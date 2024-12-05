@@ -30,6 +30,8 @@ export declare class SfIReporting extends LitElement {
     ignoreprojections: string;
     editdisable: string;
     getIgnoreProjections: () => any;
+    usermap: string;
+    getUserMap: () => any;
     dataModel: any[];
     list: any[];
     _SfReporting: any;
