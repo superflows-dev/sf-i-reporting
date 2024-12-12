@@ -76,8 +76,11 @@ async function callApiPresignedGet(url) {
         return xhr;
     });
 }
+const delay = (delayInms) => {
+    return new Promise(resolve => setTimeout(resolve, delayInms));
+};
 const exportFunctions = {
-    callApi, callApiPresignedDelete, callApiPresignedGet, validateName, readCookie
+    callApi, callApiPresignedDelete, callApiPresignedGet, validateName, readCookie, delay
 };
 export default exportFunctions;
 //# sourceMappingURL=util.js.map

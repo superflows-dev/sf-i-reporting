@@ -14,8 +14,9 @@ export interface DataObject {
     searchstring: string;
     selectprojection: string;
     ignoredprojections: string | string[];
-    mandatory: any;
     savenameseparate: string;
+    dependencies: string[];
+    mandatory: any;
 }
 export declare function createDataObject(element: any, iter?: number): DataObject;
 export interface AddButtonObject {

@@ -96,9 +96,12 @@ async function callApiPresignedDelete(url: string) {
     })
   
   }
+  const delay = (delayInms: number) => {
+    return new Promise(resolve => setTimeout(resolve, delayInms));
+  };
 
 const exportFunctions = {
-   callApi, callApiPresignedDelete, callApiPresignedGet, validateName, readCookie
+   callApi, callApiPresignedDelete, callApiPresignedGet, validateName, readCookie, delay
 };
 
 export default exportFunctions;

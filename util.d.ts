@@ -8,6 +8,7 @@ declare const exportFunctions: {
     callApiPresignedGet: typeof callApiPresignedGet;
     validateName: (name: string) => boolean;
     readCookie: typeof readCookie;
+    delay: (delayInms: number) => Promise<unknown>;
 };
 export default exportFunctions;
 //# sourceMappingURL=util.d.ts.map

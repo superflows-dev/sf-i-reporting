@@ -32,9 +32,12 @@ export declare class SfIReporting extends LitElement {
     getIgnoreProjections: () => any;
     usermap: string;
     getUserMap: () => any;
+    formviewclass: string;
     dataModel: any[];
     list: any[];
-    _SfReporting: any;
+    published: boolean;
+    lastCalendarGenerated: string;
+    nextCalendarScheduled: string;
     selectedItem: any;
     selectedItemIds: any;
     static styles: import("lit").CSSResult;
@@ -48,7 +51,6 @@ export declare class SfIReporting extends LitElement {
     _SfIReportingC: any;
     _SfReportingContainer: any;
     _SfReportingContainerShort: any;
-    _SfReportingButtonContainer: any;
     _SfReportingButtonSubmit: any;
     _SfReportingButtonSubmitConfirm: any;
     _SfReportingButtonSubmitCancel: any;
@@ -75,11 +77,13 @@ export declare class SfIReporting extends LitElement {
     submitConfirmClick: () => void;
     editClick: () => void;
     editCancelClick: () => void;
+    publishClick: () => void;
     newClick: () => void;
     backClick: () => void;
     deleteClick: () => void;
     deleteCancelClick: () => void;
     deleteConfirmClick: () => void;
+    getBricksValues: (element: DataObject, selectedValues?: string[]) => any[][];
     initListeners: () => void;
     initListListeners: () => void;
     initNewListeners: () => void;

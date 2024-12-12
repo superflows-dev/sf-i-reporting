@@ -1,7 +1,7 @@
 {
   "name": "sf-i-reporting",
   "private": false,
-  "version": "1.0.30",
+  "version": "1.0.52",
   "description": "Superflows Reporting Component",
   "main": "sf-i-reporting.js",
   "module": "sf-i-reporting.js",
@@ -53,6 +53,7 @@
   "dependencies": {
     "fs": "^0.0.1-security",
     "lit": "^2.2.4",
+    "sf-i-bricks": "^1.0.7",
     "sf-i-elastic-text": "^1.0.17",
     "sf-i-form": "^1.0.181",
     "sinon": "^15.0.1"

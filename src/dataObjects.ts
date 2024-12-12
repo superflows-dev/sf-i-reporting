@@ -14,8 +14,9 @@ export interface DataObject {
     searchstring: string,
     selectprojection: string,
     ignoredprojections: string | string[],
-    mandatory: any,
-    savenameseparate: string
+    savenameseparate: string,
+    dependencies: string[],
+    mandatory: any
 }
 
 export function createDataObject(element: any, iter?: number): DataObject {
@@ -36,8 +37,9 @@ export function createDataObject(element: any, iter?: number): DataObject {
             searchstring: element.searchstring ?? "",
             selectprojection: element.selectprojection ?? "",
             ignoredprojections: element.ignoredprojections ?? "",
-            mandatory: element.mandatory,
-            savenameseparate: element.savenameseparate ?? "no"
+            savenameseparate: element.savenameseparate ?? "no",
+            dependencies: element.dependencies ?? [],
+            mandatory: element.mandatory
         }
     }else{
         return{
@@ -56,8 +58,9 @@ export function createDataObject(element: any, iter?: number): DataObject {
             searchstring: element.searchstring ?? "",
             selectprojection: element.selectprojection ?? "",
             ignoredprojections: element.ignoredprojections ?? "",
-            mandatory: element.mandatory,
-            savenameseparate: element.savenameseparate ?? "no"
+            savenameseparate: element.savenameseparate ?? "no",
+            dependencies: element.dependencies ?? [],
+            mandatory: element.mandatory
         }
     }
 }
