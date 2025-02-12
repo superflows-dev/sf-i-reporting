@@ -5,7 +5,7 @@ export interface DataObject {
     label: string,
     hint: string,
     id: string,
-    value: string | string[],
+    value: any,
     options: string[],
     collapse: string,
     apiid: string,
@@ -16,7 +16,14 @@ export interface DataObject {
     ignoredprojections: string | string[],
     savenameseparate: string,
     dependencies: string[],
-    mandatory: any
+    allowedextensions: string,
+    extract: string,
+    maxsize: string,
+    allowdownload: string,
+    selectfields: string[]
+    mandatory: any,
+    copytoreopen: boolean,
+    displayinhistory: boolean
 }
 
 export function createDataObject(element: any, iter?: number): DataObject {
@@ -39,7 +46,14 @@ export function createDataObject(element: any, iter?: number): DataObject {
             ignoredprojections: element.ignoredprojections ?? "",
             savenameseparate: element.savenameseparate ?? "no",
             dependencies: element.dependencies ?? [],
-            mandatory: element.mandatory
+            allowedextensions: element.allowedextensions ?? "",
+            extract: element.extract ?? "",
+            maxsize: element.maxsize ?? "",
+            allowdownload: element.allowdownload ?? "",
+            selectfields: element.selectfields ?? [],
+            mandatory: element.mandatory,
+            copytoreopen: (element.copytoreopen ?? "") == "yes",
+            displayinhistory: (element.displayinhistory ?? "") == "yes"
         }
     }else{
         return{
@@ -60,7 +74,14 @@ export function createDataObject(element: any, iter?: number): DataObject {
             ignoredprojections: element.ignoredprojections ?? "",
             savenameseparate: element.savenameseparate ?? "no",
             dependencies: element.dependencies ?? [],
-            mandatory: element.mandatory
+            allowedextensions: element.allowedextensions ?? "",
+            extract: element.extract ?? "",
+            maxsize: element.maxsize ?? "",
+            allowdownload: element.allowdownload ?? "",
+            selectfields: element.selectfields ?? [],
+            mandatory: element.mandatory,
+            copytoreopen: (element.copytoreopen ?? "") == "yes",
+            displayinhistory: (element.displayinhistory ?? "") == "yes"
         }
     }
 }

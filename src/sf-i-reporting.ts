@@ -14,6 +14,7 @@ import Util from './util';
 import {DataObject, AddButtonObject, createDataObject, createAddButtonObject, isAddButtonObject} from './dataObjects';
 import { SfIForm } from 'sf-i-form';
 import { SfIBricks } from 'sf-i-bricks';
+import { SfIUploader } from 'sf-i-uploader';
 
 /*
 
@@ -37,6 +38,9 @@ DB: partitionKey, rangeKey, values
 export class SfIReporting extends LitElement {
   @property()
   apiId: string = "";
+
+  @property()
+  apiIdUploader: string = "";
 
   @property()
   projectid: string = "";
@@ -103,14 +107,24 @@ export class SfIReporting extends LitElement {
   lastCalendarGenerated: string = ""
   nextCalendarScheduled: string = ""
   // selectedItem: any = {};
-  selectedItem: any = {id:"be121a6c-73e2-49f8-b1c9-bdf45a72da6d"};
+  selectedItem: any = {id:"2b1d4da9-7cfe-4861-91f2-1727d0cc70b4"};
 
   selectedItemIds: any = [];
+
+  reopenedItem: any = {};
 
   static override styles = css`
 
     
     .SfIReportingC {
+    }
+
+    .SfIReportingCCopy {
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      display: none;
+      position: absolute;
     }
 
     .invisible {
@@ -134,8 +148,19 @@ export class SfIReporting extends LitElement {
       margin-left: 5px;
       margin-right: 5px;
     }
+    .mrl-10 {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+    .mt-10{
+      margin-top: 10px
+    }
+    }
     .ml-10{
       margin-left: 10px
+    }
+    .mr-20{
+      margin-right: 20px
     }
     .flex-grow {
       flex-grow: 1;
@@ -212,6 +237,9 @@ export class SfIReporting extends LitElement {
     }
     .p-10{
       padding: 10px
+    }
+    .p-5{
+      padding: 5px
     }
     
     .lds-dual-ring {
@@ -385,6 +413,94 @@ export class SfIReporting extends LitElement {
       pointer-events: none
     }
     
+    .sf-i-form-modal-container {
+      position: fixed;
+      width: 80%;
+      height: 80%;
+      top: 10%;
+      right: 10%;
+      background-color: white;
+      border: 1px solid #888;
+      overflow: scroll;
+    }
+    
+    .selected-option {
+      font-size: 70%;
+      padding: 5px;
+      border-radius: 10px;
+      border: solid 1px #dddddd;
+      white-space: nowrap;
+      overflow: hidden !important;
+      min-width: 50px;
+    }
+    .selected-option-icon{
+      pointer-events: none
+    }
+
+    .selected-option-label{
+      pointer-events: none
+    }
+
+    .sf-i-form-modal-button-container{
+      background-color: white;
+      position: sticky;
+      top: 0px;
+      z-index: 10;
+    }
+    .commentbox {
+      padding: 10px;
+      border: solid 1px gray;
+      border-radius: 10px;
+    }
+
+    .reporterbox {
+      width: 90%;
+      margin-right: 10%;
+    }
+
+    .approverbox {
+      width: 90%;
+      margin-left: 5%;
+    }
+
+    .box-large {
+      height: 150px;
+      width: 100%;
+      background: linear-gradient(-45deg, transparent 10%, #ccc 5%, transparent 60%);
+      background-size: 300%;
+      background-position-x: 100%;
+      animation: shimmer 1.5s infinite linear;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+
+    .box {
+      margin-top: 20px;
+      height: 10px;
+      width: 100%;
+      background: linear-gradient(-45deg, transparent 10%, #ccc 5%, transparent 60%);
+      background-size: 300%;
+      background-position-x: 100%;
+      animation: shimmer 1.5s infinite linear;
+      margin-bottom: 20px;
+    }
+  
+    @keyframes shimmer {
+      to {
+         background-position-x: 0%
+      }
+    }  
+
+    .history-status {
+      position: absolute;
+      top:10px;
+      right: 0;
+      left: 0;
+      margin-left: auto;
+      margin-right: auto;
+      width: fit-content;
+    }
   `;
 
   @query('.div-row-error')
@@ -410,6 +526,9 @@ export class SfIReporting extends LitElement {
 
   @query('.SfIReportingC')
   _SfIReportingC: any;
+
+  @query('.SfIReportingCCopy')
+  _SfIReportingCCopy: any;
 
   @query('#reporting-container')
   _SfReportingContainer: any;
@@ -533,8 +652,18 @@ export class SfIReporting extends LitElement {
               valueObj[element.id] = form.selectedTexts();
             }
             console.log('selected values form', form.selectedValues(), form.selectedTexts());
+          }else if(element.type == "sf-i-form-select"){
+            valueObj[element.id] = element.value
+            if(element.savenameseparate == "yes"){
+              valueObj[element.id] = element.value
+            }else{
+              for(let field of element.selectfields){
+                valueObj[field] = element.value[field]
+              }
+            }
           }else if(element.type == "sf-i-bricks"){
             let bricks: SfIBricks = (this._SfReportingContainer as HTMLDivElement).querySelector('#'+element.id) as SfIBricks;
+            console.log('sf-i-bricks id', element.id);
             if(element.savenameseparate == "yes"){
               valueObj[element.id + 'id'] = bricks.selectedValues()[0] ?? "";
               valueObj[element.id + 'name'] = bricks.selectedTexts()[0] ?? "";
@@ -586,6 +715,7 @@ export class SfIReporting extends LitElement {
 
   newClick = () => {
     console.log('new clicked');
+    this.prepopulateValJson = "[]";
     this.flow = "new";
     this.loadMode();
   }
@@ -755,6 +885,9 @@ export class SfIReporting extends LitElement {
         }else{
           if(element.type == "section"){
             let dataObj: DataObject = createDataObject({id: 'section-' + sectionCount, name: element.name, type: element.type})
+            if(this.editdisable == "true" || this.flow == "details"){
+              dataObj.collapse = "true"
+            }
             this.dataModel.push(dataObj)
             sectionCount ++;
           }else{
@@ -774,37 +907,39 @@ export class SfIReporting extends LitElement {
     //           <h3 part="results-title" class="m-0">${this.name}</h3>
     //           <button id="button-detail-close" part="button-icon" class="material-icons">close</button>
     //         </div>`
-    html += `<div class="d-flex flex-col md-20-ml-10" part="title-section">
+    html += `${this.name.length > 1 ? `<div class="d-flex flex-col md-20-ml-10" part="title-section">
               <div class="d-flex w-100-m-0 justify-between align-center">
-                <button id="button-back" part="button-icon" class="button-icon-click"><span class="material-icons">keyboard_backspace</span></button>
-                <h3 part="results-title" class="m-0">${this.name}</h3>
+                ${this.editdisable != "true" ? `
+                <button id="button-back" part="button-icon" class="button-icon-click"><span class="material-icons">keyboard_backspace</span></button>` : ''}
+                ${this.editdisable != "true" ? `<h3 part="results-title" class="m-0">${this.name}</h3>`: ''}
+                ${this.editdisable != "true" ? (`
                 <div class="d-flex justify-center align-center">${ this.flow == "new" ? `
-                    <button class="mrl-5 material-icons invisible" part="button-icon" id="button-submit" disabled>save</button>
+                    <button class="mrl-5 material-icons invisible" part="button-icon" id="button-submit" disabled>upload</button>
                     <button class="mrl-5 material-icons hide" part="button-icon-light" id="button-submit-cancel">close</button>
                     <button class="mrl-5 material-icons hide" part="button-icon" id="button-submit-confirm">check save</button>
                   ` : (this.flow == "details" ? `
-                    <span class="mrl-5 material-icons" part="span-icon${this.published ? '-light' : ''}" id="span-submit-publish">${this.published ? 'radio_button_checked' : 'radio_button_unchecked'}</span>
+                    <span class="mrl-5" part="span-icon${this.published ? '-light' : ''}" id="span-submit-publish">${this.published ? 'Published' : 'Unpublished'}</span>
                     <button id="button-edit" part="button-icon" class="mrl-5 material-icons button-icon-click">edit</button>
                     <button id="button-delete" part="button-icon" class="mrl-5 material-icons button-icon-click">delete</button>
                     <button id="button-delete-cancel" part="button-icon-light" class="mrl-5 material-icons button-icon-click hide">close</button>
                     <button id="button-delete-confirm" part="button-icon" class="mrl-5 button-icon-click hide"><span class="material-icons">delete</span><span class="material-icons">done</span></button>
               ` : `
-                    <button class="mrl-5 material-icons" part="button-icon${this.published ? '-light' : ''}" id="button-submit-publish">${this.published ? 'radio_button_unchecked' : 'radio_button_checked'}</button>
+                    <button class="mrl-5" part="button-icon${this.published ? '-light' : ''}" id="button-submit-publish">${this.published ? 'Unpublish' : 'Publish'}</button>
                     <button id="button-edit-cancel" part="button-icon-light" class="mrl-5 material-icons button-icon-click">edit_off</button>
-                    <button class="mrl-5 material-icons hide" part="button-icon" id="button-submit" disabled>save</button>
+                    <button class="mrl-5 material-icons hide" part="button-icon" id="button-submit" disabled>upload</button>
                     <button class="mrl-5 material-icons hide" part="button-icon-light" id="button-submit-cancel">close</button>
                     <button class="mrl-5 material-icons hide" part="button-icon" id="button-submit-confirm">check save</button>
               `) 
                 }
-                </div>
+                </div>`) : ''}
               </div>
               <div class="progress-bar w-100-m-0 d-flex flex-wrap" part="progress-bar">
                 <div class="progress-bar-complete" part="progress-bar-complete"></div>
                 <div class="progress-bar-finished" part="progress-bar-finished"></div>
                 <div class="progress-bar-incomplete" part="progress-bar-incomplete"></div>
               </div>
-            </div>
-            <div class="d-flex ${this.formviewclass} form-container align-stretch p-10" part="form-container">`
+            </div>` : ``}
+            <div class="d-flex ${this.formviewclass} form-container align-stretch p-10" part="${this.published ? "form-container-published" : "form-container"}">`
 
     let firstFlag = true
     for(let element of this.dataModel){
@@ -847,6 +982,18 @@ export class SfIReporting extends LitElement {
                 </div>
               </div>`
     }
+    if(this.flow != "details"){
+      html += `
+        <div class="sf-i-form-modal-container d-flex flex-col align-stretch hide" part="sf-i-form-modal-container" id="sf-i-form-modal-container">
+          <div class="sf-i-form-modal-button-container d-flex justify-between align-center p-10" part="sf-i-form-modal-button-container">
+            <button id="button-close-form" part="button-icon" class="button-icon-click"><span class="material-icons">keyboard_backspace</span></button>
+            <button id="button-save-form" part="button-icon" class="button-icon-click"><span class="material-icons">check</span></button>
+          </div>
+          <div class="d-flex p-10" id="sf-i-form-container" part="sf-i-form-container"></div>
+        </div>
+      `;
+    }
+    
     (this._SfReportingContainer as HTMLDivElement).innerHTML = html;
     (this._SfReportingContainer as HTMLDivElement).style.display = 'block';
     this.initSectionListeners();
@@ -870,7 +1017,7 @@ export class SfIReporting extends LitElement {
     for(let element of this.dataModel){
       if(element.type == "sf-i-form"){
         let form: SfIForm = (this._SfReportingContainer as HTMLDivElement).querySelector('#'+element.id) as SfIForm;
-        if(this.flow == "details"){
+        if(this.mode == "view" || this.flow == "details"){
           form.flow = "read"
         }
         if(element.value != ''){
@@ -878,8 +1025,7 @@ export class SfIReporting extends LitElement {
         }
         
         // setTimeout(() => {form.loadMode();},1000)
-      }
-      if(element.type == "sf-i-bricks"){
+      }else if(element.type == "sf-i-bricks"){
         console.log('bricks element value', element.value, element.id);
         let bricks: SfIBricks = (this._SfReportingContainer as HTMLDivElement).querySelector('#'+element.id) as SfIBricks
         let selectedDependedValues = []
@@ -895,34 +1041,132 @@ export class SfIReporting extends LitElement {
         bricks.namesjson = JSON.stringify(values[0])
         bricks.idsjson = JSON.stringify(values[1])
         if(element.value != ''){
-          // let ids = []
-          // for(let val of element.value){
-          //   console.log('bricks spliting values', val, element.id)
-          //   ids.push(val.split(';')[1])
-          // }
           bricks.prepopulateValJson = JSON.stringify(element.value)
         }else{
           bricks.prepopulateValJson = JSON.stringify([])
         }
         console.log('bricks element values', bricks.prepopulateValJson, element.id);
-        if(this.flow == "details"){
-          bricks.flow = "read"
+        if(this.mode == "view" || this.flow == "details"){
+          bricks.flow = "view"
         }else{
           bricks.flow = "edit"
         }
-        // setTimeout(() => {bricks.loadMode()},500)
+      }else if(element.type == "sf-i-uploader"){
+        let uploader: SfIUploader = (this._SfReportingContainer as HTMLDivElement).querySelector('#'+element.id) as SfIUploader
+        uploader.prepopulatedInputArr = JSON.stringify(element.value ?? []);
+        uploader.readOnly = (this.mode == "view" || this.flow == "details")
+        uploader.loadMode()
+      }else if(element.type == "sf-i-form-select"){
+        let buttonEditForm = (this._SfReportingContainer as HTMLDivElement).querySelector('#button-edit-form-'+element.id) as HTMLButtonElement
+        buttonEditForm?.addEventListener('click', () => {
+          let formHtml = `
+            <div part="date-container" class="d-flex flex-col flex-grow mt-20">
+              <label id="${element.id}-label" part="date-label">${element.label}</label>
+              <div part="td-body-2"><sf-i-elastic-text text="${element.hint}" minLength="50"></sf-i-elastic-text></div>
+              <sf-i-form exportparts="td-action:form-td-action, td-body" id="${element.id}" class="reporting-sf-i-form" part="input-sf-i-form" name="${element.name}" label="" apiId="${element.apiid}" mode="${element.mode}" searchPhrase="${((element.mode == "multiselect-dropdown" || element.searchstring != "") ? (this.projectname + "&") : "") + element.searchstring}" selectProjection="${element.selectprojection}" ignoreProjections="${element.ignoredprojections}" ${parseInt(element.maxselect) == 0 ? "" : `maxselect="${element.maxselect}"`} ${element.mandatory != null ? "mandatory=\"\"" : ""}></sf-i-form>
+            </div>
+          `
+          
+          let formContainer = (this._SfReportingContainer as HTMLDivElement).querySelector('#sf-i-form-container') as HTMLDivElement
+          formContainer.innerHTML = formHtml
+          let formModalContainer = (this._SfReportingContainer as HTMLDivElement).querySelector('#sf-i-form-modal-container') as HTMLDivElement
+          formModalContainer.style.display = 'block'
+          let formCloseButton = (this._SfReportingContainer as HTMLDivElement).querySelector('#button-close-form') as HTMLButtonElement
+          formCloseButton.addEventListener('click', () => {
+            formModalContainer.style.display = 'none'
+          })
+          let formSaveButton = (this._SfReportingContainer as HTMLDivElement).querySelector('#button-save-form') as HTMLButtonElement
+          let formObj = formContainer.querySelector('#' + element.id) as SfIForm
+          console.log('formobj searchPhrase', formObj.searchPhrase);
+          // if(formObj.searchPhrase != ''){
+          //   formObj.loadMode();
+          // }
+          console.log('selectedsearchid', element.value)
+          if((element.value.id ?? '') != ''){
+            formObj.selectedSearchId = element.value.id
+            console.log('form selectedsearchid', formObj.selectedSearchId)
+            formSaveButton.style.visibility = 'visible';
+          }else{
+            formSaveButton.style.visibility = 'hidden';
+          }
+          formObj.addEventListener('valueChanged',() => {
+            if(formObj.selectedEntireValues() != null && Object.keys(formObj.selectedEntireValues()).length > 0){
+              formSaveButton.style.visibility = 'visible';
+            }else{
+              formSaveButton.style.visibility = 'hidden';
+            }
+          })
+          formSaveButton.addEventListener('click', async () => {
+            await this.showLoader();
+            formModalContainer.style.display = 'none'
+            let formObj = formContainer.querySelector('#' + element.id) as SfIForm
+            console.log("selected", formObj, element.id)
+            for(let dataElement of this.dataModel){
+              if(dataElement.id == element.id){
+                let valObj:any = {}
+                let selectedObj = formObj.selectedEntireValues()
+                valObj.id = selectedObj.id
+                let cols = JSON.parse(selectedObj.fields?.cols ?? '[]')
+                let data = JSON.parse(selectedObj.fields?.data ?? '[]')
+                for(let [i, col] of cols.entries()){
+                  valObj[col] = data[i]
+                }
+                if(dataElement.savenameseparate == "yes"){
+                  console.log('populating dataelement', valObj)
+                  dataElement.value = [valObj.name + ';' + valObj.id];
+                }else{
+                  dataElement.value = valObj
+                }
+              }
+            }
+            let reportingFormContainer = (this._SfReportingContainer as HTMLDivElement).querySelector('.form-container') as HTMLDivElement
+            if(reportingFormContainer != null){
+              console.log('scrolling', reportingFormContainer.scrollTop)
+              this.populateView(reportingFormContainer.scrollTop);
+            }
+          })
+          if(element.dependencies != null && element.dependencies.length > 0){
+            this.updateShortlistedSearchPhrases(element.id);
+          }
+        })
+      }
+    }
+    if(this.mode != "view" && this.flow != 'details'){
+      let selectedOptions = (this._SfReportingContainer as HTMLDivElement).querySelectorAll('.selected-option') as NodeListOf<HTMLDivElement>
+      for(let selectedOption of selectedOptions){
+        selectedOption?.addEventListener('click',async (ev: any) => {
+          await this.showLoader();
+          let target = ev.target
+          let elementId = target.id
+          let id = elementId.split('-')[2]
+          for(let [i, dataObj] of this.dataModel.entries()){
+            if(dataObj.id == id){
+              this.dataModel[i].value = ''
+            }
+          }
+          let formContainer = (this._SfReportingContainer.querySelector('.form-container') as HTMLElement)
+          if(formContainer != null){
+            this.populateView(formContainer.scrollTop);
+          }
+        })
       }
     }
     let checkboxPublish = (this._SfReportingContainer as HTMLDivElement).querySelector('#input-publish-checkbox') as HTMLInputElement
     checkboxPublish?.addEventListener('click',(ev:any) => {
-      let target = ev.target as HTMLInputElement
-      this.published = target.checked
-      let publishedContainer = (this._SfReportingContainer as HTMLDivElement).querySelector('#published-container') as HTMLDivElement
-      publishedContainer.setAttribute('part', this.published ? "published-container-published" : "published-container-unpublished")
-      let formContainer = this._SfReportingContainer.querySelector('.form-container') as HTMLDivElement
-      formContainer.setAttribute('part',this.published ? "form-container-published" : "form-container")
-      console.log('publish checked', this.published);
+        let target = ev.target as HTMLInputElement
+        this.published = target.checked
+        let publishedContainer = (this._SfReportingContainer as HTMLDivElement).querySelector('#published-container') as HTMLDivElement
+        publishedContainer.setAttribute('part', this.published ? "published-container-published" : "published-container-unpublished")
+        let formContainer = this._SfReportingContainer.querySelector('.form-container') as HTMLDivElement
+        formContainer.setAttribute('part',this.published ? "form-container-published" : "form-container")
+        console.log('publish checked', this.published);
+      }
+    ) 
+    let checkboxPublishLabel = (this._SfReportingContainer as HTMLDivElement).querySelector('#input-publish-checkbox-label') as HTMLLabelElement
+    checkboxPublishLabel?.addEventListener('click',() => {
+      checkboxPublish.click()
     }) 
+
     let buttonBack = (this._SfReportingContainer as HTMLDivElement).querySelector('#button-back') as HTMLButtonElement
     buttonBack?.addEventListener('click',this.backClick);
 
@@ -949,7 +1193,7 @@ export class SfIReporting extends LitElement {
     let buttonDeleteCancel = (this._SfReportingContainer as HTMLDivElement).querySelector('#button-delete-cancel') as HTMLButtonElement
     buttonDeleteCancel?.addEventListener('click', this.deleteCancelClick)
     let buttonDeleteConfirm = (this._SfReportingContainer as HTMLDivElement).querySelector('#button-delete-confirm') as HTMLButtonElement
-    buttonDeleteConfirm?.addEventListener('click', this.submitCancelClick)
+    buttonDeleteConfirm?.addEventListener('click', this.submitDelete)
     
     let buttonEditCancel = (this._SfReportingContainer as HTMLDivElement).querySelector('#button-edit-cancel') as HTMLButtonElement
     buttonEditCancel?.addEventListener('click', this.editCancelClick)
@@ -957,8 +1201,151 @@ export class SfIReporting extends LitElement {
     setTimeout(()=>{
       this.evalShowProgress();
       (this._SfReportingContainer.querySelector('.form-container') as HTMLDivElement).scrollTo({top: scrollTopTarget, left:0});
+      this.hideLoader();
+      let customEvent = new CustomEvent('valueChanged');
+      this.dispatchEvent(customEvent);
     },500)
-    
+    if(this.getPrepopulateJson().history != null && Object.keys(this.getPrepopulateJson().history).length > 0){
+      this.populateHistory()
+    }
+  }
+
+  populateHistory = () => {
+    let formContainer = (this._SfReportingContainer.querySelector('.form-container') as HTMLElement)
+    if(formContainer != null){
+      let html = ''
+      html += `
+        <div class="d-flex flex-col" part="section-container"><div id="history" class="section-head d-flex align-center justify-between" part="section-head-collapsed"><h3 part="section-title-collapsed" id="section-history-title">History</h3><div class="material-icons" id="section-history-icon">keyboard_arrow_down</div></div><div id="section-history-body" class="section-body d-flex ${this.formviewclass} hide" part="section-body">
+      `
+      for(let [indexDate, historyDate] of Object.keys(this.getPrepopulateJson().history).entries()){
+        console.log('history', historyDate);
+        html += `
+          <div class="d-flex flex-col" part="section-container"><div id="history-date-${indexDate}" class="history-section-head section-head d-flex align-center justify-between" part="section-head-collapsed"><h3 part="section-title-collapsed" class="section-history-title" id="section-history-title-${indexDate}">${historyDate}</h3><div class="section-history-icon material-icons" id="section-history-icon-${indexDate}">keyboard_arrow_down</div></div><div id="section-history-body-${indexDate}" class="section-history-body section-body d-flex ${this.formviewclass} hide" part="section-body">
+        `
+        for(let [index,historyItem] of this.getPrepopulateJson().history[historyDate].entries()){
+          html += `<sf-i-reporting name="" id="history-reporting-${historyDate}-${index}" class="history-reporting" exportparts="uploader-extracted-text:reporting-uploader-extracted-text, uploader-sf-upload-message:reporting-uploader-sf-upload-message, uploader-sf-upload-submessage:reporting-uploader-sf-upload-submessage, uploader-extracted-text-chip:reporting-uploader-extracted-text-chip, uploader-extracted-text-chip-failed:reporting-uploader-extracted-text-chip-failed, uploader-doctype-verify-badge:reporting-uploader-doctype-verify-badge,span-submit-published:reporting-span-submit-published, span-submit-unpublished:reporting-span-submit-unpublished, reporting-container:reporting-reporting-container, button-icon:reporting-button-icon, uploader-button-icon:reporting-uploader-button-icon, sf-i-form-modal-container:reporting-sf-i-form-modal-container, next-calendar-date:reporting-next-calendar-date, last-calendar-date:reporting-last-calendar-date, input-publish-checkbox:reporting-input-publish-checkbox, button-icon-light:reporting-button-icon-light, button-icon-small:reporting-button-icon-small, uploader-input-label:reporting-uploader-input-label, input-radio:reporting-input-radio, radio-label:reporting-radio-label, input-textarea:reporting-input-textarea, input-date:reporting-input-date, input-select-single:reporting-input-select-single, textarea-container:reporting-textarea-container, section-body:reporting-section-body, section-container:reporting-section-container, date-container:reporting-date-container, input-sf-i-uploader:reporting-input-sf-i-uploader, published-container:reporting-published-container, selected-option:reporting-selected-option, input-select-multi-option:reporting-input-select-multi-option, select-option-label:reporting-select-option-label, input-sf-i-form:reporting-input-sf-i-form, input-sf-i-bricks:reporting-input-sf-i-bricks, uploader-input:reporting-uploader-input, form-container:reporting-form-container, published-container:reporting-published-container, form-container-published:reporting-form-container-published, subsection:reporting-subsection, results-title:reporting-results-title, td-head:reporting-td-head, td-action:reporting-td-action, td-body:reporting-td-body, td-body-2:reporting-td-body-2, add-button:reporting-add-button, uploader-button:reporting-uploader-button, section-head-collapsed:reporting-section-head-collapsed, section-title-expanded:reporting-section-title-expanded, section-title-collapsed:reporting-section-title-collapsed, section-head-expanded:reporting-section-head-expanded, progress-bar-finished:reporting-progress-bar-finished, progress-bar-complete:reporting-progress-bar-complete, progress-bar-incomplete:reporting-progress-bar-incomplete, section-success-icon:reporting-section-success-icon, section-body:reporting-section-body, title-section:reporting-title-section, button-lg:reporting-button-lg, uploader-detail-container:reporting-uploader-detail-container, textarea-label:reporting-textarea-label, date-label:reporting-date-label, commentbox:reporting-commentbox, comment-username:reporting-comment-username, detail-head:reporting-detail-head" name="Notice Details" mode="view" editdisable="true" formviewclass="flex-wrap" configjson="${JSON.stringify(historyItem.schema)}" prepopulatevaljson="${JSON.stringify(historyItem.object).replace(/"/g,'&quot;')}"></sf-i-reporting>`
+          let comments = historyItem.object.comments ?? []
+          if(historyItem.object.documents != null && historyItem.object.documents.length > 0){
+            html += '<div class="d-flex justify-between mb-20">';
+            html += '<h3 part="history-docs-title" class="m-0"><br />Documents</h3>';
+            html += '</div>';
+            html += `
+              <sf-i-uploader prepopulatedInputArr="${JSON.stringify(historyItem.object.documents).replace(/"/g,'&quot;')}" exportparts="detail-container:uploader-detail-container, errmsg:uploader-errmsg, successmsg:uploader-successmsg, sf-upload-message:uploader-sf-upload-message, sf-upload-submessage: uploader-sf-upload-submessage, doctype-verify-badge: uploader-doctype-verify-badge, details-controls-container: uploader-details-controls-container, button-icon: uploader-button-icon, pdf-controls-container: uploader-pdf-controls-container, pdf-pages: uploader-pdf-pages, pdf-page-num: uploader-pdf-page-num, pdf-page-count: uploader-pdf-page-count, pdf-canvas: uploader-pdf-canvas, image-container: uploader-image-container, image-component: uploader-image-component, pdf-thumbnail-container: uploader-pdf-thumbnail-container, pdf-canvas-thumbnail: uploader-pdf-canvas-thumbnail, sf-uploader-download-message: uploader-sf-uploader-download-message, input: uploader-input, upload-buttons-container: uploader-upload-buttons-container, doctype-badge: uploader-doctype-badge, upload-status: uploader-upload-status, ext-badge:uploader-ext-badge, extracted-meta: uploader-extracted-meta, extracted-text-chip: uploader-extracted-text-chip, extracted-text-chip-parsed: uploader-extracted-text-chip-parsed, extracted-text-chip-failed: uploader-extracted-text-chip-failed, matches-title: uploader-matches-title, matches:uploader-matches, extracted-title: uploader-extracted-title, extracted-text: uploader-extracted-text, disclaimer-message-container: uploader-disclaimer-message-container, message-container: uploader-message-container, button: uploader-button" class="reporting-sf-i-uploader" part="input-sf-i-uploader" id="history-doc-uploader-${index}" maximize="yes" max="${historyItem.object.documents.length}" apiid="${this.apiIdUploader}" projectid="${this.projectid}" mode="view"></sf-i-uploader>
+            `
+          }
+          html += '<div class="d-flex justify-between mb-20">';
+          html += '<h3 part="history-comments-title" class="m-0"><br />Comments</h3>';
+          html += '</div>';
+          
+          html += '<div class="m-20">';
+
+            html += '<div class="d-flex flex-col">';
+
+              for(var i = 0; i < comments.length; i++) {
+                html += '<div part="commentbox" class="d-flex commentbox '+(comments[i].author + "").toLowerCase()+'box">';
+                html += '<div class="mr-20 d-flex flex-col align-end"><span part="comment-username">'+(comments[i].username != null ? comments[i].username : '')+'</span><span part="td-head">'+comments[i].author+'</span></div>';
+                
+                const onlyCommentText = (comments[i].comment + "").replace(/ *\([^)]*\) */g, "").trim();
+                try {
+
+                  const jsonComments = JSON.parse(onlyCommentText);
+
+                  if(Util.isInteger(jsonComments)) {
+                    html += '<div class="">'+comments[i].comment+'<br /><small><span class="muted">'+comments[i].timestamp+'</span></small></div>';
+                  } else {
+                    //console.log('json comments', jsonComments);
+                    var htmlTable = '';
+                    for(var j = 0; j < Object.keys(jsonComments).length; j++) {
+                      htmlTable += '<div class="mb-20">';
+                        htmlTable += ('<div part="detail-head">' + Object.keys(jsonComments)[j] + '</div>');
+                        htmlTable += ('<sf-i-elastic-text text="'+jsonComments[Object.keys(jsonComments)[j]]+'" minLength="20"></sf-i-elastic-text>');
+                        htmlTable += '</div>';
+                    }
+                    html += '<div class="">'+htmlTable+'<small><span class="muted">'+comments[i].timestamp+'</span></small></div>';
+                  }
+                  
+                } catch (e: any) {
+                  //console.log('json comments exception', comments[i]);
+                  html += '<div class="">'+comments[i].comment+'<br /><small><span class="muted">'+comments[i].timestamp+'</span></small></div>';
+                }
+                
+                html += '</div>';
+              }
+              if(comments.length === 0) {
+                html += '<div><strong>No comments!</strong></div>';
+              }
+
+            html += '</div>';
+
+          html += '</div>';
+        }
+        html += '</div>'
+      }
+      html += `<div part="history-status" class="d-flex history-status p-5 hide">History Status</div>`
+      html += '</div>'
+      formContainer.insertAdjacentHTML('beforeend',html);
+      let sectionHistory = formContainer.querySelector('#history') as HTMLDivElement
+      sectionHistory.addEventListener('click',() => {
+        let sectionHistoryBody = formContainer.querySelector('#section-history-body') as HTMLDivElement
+        let sectionHistoryTitle = formContainer.querySelector('#section-history-title') as HTMLHeadingElement
+        let sectionHistoryIcon = formContainer.querySelector('#section-history-icon') as HTMLHeadingElement
+        if(sectionHistoryBody.style.display == 'block'){
+          sectionHistory.setAttribute('part','section-head-collapsed')
+          sectionHistoryBody.style.display = 'none'
+          sectionHistoryTitle.setAttribute('part','section-title-collapsed')
+          sectionHistoryIcon.innerHTML = 'keyboard_arrow_down'
+        }else{
+          sectionHistory.setAttribute('part','section-head-expanded')
+          sectionHistoryBody.style.display = 'block'
+          sectionHistoryTitle.setAttribute('part','section-title-expanded')
+          sectionHistoryIcon.innerHTML = 'keyboard_arrow_up'
+        }
+      })
+      let sectionHistoryDates = formContainer.querySelectorAll('.history-section-head') as NodeListOf<HTMLDivElement>
+      for(let sectionHistoryDate of sectionHistoryDates){
+        sectionHistoryDate.addEventListener('click',() => {
+          let id = sectionHistoryDate.id
+          let dateIndex = id.split('-')[2]
+          let sectionHistoryDateBodies = formContainer.querySelectorAll('.section-history-body') as NodeListOf<HTMLDivElement>
+
+          let sectionHistoryDateTitles = formContainer.querySelectorAll('.section-history-title') as NodeListOf<HTMLHeadingElement>
+          let sectionHistoryDateIcons = formContainer.querySelectorAll('.section-history-icon') as NodeListOf<HTMLHeadingElement>
+          let historyStatus = formContainer.querySelector('.history-status') as HTMLDivElement
+          for(let [i, sectionHistoryDateBody] of sectionHistoryDateBodies.entries()){
+            if(sectionHistoryDateBody.id == ("section-history-body-" + dateIndex)){
+              if(sectionHistoryDateBody.style.display == 'block'){
+                historyStatus.style.display = 'none'
+                sectionHistoryDate.setAttribute('part','section-head-collapsed')
+                sectionHistoryDateBody.style.display = 'none'
+                sectionHistoryDateTitles[i].setAttribute('part','section-title-collapsed')
+                sectionHistoryDateIcons[i].innerHTML = 'keyboard_arrow_down'
+              }else{
+                historyStatus.innerHTML = "History : " + sectionHistoryDateTitles[i].innerHTML
+                historyStatus.style.display = 'flex'
+                sectionHistoryDate.setAttribute('part','section-head-expanded')
+                sectionHistoryDateBody.style.display = 'block'
+                sectionHistoryDateTitles[i].setAttribute('part','section-title-expanded')
+                sectionHistoryDateIcons[i].innerHTML = 'keyboard_arrow_up'
+              }
+            }else{
+              sectionHistoryDate.setAttribute('part','section-head-collapsed')
+              sectionHistoryDateBody.style.display = 'none'
+              sectionHistoryDateTitles[i].setAttribute('part','section-title-collapsed')
+              sectionHistoryDateIcons[i].innerHTML = 'keyboard_arrow_down'
+            }
+          }
+        })
+      }
+      let historyReportings = formContainer.querySelectorAll('.history-reporting') as NodeListOf<SfIReporting>
+      for(let historyReporting of historyReportings){
+        let id = historyReporting.id;
+        let date = id.split('-')[2]
+        let index = id.split('-')[3]
+        console.log('historyConfigJSON', id)
+        historyReporting.configjson = JSON.stringify(this.getPrepopulateJson().history[date][index].schema)
+        // historyReporting.loadMode();
+      }
+    }
   }
 
   prepopulateValues = () => {
@@ -978,7 +1365,7 @@ export class SfIReporting extends LitElement {
           }
         }
       }else{
-        if(element.type == "section"){
+        if(element.type == "section" && this.editdisable != "true" && this.flow != "details"){
           this.dataModel[i].collapse = "false"
         }else{
           if(this.dataModel[i].type == "textarea"){
@@ -987,6 +1374,13 @@ export class SfIReporting extends LitElement {
             this.dataModel[i].value = this.getPrepopulateJson()[element.id] ?? ['','']
           }else if(element.type == "date"){
             this.dataModel[i].value = this.getPrepopulateJson()[element.id] ?? ''
+          }else if(element.type == "sf-i-form-select"){
+            // if(element.savenameseparate == "yes"){
+            //   console.log('prepopulating sf-i-form-select', this.getPrepopulateJson()[element.id])
+            //   this.dataModel[i].value = this.getPrepopulateJson()[element.id] ?? ''
+            // }else{
+              this.dataModel[i].value = this.getPrepopulateJson()[element.id] ?? ''
+            // }
           }else if(element.type == "sf-i-form"){
             if(element.savenameseparate == "yes"){
               this.dataModel[i].value = [this.getPrepopulateJson()[element.id + 'id']]
@@ -1009,6 +1403,8 @@ export class SfIReporting extends LitElement {
             }else{
               this.dataModel[i].value = this.getPrepopulateJson()[element.id]
             }
+          }else if(element.type == "sf-i-uploader"){
+            this.dataModel[i].value = this.getPrepopulateJson()[element.id]
           }
         }
       }
@@ -1075,8 +1471,20 @@ export class SfIReporting extends LitElement {
               filled ++;
               sectionChildFilledCount ++;
             }
+          }else if(element.type == "sf-i-form-select"){
+            console.log('evalshowprogress sf-i-form-select value', element.value, Object.keys(element.value).length, element.mandatory);
+            if(Object.keys(element.value).length > 0){
+              filled ++;
+              sectionChildFilledCount ++;
+            }
           }else if(element.type == "sf-i-bricks"){
             console.log('evalshowprogress sf-i-bricks value', element.value, element.value.length, element.mandatory, element.mandatory != null);
+            if(element.value.length > 0){
+              filled ++;
+              sectionChildFilledCount ++;
+            }
+          }else if(element.type == "sf-i-uploader"){
+            console.log('evalshowprogress sf-i-uploader value', element.value, element.value.length, element.mandatory, element.mandatory != null);
             if(element.value.length > 0){
               filled ++;
               sectionChildFilledCount ++;
@@ -1100,7 +1508,7 @@ export class SfIReporting extends LitElement {
     console.log('evalshowprogress',filled, total)
     if(this.editdisable == "true"){
       ((this._SfReportingContainer as HTMLDivElement).querySelector('.progress-bar') as HTMLDivElement).style.display = 'none'
-    }else{
+    }else if(((this._SfReportingContainer as HTMLDivElement).querySelector('.progress-bar') as HTMLDivElement) != null){
       ((this._SfReportingContainer as HTMLDivElement).querySelector('.progress-bar') as HTMLDivElement).style.display = 'flex'
       let progress = Math.floor((filled / total) * 100);
       if(progress == 100){
@@ -1123,7 +1531,8 @@ export class SfIReporting extends LitElement {
   initInputListeners = () => {
     let addButtons = (this._SfReportingContainer as HTMLDivElement).querySelectorAll('.add-button') as NodeListOf<HTMLButtonElement>
     for(let addButton of addButtons){
-      addButton.addEventListener('click', (ev: any)=>{
+      addButton.addEventListener('click', async (ev: any)=>{
+        await this.showLoader();
         let target = ev.target;
         for(let [i,element] of this.dataModel.entries()){
           if(isAddButtonObject(element)){
@@ -1144,13 +1553,17 @@ export class SfIReporting extends LitElement {
         this.evalTimeout = setTimeout(() => {
           this.evalShowProgress()
         },2000)
-        this.populateView((this._SfReportingContainer.querySelector('.form-container') as HTMLElement).scrollTop);
+        let formContainer = (this._SfReportingContainer.querySelector('.form-container') as HTMLElement)
+        if(formContainer != null){
+          this.populateView(formContainer.scrollTop);
+        }
       })
     }
 
     let removeButtons = (this._SfReportingContainer as HTMLDivElement).querySelectorAll('.remove-child-button') as NodeListOf<HTMLButtonElement>
     for(let removeButton of removeButtons){
-      removeButton.addEventListener('click', (ev: any)=>{
+      removeButton.addEventListener('click', async (ev: any)=>{
+        await this.showLoader();
         let target = ev.target;
         console.log(target)
         let addId = target.id.split("-")[0]
@@ -1170,7 +1583,10 @@ export class SfIReporting extends LitElement {
         this.evalTimeout = setTimeout(() => {
           this.evalShowProgress()
         },2000)
-        this.populateView((this._SfReportingContainer.querySelector('.form-container') as HTMLElement).scrollTop);
+        let formContainer = (this._SfReportingContainer.querySelector('.form-container') as HTMLElement)
+        if(formContainer != null){
+          this.populateView(formContainer.scrollTop);
+        }
       })
     }
 
@@ -1287,6 +1703,7 @@ export class SfIReporting extends LitElement {
             }
           }
         }
+        this.checkDependencies(target.id)
         if(this.evalTimeout != null){
           clearTimeout(this.evalTimeout);
         }
@@ -1353,31 +1770,42 @@ export class SfIReporting extends LitElement {
           }
         }
         
-        for(let element of this.dataModel){
-          if(element.type == "sf-i-bricks" && element.dependencies.indexOf(target.id) >= 0){
-            let dependantBricks = (this._SfReportingContainer as HTMLDivElement).querySelector('#' + element.id) as SfIBricks
-            let selectedDependedValues = []
-            for(let dependency of element.dependencies){
-              let dependedBricks = (this._SfReportingContainer as HTMLDivElement).querySelector('#' + dependency) as SfIBricks
-              selectedDependedValues.push(dependedBricks.selectedValueTexts()[0])
+        this.checkDependencies(target.id)
+
+        if(this.evalTimeout != null){
+          clearTimeout(this.evalTimeout);
+        }
+        this.evalTimeout = setTimeout(() => {
+          this.evalShowProgress()
+        },2000)
+      })
+    }
+
+    let uploaders = (this._SfReportingContainer as HTMLDivElement).querySelectorAll('.reporting-sf-i-uploader') as NodeListOf<SfIUploader>
+    for(let uploader of uploaders){
+      uploader.addEventListener('uploadValid', async (ev: any)=>{
+        
+        let target = ev.target as SfIUploader;
+        let genId = target.id.slice(0, target.id.lastIndexOf('-'));
+        console.log('bricks value changed', target.id)
+        for(let [i,element] of this.dataModel.entries()){
+          if(!isAddButtonObject(element)){
+            if(element.id == target.id){
+              this.dataModel[i].value = target.selectedValues()
             }
-            let values = this.getBricksValues(element, selectedDependedValues)
-            console.log('bricks selecteddependantvalues', selectedDependedValues, element.value.length, values[1], element.id);
-            dependantBricks.namesjson = JSON.stringify(values[0]) 
-            dependantBricks.idsjson = JSON.stringify(values[1])
-            if(element.value != '' && element.value.length > 0){
-              // let ids = []
-              // for(let val of element.value){
-              //   ids.push(val.split(';')[1])
-              // }
-              dependantBricks.prepopulateValJson = JSON.stringify(element.value)
-            }else{
-              dependantBricks.prepopulateValJson = JSON.stringify([])
+          }else{
+            if(element.schema.indexOf(genId) >= 0){
+              for(let [j,childElementArr] of element.children.entries()){
+                for(let [k, childElement] of childElementArr.entries()){
+                  if(childElement.id == target.id){
+                    this.dataModel[i].children[j][k].value = target.selectedValues()
+                  }
+                }
+              }
             }
-            dependantBricks.loadMode()
-            await Util.delay(500)
           }
         }
+        
         if(this.evalTimeout != null){
           clearTimeout(this.evalTimeout);
         }
@@ -1388,10 +1816,92 @@ export class SfIReporting extends LitElement {
     }
   }
 
+  checkDependencies = async (id: string) => {
+    for(let element of this.dataModel){
+      if(element.dependencies.indexOf(id) >= 0){
+        let dependantElement = (this._SfReportingContainer as HTMLDivElement).querySelector('#' + element.id)
+        console.log('dependant element', dependantElement?.tagName, dependantElement?.id, id);
+        if(dependantElement?.tagName.toLowerCase() == "sf-i-bricks"){
+          let dependantBricks = dependantElement as SfIBricks
+          let selectedDependedValues = []
+          for(let dependency of element.dependencies){
+            let dependedBricks = (this._SfReportingContainer as HTMLDivElement).querySelector('#' + dependency) as SfIBricks
+            selectedDependedValues.push(dependedBricks.selectedValueTexts()[0])
+          }
+          let values = this.getBricksValues(element, selectedDependedValues)
+          console.log('bricks selecteddependantvalues', selectedDependedValues, element.value.length, values[1], element.id);
+          dependantBricks.namesjson = JSON.stringify(values[0]) 
+          dependantBricks.idsjson = JSON.stringify(values[1])
+          if(element.value != '' && element.value.length > 0){
+            dependantBricks.prepopulateValJson = JSON.stringify(element.value)
+          }else{
+            dependantBricks.prepopulateValJson = JSON.stringify([])
+          }
+          dependantBricks.loadMode()
+          await Util.delay(500)
+        }else if(dependantElement?.tagName.toLowerCase() == "sf-i-form"){
+          let dependantForm = dependantElement as SfIForm
+          if(dependantForm.mode == "select"){
+            this.updateShortlistedSearchPhrases(dependantForm.id);
+            dependantForm.loadMode()
+          }
+        }else if(dependantElement?.tagName.toLowerCase() == "sf-i-form-select"){
+          let dependantForm = dependantElement as SfIForm
+          if(dependantForm.mode == "select"){
+            this.updateShortlistedSearchPhrases(dependantForm.id);
+            dependantForm.loadMode()
+          }
+        }
+      }
+    }
+  }
+
+  updateShortlistedSearchPhrases = (id: string) => {
+    for(let dataObj of this.dataModel){
+      if (dataObj.id == id){
+        let element = dataObj as DataObject
+        let elementForm = (this._SfReportingContainer as HTMLDivElement).querySelector('#' + element.id) as SfIForm;
+        let tempSearchPhrases = []
+        for(let dependency of element.dependencies){
+          console.log('checking dependency', dependency)
+          let dependencyElement = (this._SfReportingContainer as HTMLDivElement).querySelector('#' + dependency)
+          if(dependencyElement?.tagName.toLowerCase() == "sf-i-bricks"){
+            console.log('dependencyelement', dependencyElement.id, (dependencyElement as SfIBricks).selectedTexts());
+            for(let selectedText of (dependencyElement as SfIBricks).selectedTexts()){
+              if(selectedText == ''){
+                continue;
+              }
+              tempSearchPhrases.push(selectedText.replace(/ *\([^)]*\) */g, ""))
+            }
+          }else if(dependencyElement?.tagName.toLowerCase() == "sf-i-form"){
+            console.log('dependencyelement', dependencyElement.id, (dependencyElement as SfIForm).selectedTexts());
+            for(let selectedText of (dependencyElement as SfIForm).selectedTexts()){
+              if(selectedText == ''){
+                continue;
+              }
+              tempSearchPhrases.push(selectedText.replace(/ *\([^)]*\) */g, ""))
+            }
+          }else if(dependencyElement?.tagName.toLowerCase() == "sf-i-form-select"){
+            console.log('dependencyelement', dependencyElement.id, (dependencyElement as SfIForm).selectedTexts());
+            for(let selectedText of (dependencyElement as SfIForm).selectedTexts()){
+              if(selectedText == ''){
+                continue;
+              }
+              tempSearchPhrases.push(selectedText.replace(/ *\([^)]*\) */g, ""))
+            }
+          }
+        }
+        elementForm.searchPhrase = tempSearchPhrases.join('&')
+        console.log('shortlistedSearchPhrases', tempSearchPhrases, elementForm.searchPhrase);
+      }
+    }
+  }
+
   initSectionListeners = () => {
     let sectionHeads = (this._SfReportingContainer.querySelectorAll('.section-head')) as NodeListOf<HTMLDivElement>
     for(let sectionHead of sectionHeads){
-      sectionHead.addEventListener('click', () => {
+      sectionHead.addEventListener('click', async () => {
+        await this.showLoader();
         console.log('scroll position',(this._SfReportingContainer.querySelector('.form-container') as HTMLElement).scrollTop)
         for(let dataObj of this.dataModel){
           if(dataObj.id == sectionHead.id){
@@ -1405,7 +1915,10 @@ export class SfIReporting extends LitElement {
           this.evalShowProgress()
         },2000)
         
-        this.populateView((this._SfReportingContainer.querySelector('.form-container') as HTMLElement).scrollTop)
+        let formContainer = (this._SfReportingContainer.querySelector('.form-container') as HTMLElement)
+        if(formContainer != null){
+          this.populateView(formContainer.scrollTop);
+        }
       })
     }
   }
@@ -1427,50 +1940,85 @@ export class SfIReporting extends LitElement {
   renderElement = (dataObj: DataObject) => {
     let elementHtml = ""
     console.log('rendering obj',dataObj.type)
+    let elementLabel = dataObj.label ?? ""
+    if(this.editdisable == "true"){
+      elementLabel = elementLabel.replace(/ */g,'')
+    }
     if(dataObj.type == "section"){
+      console.log('renderingSection', dataObj)
       elementHtml += `<div class="d-flex flex-col" part="section-container"><div id="${dataObj.id}" class="section-head d-flex align-center justify-between" part="${dataObj.collapse == "true" ? 'section-head-collapsed' : 'section-head-expanded'}"><h3 part="${dataObj.collapse == "true" ? 'section-title-collapsed' : 'section-title-expanded'}">${dataObj.name}</h3><div id="${dataObj.id}-success" part="section-success-icon"><div class="material-icons">${dataObj.collapse == "true" ? "keyboard_arrow_down" : "keyboard_arrow_up"}</div></div></div><div class="section-body d-flex ${this.formviewclass} ${dataObj.collapse == "true" ? 'hide' : ''}" part="section-body"> `
     }else if(dataObj.type == "subsection"){
       elementHtml += `<div class="d-flex align-center" part="subsection-container"><h4 part="subsection">${dataObj.name}</h4></div>`
     }else if(dataObj.type == "textarea"){
       elementHtml += `<div part="textarea-container" class="d-flex flex-col flex-grow">
-                        <label id="${dataObj.id}-label" part="textarea-label">${dataObj.label}</label>
+                        <label id="${dataObj.id}-label" part="textarea-label">${elementLabel}</label>
                         <div part="td-body-2"><sf-i-elastic-text text="${dataObj.hint}" minLength="50"></sf-i-elastic-text></div>
-                        <textarea rows="${dataObj.size == "small" ? "4" : "10"}" id="${dataObj.id}" type="text" class=" reporting-textarea" part="input-textarea" ${this.mode == "view" || this.flow == "details" ? "readonly" : ""}>${dataObj.value}</textarea>
+                        <${this.editdisable == "true" ? 'div' : 'textarea'} rows="${dataObj.size == "small" ? "4" : ( dataObj.size == "smallest" ? "1" : "10")}" id="${dataObj.id}" type="text" class=" reporting-textarea" part="input-textarea" ${this.mode == "view" || this.flow == "details" ? "readonly" : ""}>${dataObj.value}</${this.editdisable == "true" ? 'div' : 'textarea'}>
                       </div>`
     }else if(dataObj.type == "yesno+textarea"){
       elementHtml += `<div part="textarea-container"  class="d-flex flex-col flex-grow">
-                        <label id="${dataObj.id}-label" part="textarea-label">${dataObj.label}</label>
+                        <label id="${dataObj.id}-label" part="textarea-label">${elementLabel}</label>
                         <div part="td-body-2"><sf-i-elastic-text text="${dataObj.hint}" minLength="50"></sf-i-elastic-text></div>
                         <div class="d-flex">`
       for(let option of dataObj.options){
         elementHtml += `<input type="radio" id="${dataObj.id}-${option.toLowerCase().replace(/ /g,'_')}" name="${dataObj.id}" class="reporting-radio" part="input-radio" value="${option}" ${this.mode == "view" || this.flow == "details" ? "disabled" : ""} ${dataObj.value[0] == option ? "checked" : ""}><label id="${dataObj.id}-${option.toLowerCase().replace(/ /g,'_')}-label" part="radio-label">${option}</label>`
       }                  
       elementHtml += `</div>
-                        <textarea rows="${dataObj.size == "small" ? "4" : "10"}" id="${dataObj.id}-textarea" type="text" class="reporting-textarea" part="input-textarea" ${this.mode == "view" || this.flow == "details" ? "readonly" : ""}>${dataObj.value[1] ?? ""}</textarea>
+                        <${this.editdisable == "true" ? 'div' : 'textarea'} rows="${dataObj.size == "small" ? "4" : "10"}" id="${dataObj.id}-textarea" type="text" class="reporting-textarea" part="input-textarea" ${this.mode == "view" || this.flow == "details" ? "readonly" : ""}>${dataObj.value[1] ?? ""}</${this.editdisable == "true" ? 'div' : 'textarea'}>
                       </div>`
     }else if(dataObj.type == "date"){
       elementHtml += `<div part="date-container" class="d-flex flex-col flex-grow">
-                        <label id="${dataObj.id}-label" part="date-label">${dataObj.label}</label>
+                        <label id="${dataObj.id}-label" part="date-label">${elementLabel}</label>
                         <div part="td-body-2"><sf-i-elastic-text text="${dataObj.hint}" minLength="50"></sf-i-elastic-text></div>
                         <input class="reporting-date" id="${dataObj.id}" part="input-date" type="date" ${this.mode == "view" || this.flow == "details" ? "readonly" : ""} value="${dataObj.value}"/>
                       </div>`
     }else if(dataObj.type == "sf-i-form"){
       elementHtml += `<div part="date-container" class="d-flex flex-col flex-grow">
-                        <label id="${dataObj.id}-label" part="date-label">${dataObj.label}</label>
+                        <label id="${dataObj.id}-label" part="date-label">${elementLabel}</label>
                         <div part="td-body-2"><sf-i-elastic-text text="${dataObj.hint}" minLength="50"></sf-i-elastic-text></div>
-                        <sf-i-form exportparts="td-action:form-td-action, td-body" id="${dataObj.id}" class="reporting-sf-i-form" part="input-sf-i-form" name="${dataObj.name}" label="" apiId="${dataObj.apiid}" mode="${dataObj.mode}" searchPhrase="${this.projectname + "&" + dataObj.searchstring}" selectProjection="${dataObj.selectprojection}" ignoreProjections="${dataObj.ignoredprojections}" ${parseInt(dataObj.maxselect) == 0 ? "" : `maxselect="${dataObj.maxselect}"`} ${dataObj.mandatory != null ? "mandatory=\"\"" : ""}></sf-i-form>
+                        <sf-i-form exportparts="td-action:form-td-action, td-body" id="${dataObj.id}" class="reporting-sf-i-form" part="input-sf-i-form" name="${dataObj.name}" label="" apiId="${dataObj.apiid}" mode="${dataObj.mode}" searchPhrase="${(dataObj.mode == "multiselect-dropdown" ? (this.projectname + "&") : "") + dataObj.searchstring}" selectProjection="${dataObj.selectprojection}" ignoreProjections="${dataObj.ignoredprojections}" ${parseInt(dataObj.maxselect) == 0 ? "" : `maxselect="${dataObj.maxselect}"`} ${dataObj.mandatory != null ? "mandatory=\"\"" : ""}></sf-i-form>
                       </div>`
-      // elementHtml += `<div part="date-container" class="d-flex flex-col flex-grow">
-      //                   <label id="${dataObj.id}-label" part="date-label">${dataObj.label}</label>
-      //                   <div part="td-body"><sf-i-elastic-text text="${dataObj.hint}" minLength="50"></sf-i-elastic-text></div>
-      //                   <sf-i-form id="${dataObj.id}" class="reporting-sf-i-form" name="${dataObj.name}" label="" apiId="${dataObj.apiid}" mode="${dataObj.mode}" searchPhrase="${this.projectname + "&" + dataObj.searchstring}" selectProjection="${dataObj.selectprojection}" ignoreProjections="${dataObj.ignoredprojections}" ${parseInt(dataObj.maxselect) == 0 ? "" : `maxselect="${dataObj.maxselect}"`} ${dataObj.mandatory != null ? "mandatory=\"\"" : ""}></sf-i-form>
-      //                 </div>`
-                      //${dataObj.value != "" ? (dataObj.mode == "select" ? "" : ("selectedSearchId=\"" + JSON.stringify(dataObj.value).replace(/"/g,"&quot;") + "\"")) : ""} 
+    }else if(dataObj.type == "sf-i-form-select"){
+      let valToBeShown = ""
+      if(dataObj.savenameseparate == "yes"){
+        if(dataObj.value[0] != null && dataObj.value[0].split(';').length > 0){
+          valToBeShown = dataObj.value[0].split(';')[0]
+        }
+      }else if(dataObj.value.name != null){
+        valToBeShown = dataObj.value.name
+      }else{
+        valToBeShown = dataObj.value.reference
+      }
+      elementHtml += `<div part="date-container" class="d-flex flex-col flex-grow">
+                        <label id="${dataObj.id}-label" part="date-label">${elementLabel}</label>
+                        <div part="td-body-2"><sf-i-elastic-text text="${dataObj.hint}" minLength="50"></sf-i-elastic-text></div>
+                        <div class="d-flex flex-col align-start" part="form-select-container">
+                          <div class"d-flex align-center" part="form-selected-value">
+                            ${(Object.keys(dataObj.value) ?? []).length > 0 ? (`
+                              <div class="selected-option d-flex justtify-center align-center" part="selected-option" id="selected-option-${dataObj.id}">
+                                ${this.mode == "view" || this.flow == "details" ? '' : '<span class="material-icons selected-option-icon mr-10">cancel</span>'}
+                                <label class="selected-option-label" part="selected-option-label">${valToBeShown}</label>
+                              </div>`): (`
+                                ${(this.mode == "view" || this.flow == "details" ) ? '' :
+                                  `<button id="button-edit-form-${dataObj.id}" part="button-icon" class="material-icons button-edit-form button-icon-click">edit</button>`
+                                }
+                                `)
+                              }
+                          </div>
+                        </div>
+                      </div>`
     }else if(dataObj.type == "sf-i-bricks"){
       elementHtml += `<div part="date-container" class="d-flex flex-col flex-grow">
-                        <label id="${dataObj.id}-label" part="date-label">${dataObj.label}</label>
+                        <label id="${dataObj.id}-label" part="date-label">${elementLabel}</label>
                         <div part="td-body-2"><sf-i-elastic-text text="${dataObj.hint}" minLength="50"></sf-i-elastic-text></div>
-                        <sf-i-bricks exportparts="input-select-single, selected-container, selected-option, input-select-multi-option, select-option-label, selected-option-label" id="${dataObj.id}" mode="${dataObj.mode}" class="reporting-sf-i-bricks" part="input-sf-i-bricks" name="${dataObj.name}" ${parseInt(dataObj.maxselect) == 0 ? "" : `maxselect="${dataObj.maxselect}"`} ${dataObj.mandatory != null ? "mandatory=\"\"" : ""}></sf-i-bricks>
+                        <sf-i-bricks exportparts="input-select-single, selected-container, selected-option, input-select-multi-option, select-option-label, selected-option-label" id="${dataObj.id}" mode="${dataObj.mode}" 
+                        ${this.mode == "view" || this.flow == 'details' ? 'flow="view"' : ''} class="reporting-sf-i-bricks" part="input-sf-i-bricks" name="${dataObj.name}" ${parseInt(dataObj.maxselect) == 0 ? "" : `maxselect="${dataObj.maxselect}"`} ${dataObj.mandatory != null ? "mandatory=\"\"" : ""}></sf-i-bricks>
+                      </div>`
+    }else if(dataObj.type == "sf-i-uploader"){
+      elementHtml += `<div part="uploader-container" class="d-flex flex-col flex-grow">
+                        <label id="${dataObj.id}-label" part="date-label">${elementLabel}</label>
+                        <div part="td-body-2"><sf-i-elastic-text text="${dataObj.hint}" minLength="50"></sf-i-elastic-text></div>
+                        <sf-i-uploader exportparts="detail-container:uploader-detail-container, errmsg:uploader-errmsg, successmsg:uploader-successmsg, sf-upload-message:uploader-sf-upload-message, sf-upload-submessage: uploader-sf-upload-submessage, doctype-verify-badge: uploader-doctype-verify-badge, details-controls-container: uploader-details-controls-container, button-icon: uploader-button-icon, pdf-controls-container: uploader-pdf-controls-container, pdf-pages: uploader-pdf-pages, pdf-page-num: uploader-pdf-page-num, pdf-page-count: uploader-pdf-page-count, pdf-canvas: uploader-pdf-canvas, image-container: uploader-image-container, image-component: uploader-image-component, pdf-thumbnail-container: uploader-pdf-thumbnail-container, pdf-canvas-thumbnail: uploader-pdf-canvas-thumbnail, sf-uploader-download-message: uploader-sf-uploader-download-message, input: uploader-input, upload-buttons-container: uploader-upload-buttons-container, doctype-badge: uploader-doctype-badge, upload-status: uploader-upload-status, ext-badge:uploader-ext-badge, extracted-meta: uploader-extracted-meta, extracted-text-chip: uploader-extracted-text-chip, extracted-text-chip-parsed: uploader-extracted-text-chip-parsed, extracted-text-chip-failed: uploader-extracted-text-chip-failed, matches-title: uploader-matches-title, matches:uploader-matches, extracted-title: uploader-extracted-title, extracted-text: uploader-extracted-text, disclaimer-message-container: uploader-disclaimer-message-container, message-container: uploader-message-container, button: uploader-button" class="reporting-sf-i-uploader" part="input-sf-i-uploader" id="${dataObj.id}" max="${dataObj.maxselect}" apiid="${dataObj.apiid}" allowedextensions="${dataObj.allowedextensions}" extract="${dataObj.extract}" projectid="${this.projectid}" maxsize="${dataObj.maxsize}" allowdownload="${dataObj.allowdownload}"></sf-i-uploader>
                       </div>`
     }
 
@@ -1501,7 +2049,7 @@ export class SfIReporting extends LitElement {
 
   populateList = () => {
     let html = ''
-    html += `<div class="d-flex justify-between p-7">`
+    html += `<div class="d-flex justify-between align-start p-7">`
       html += `<div part="calendar-date-container" class="d-flex flex-col align-start justify-center">${this.lastCalendarGenerated == "" ? "" : ("<div class=\"d-flex align-center justify-center\" part=\"last-calendar-date\" id=\"last-calendar-date\"><span class=\"material-symbols-outlined\">update</span>&nbsp;&nbsp;Calendar synced on \n" + (new Date(parseInt(this.lastCalendarGenerated)).toLocaleDateString('en-IN') + " - " + new Date(parseInt(this.lastCalendarGenerated)).toLocaleTimeString('en-IN'))) + '</div>'}${this.nextCalendarScheduled == "" ? "" : ("<div class=\"d-flex align-center justify-center\" part=\"next-calendar-date\" id=\"next-calendar-date\"><span class=\"material-symbols-outlined\">hourglass</span>&nbsp;&nbsp;Next update on \n" + (new Date(parseInt(this.nextCalendarScheduled)).toLocaleDateString('en-IN') + " - " + new Date(parseInt(this.nextCalendarScheduled)).toLocaleTimeString('en-IN'))) + '</div>'}</div>`
       html += `<div class="d-flex justify-end flex-grow">`
         // html += `<button id="button-publish" part="button-icon" class="material-icons hide">campaign</button>`
@@ -1513,10 +2061,16 @@ export class SfIReporting extends LitElement {
       html += '<tr class="tablerow">'
       let bgClass = i % 2 == 0 ? 'td-light' : 'td-dark'
       html += `<td part="td-body" class="td-body"><span class="mrl-5 material-icons" part="span-submit-${item.published ? 'published' : 'unpublished'}" >${item.published ? 'radio_button_checked' : 'edit_note'}</span></td>`
+      html += `<td part="td-action" class="td-action"><button part="button-icon" class="material-symbols-outlined button-reopen" id="button-reopen-${i}">reopen_window</button></td>`
       html += `<td part="td-action" class="td-action"><button part="button-icon" class="material-icons button-details" id="button-details-${i}">open_in_new</button></td>`
       for(let property of Object.keys(item)){
         if(this.getIgnoreProjections().indexOf(property) < 0){
-          html +=`<td part="td-body" class="td-body ${bgClass}"><div class="d-flex flex-col align-start flex-wrap"><div part="td-head" class="pl-0-imp w-100 d-flex align-center">${property}</div><div><sf-i-elastic-text text="${item[property]}" minLength="20"></sf-i-elastic-text></div></div></td>`
+          let displayValue = item[property]
+          console.log('displaying property', property)
+          if(property == "lastModifiedTime"){
+            displayValue = Util.timeSince(parseInt(item[property]));
+          }
+          html +=`<td part="td-body" class="td-body ${bgClass}"><div class="d-flex flex-col align-start flex-wrap"><div part="td-head" class="pl-0-imp w-100 d-flex align-center">${property}</div><div><sf-i-elastic-text text="${displayValue}" minLength="20"></sf-i-elastic-text></div></div></td>`
         }
       }
       html += '</tr>'
@@ -1526,58 +2080,60 @@ export class SfIReporting extends LitElement {
     (this._SfReportingContainer as HTMLDivElement).innerHTML = html;
     (this._SfReportingContainer as HTMLDivElement).style.display = 'block';
 
+    let reopenButtons = (this._SfReportingContainer as HTMLDivElement).querySelectorAll('.button-reopen') as NodeListOf<HTMLButtonElement>
+    for(let reopenButton of reopenButtons){
+      reopenButton.addEventListener('click', async (ev: any) => {
+        let target = ev.target
+        let index = target.id.split('-')[2]
+        this.reopenedItem = this.list[index]
+        let oldObj = this.reopenedItem
+        this.showLoader();
+        console.log('item selected', this.reopenedItem);
+        await this.fetchSchema();
+        this.published = this.list[index].published ?? false
+        let copyVals: any = {}
+        for(let obj of this.dataModel){
+          if(obj.copytoreopen){
+            console.log('copyVals copying', obj.id, obj.type, oldObj[obj.id]);
+            if(obj.type == "sf-i-bricks" && obj.savenameseparate == "yes"){
+              copyVals[obj.id + 'id'] = oldObj[obj.id + 'id'];  
+              copyVals[obj.id + 'name'] = oldObj[obj.id + 'name'];  
+            }else{
+              copyVals[obj.id] = oldObj[obj.id];
+            }
+            console.log('copyVals copied',copyVals)
+          }
+        }
+        console.log('copyVals', JSON.parse(JSON.stringify(copyVals)))
+        this.prepopulateValJson = JSON.stringify(copyVals)
+        this.flow = "edit"
+        this.loadMode();
+      })
+    }
     let detailsButtons = (this._SfReportingContainer as HTMLDivElement).querySelectorAll('.button-details') as NodeListOf<HTMLButtonElement>
     for(let detailsButton of detailsButtons){
       detailsButton.addEventListener('click',(ev: any) => {
         let target = ev.target
         let index = target.id.split('-')[2]
         this.selectedItem = this.list[index]
+        this.showLoader();
         console.log('item selected', this.selectedItem);
-        this.flow = "details"
+        setTimeout(()=>{
+          this.flow = "details"
         this.loadMode();
+        },3000)
+        
       })
     }
-    // let selectInputs = (this._SfReportingContainer as HTMLDivElement).querySelectorAll('.input-select') as NodeListOf<HTMLInputElement>
-    // for(let selectInput of selectInputs){
-    //   selectInput.addEventListener('change',(ev: any) => {
-    //     let target = ev.target
-    //     let index = target.id.split('-')[2]
-    //     if(target.checked){
-    //       if(this.selectedItemIds.indexOf(this.list[index].id) < 0){
-    //         this.selectedItemIds.push(this.list[index].id)
-    //       }
-    //     }else{
-    //       if(this.selectedItemIds.indexOf(this.list[index].id) >= 0){
-    //         this.selectedItemIds.splice(this.selectedItemIds.indexOf(this.list[index].id), 1)
-    //       }
-    //     }
-
-    //     if(this.selectedItemIds.length > 0){
-    //       ((this._SfReportingContainer as HTMLDivElement).querySelector('#button-publish') as HTMLButtonElement).style.display = 'flex'
-    //     }else{
-    //       ((this._SfReportingContainer as HTMLDivElement).querySelector('#button-publish') as HTMLButtonElement).style.display = 'none'
-    //     }
-    //   })
-    // }
-    // let inputSelectAll = (this._SfReportingContainer as HTMLDivElement).querySelector('#input-select-all') as HTMLInputElement
-    // inputSelectAll.addEventListener('click',(ev: any)=>{
-    //   let target = ev.target;
-    //   let selectInputs = (this._SfReportingContainer as HTMLDivElement).querySelectorAll('.input-select') as NodeListOf<HTMLInputElement>
-    //   for(let selectInput of selectInputs){
-    //     selectInput.checked = target.checked
-    //     var event = document.createEvent("HTMLEvents");
-    //     event.initEvent('change', false, true);
-    //     selectInput.dispatchEvent(event);
-    //   }
-    // })
-    // inputSelectAll.style.display = this.list.length > 0 ? 'flex' : 'none';
     
     let buttonNew = ((this._SfReportingContainer as HTMLDivElement).querySelector('#button-new') as HTMLButtonElement)
     buttonNew.addEventListener('click',()=>{
+      this.showLoader();
       this.newClick()
     })
     let customEvent = new CustomEvent('valueChanged');
     this.dispatchEvent(customEvent);
+    this.hideLoader();
   }
 
   loadMode = async () => {
@@ -1720,8 +2276,10 @@ export class SfIReporting extends LitElement {
     if(xhr.status == 200) {
       const jsonRespose = JSON.parse(xhr.responseText);
       this.configjson = JSON.stringify(jsonRespose.schema);
-      this.populateDataModel();
-      this.populateView();
+      // if(this.flow == "new"){
+        this.populateDataModel();
+        this.populateView();
+      // }
     } else {
       const jsonRespose = JSON.parse(xhr.responseText);
       this.setError(jsonRespose.error);
@@ -1775,7 +2333,10 @@ export class SfIReporting extends LitElement {
   submitNew = async () => {
     console.log('adding', this.selectedValues());
     let url = "https://"+this.apiId+"/add";
-    let body = {projectid: this.projectid, object: this.selectedValues(), schema: this.getConfigJson(), published: this.published}
+    
+    let body:any = {projectid: this.projectid, object: this.selectedValues(), schema: this.getConfigJson(), published: this.published}
+    
+    // console.log('adding', body, url);
     const authorization = btoa(Util.readCookie('email') + ":" + Util.readCookie('accessToken'));
     const xhr : any = (await this.prepareXhr(body, url, this._SfLoader, authorization)) as any;
     this._SfLoader.innerHTML = '';
@@ -1796,6 +2357,11 @@ export class SfIReporting extends LitElement {
   submitEdit = async () => {
     let url = "https://"+this.apiId+"/update";
     let body = {projectid: this.projectid, noticeid: this.selectedItem.id, object: this.selectedValues(), schema: this.getConfigJson(), published: this.published}
+    if(Object.keys(this.reopenedItem).length > 0){
+      url = "https://"+this.apiId+"/reopen"
+      body = {projectid: this.projectid, object: this.selectedValues(), schema: this.getConfigJson(), noticeid: this.reopenedItem.id, published: this.published}
+    }
+    console.log('updating', body, url)
     const authorization = btoa(Util.readCookie('email') + ":" + Util.readCookie('accessToken'));
     const xhr : any = (await this.prepareXhr(body, url, this._SfLoader, authorization)) as any;
     this._SfLoader.innerHTML = '';
@@ -1877,9 +2443,10 @@ export class SfIReporting extends LitElement {
       this.decryptFileName = (this._SfDecryptFileInput as HTMLInputElement).value;
       this.evalDecrypt()
     });
-    (this._SfDecryptButton as HTMLButtonElement).addEventListener('click', () => {
+    let decryptButton = this._SfDecryptContainer.querySelector("#button-decrypt") as HTMLButtonElement
+    decryptButton?.addEventListener('click', () => {
       console.log('decrypt clicked', this.decryptProjectId, this.decryptFileName);
-      // this.submitDecrypt()
+      this.submitDecrypt()
     })
   }
 
@@ -1939,6 +2506,23 @@ export class SfIReporting extends LitElement {
 
   }
 
+  showLoader = async () => {
+    if(this._SfIReportingCCopy != null){
+      let loaderContainer = this._SfIReportingCCopy as HTMLDivElement
+      loaderContainer.style.backgroundColor = "#efefef"
+      loaderContainer.style.display = 'flex'
+      console.log('showing loader', loaderContainer.style.display)
+    }
+  }
+
+  hideLoader = async () => {
+    if(this._SfIReportingCCopy != null){
+      let loaderContainer = this._SfIReportingCCopy as HTMLDivElement
+      loaderContainer.style.display = 'none'
+      console.log('hiding loader', loaderContainer.style.display)
+    }
+  }
+
   protected override firstUpdated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
 
     this.loadMode();
@@ -1970,7 +2554,7 @@ export class SfIReporting extends LitElement {
                   <label>Decrypt Utility</label>
                   <div class="d-flex align-end">
                     <input part="input" id="input-decrypt" type="text" placeholder="file key" />.json&nbsp;&nbsp;
-                    <button id="button-decrypt" part="button-icon-small" class="material-icons button-icon">download</button>
+                    <button id="button-decrypt">download</button>
                   </div>
                   <div class="loader-element"></div>
                 </div>
@@ -2003,6 +2587,9 @@ export class SfIReporting extends LitElement {
       return html`
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+      <div part="reporting-container-outer-copy" class="SfIReportingCCopy align-center d-flex flex-col justify-center hide">
+        <div class="lds-dual-ring"></div>
+      </div>
       <div part="reporting-container-outer" class="SfIReportingC d-flex flex-col align-center">
         <div id="reporting-container" part="reporting-container" class="w-100-m-0 hide"></div>  
         <div class="loader-element"></div>
@@ -2027,6 +2614,9 @@ export class SfIReporting extends LitElement {
       return html`
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+      <div part="reporting-container-outer-copy" class="SfIReportingCCopy align-center d-flex flex-col justify-center hide">
+        <div class="lds-dual-ring"></div>
+      </div>
       <div part="reporting-container-outer" class="SfIReportingC d-flex flex-col align-center">
         <div id="reporting-container" part="reporting-container" class="w-100-m-0 hide"></div>
         <div class="loader-element"></div>
@@ -2051,6 +2641,9 @@ export class SfIReporting extends LitElement {
       return html`
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+      <div part="reporting-container-outer-copy" class="SfIReportingCCopy align-center d-flex flex-col justify-center hide">
+        <div class="lds-dual-ring"></div>
+      </div>
       <div part="reporting-container-outer" class="SfIReportingC d-flex flex-col align-center">
         <div id="reporting-container" part="reporting-container" class="w-100-m-0 hide"></div>
         <div class="loader-element"></div>
@@ -2075,6 +2668,9 @@ export class SfIReporting extends LitElement {
       return html`
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0..1,0" />
+      <div part="reporting-container-outer-copy" class="SfIReportingCCopy align-center d-flex flex-col justify-center hide">
+        <div class="lds-dual-ring"></div>
+      </div>
       <div part="reporting-container-outer" class="SfIReportingC d-flex flex-col align-center">
         <div class="d-flex justify-between w-100-m-0">
           <div id="reporting-container" part="reporting-container" class="w-100-m-0 hide"></div>

@@ -71,37 +71,108 @@ async function callApiPresignedDelete(url: string) {
   
     })
   
-  }
-  
-  async function callApiPresignedGet(url: string) {
-  
-    return new Promise((resolve: any) => {
-  
-        var xhr = new XMLHttpRequest();
-        xhr.addEventListener("readystatechange", () => {
-            if(xhr != null) {
-                if(xhr.readyState === 4) {
-                    resolve(xhr);
-                }
+}
+
+async function callApiPresignedGet(url: string) {
+
+return new Promise((resolve: any) => {
+
+    var xhr = new XMLHttpRequest();
+    xhr.addEventListener("readystatechange", () => {
+        if(xhr != null) {
+            if(xhr.readyState === 4) {
+                resolve(xhr);
             }
-        });
-        xhr.open("GET", url);
-        xhr.timeout = 1800000;
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); 
-        xhr.send(null);
-  
-        return xhr;
-  
-    })
-  
-  }
-  const delay = (delayInms: number) => {
-    return new Promise(resolve => setTimeout(resolve, delayInms));
-  };
+        }
+    });
+    xhr.open("GET", url);
+    xhr.timeout = 1800000;
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); 
+    xhr.send(null);
+
+    return xhr;
+
+})
+
+}
+const delay = (delayInms: number) => {
+return new Promise(resolve => setTimeout(resolve, delayInms));
+};
+
+const timeSince = (date: number) => {
+
+    var seconds = Math.floor((new Date().getTime() - date) / 1000);
+
+    if(seconds > 0) {
+
+      var interval = seconds / 31536000;
+    
+      if (interval > 1) {
+        return Math.floor(interval) + " years ago";
+      }
+      interval = seconds / 2592000;
+      if (interval > 1) {
+        return Math.floor(interval) + " months ago";
+      }
+      interval = seconds / 86400;
+      if (interval > 1) {
+        return Math.floor(interval) + " days ago";
+      }
+      interval = seconds / 3600;
+      if (interval > 1) {
+        return Math.floor(interval) + " hours ago";
+      }
+      interval = seconds / 60;
+      if (interval > 1) {
+        return Math.floor(interval) + " minutes ago";
+      }
+      return Math.floor(seconds) + " seconds ago";
+
+    } else {
+
+      var interval = Math.abs(seconds) / 31536000;
+
+
+      console.log('timesince', seconds);
+      
+      
+      console.log('interval year', interval);
+      if (interval > 1) {
+        return Math.floor(interval) + " years later";
+      }
+      interval = Math.abs(seconds) / 2592000;
+      console.log('interval months', interval);
+      if (interval > 1) {
+        return Math.floor(interval) + " months later";
+      }
+
+      interval = Math.abs(seconds) / 86400;
+      console.log('interval days', interval);
+      if (interval > 1) {
+        return Math.floor(interval) + " days later";
+      }
+      
+      interval = Math.abs(seconds) / 3600;
+      console.log('interval hours', interval);
+      if (interval > 1) {
+        return Math.floor(interval) + " hours later";
+      }
+      interval = Math.abs(seconds) / 60;
+      if (interval > 1) {
+        return Math.floor(interval) + " minutes later";
+      }
+      return Math.floor(Math.abs(seconds)) + " seconds";
+
+    }
+}
+
+function isInteger(value: string) {
+    return /^-?\d+$/.test(value);
+}
 
 const exportFunctions = {
-   callApi, callApiPresignedDelete, callApiPresignedGet, validateName, readCookie, delay
+   callApi, callApiPresignedDelete, callApiPresignedGet, validateName, readCookie, delay, timeSince, isInteger
 };
 
 export default exportFunctions;
