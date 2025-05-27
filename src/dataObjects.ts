@@ -23,7 +23,9 @@ export interface DataObject {
     selectfields: string[]
     mandatory: any,
     copytoreopen: boolean,
-    displayinhistory: boolean
+    displayinhistory: boolean,
+    elementsjson: string,
+    customreporting: boolean
 }
 
 export function createDataObject(element: any, iter?: number): DataObject {
@@ -51,9 +53,11 @@ export function createDataObject(element: any, iter?: number): DataObject {
             maxsize: element.maxsize ?? "",
             allowdownload: element.allowdownload ?? "",
             selectfields: element.selectfields ?? [],
-            mandatory: element.mandatory,
+            mandatory: element.mandatory ?? null,
             copytoreopen: (element.copytoreopen ?? "") == "yes",
-            displayinhistory: (element.displayinhistory ?? "") == "yes"
+            displayinhistory: (element.displayinhistory ?? "") == "yes",
+            elementsjson: element.elementsjson ?? "",
+            customreporting: (element.customreporting ?? "") == "yes"
         }
     }else{
         return{
@@ -79,9 +83,11 @@ export function createDataObject(element: any, iter?: number): DataObject {
             maxsize: element.maxsize ?? "",
             allowdownload: element.allowdownload ?? "",
             selectfields: element.selectfields ?? [],
-            mandatory: element.mandatory,
+            mandatory: element.mandatory ?? null,
             copytoreopen: (element.copytoreopen ?? "") == "yes",
-            displayinhistory: (element.displayinhistory ?? "") == "yes"
+            displayinhistory: (element.displayinhistory ?? "") == "yes",
+            elementsjson: element.elementsjson ?? "",
+            customreporting: (element.customreporting ?? "") == "yes"
         }
     }
 }

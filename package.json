@@ -1,7 +1,7 @@
 {
   "name": "sf-i-reporting",
   "private": false,
-  "version": "1.0.52",
+  "version": "1.0.89",
   "description": "Superflows Reporting Component",
   "main": "sf-i-reporting.js",
   "module": "sf-i-reporting.js",
@@ -11,7 +11,7 @@
     "build:watch": "tsc --watch",
     "clean": "rimraf sf-i-reporting.{d.ts,d.ts.map,js,js.map} test/sf-i-reporting.{d.ts,d.ts.map,js,js.map} test/sf-i-reporting_test.{d.ts,d.ts.map,js,js.map}",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
-    "lint:eslint": "eslint 'src/**/*.ts'",
+    "lint:eslint": "eslint 'src/*.ts'",
     "lint:lit-analyzer": "lit-analyzer",
     "format": "prettier \"**/*.{cjs,html,js,json,md,ts}\" --ignore-path ./.eslintignore --write",
     "analyze": "cem analyze --litelement --globs \"src/**/*.ts\"",
@@ -52,10 +52,13 @@
   "repository": "superflows-dev/sf-i-reporting",
   "dependencies": {
     "fs": "^0.0.1-security",
-    "lit": "^2.2.4",
-    "sf-i-bricks": "^1.0.7",
+    "lit": "^2.8.0",
+    "sf-checklist": "^1.0.17",
+    "sf-i-bricks": "^1.0.10",
     "sf-i-elastic-text": "^1.0.17",
-    "sf-i-form": "^1.0.181",
+    "sf-i-form": "^1.0.184",
+    "sf-i-select": "^1.0.93",
+    "sf-i-uploader": "^1.0.116",
     "sinon": "^15.0.1"
   },
   "devDependencies": {
@@ -72,7 +75,7 @@
     "@web/test-runner": "^0.13.27",
     "@web/test-runner-playwright": "^0.8.8",
     "@webcomponents/webcomponentsjs": "^2.6.0",
-    "eslint": "^8.15.0",
+    "eslint": "^8.57.1",
     "lit-analyzer": "^1.2.1",
     "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
