@@ -933,7 +933,7 @@ export class SfIReporting extends LitElement {
   }
 
   populateView = async (scrollTopTarget: number = 0) => {
-    console.log('populating view');
+    console.log('populating view', this.flow, this.id, this.editdisable);
     let html = "";
     // html += `<div class="d-flex justify-between m-20">
     //           <button part="button-icon" class="material-icons invisible">close</button>
@@ -942,10 +942,10 @@ export class SfIReporting extends LitElement {
     //         </div>`
     html += `${this.name.length > 1 ? `<div class="d-flex flex-col md-20-ml-10" part="title-section">
               <div class="d-flex w-100-m-0 justify-between align-center">
-                ${this.editdisable != "true" ? `
+                ${(this.editdisable != "true" && this.flow != "reporting") ? `
                 <button id="button-back" part="button-icon" class="button-icon-click"><span class="material-icons">keyboard_backspace</span></button>` : ''}
                 ${this.editdisable != "true" ? `<h3 part="results-title" class="m-0">${this.name}</h3>` : ''}
-                ${this.editdisable != "true" ? (`
+                ${(this.editdisable != "true" && this.flow != "reporting") ? (`
                 <div class="d-flex justify-center align-center">${this.flow == "new" ? `
                     <button class="mrl-5 material-icons invisible" part="button-icon" id="button-submit" disabled>save</button>
                     <button class="mrl-5 material-icons hide" part="button-icon-light" id="button-submit-cancel">close</button>
@@ -1209,17 +1209,17 @@ export class SfIReporting extends LitElement {
         console.log('rendering sf-checklist', element.id, JSON.stringify(element.value));
         await customElements.whenDefined('sf-checklist');
         let checklist: SfChecklist = (this._SfReportingContainer as HTMLDivElement).querySelector('#' + element.id) as SfChecklist
-        if (this.mode == 'admin' && this.flow != "details") {
-          checklist.listelements = element.value ?? []
+        if (this.mode == 'admin' && this.flow != "reporting") {
+          checklist.listelements = (element.value != '' ? element.value : [])
         } else {
-          checklist.listelements = element.elementsjson != '' ? JSON.parse(element.elementsjson) : (element.value ?? [])
+          checklist.listelements = element.elementsjson != '' ? JSON.parse(element.elementsjson) : (element.value != '' ? element.value : [])
           checklist.listselection = JSON.stringify(element.value) != '' ? element.value : {}
         }
         checklist.readonly = (this.mode == "view" || this.flow == "details")
         checklist.mode = this.mode
         // console.log('sf-checklist', checklist.listelements, checklist.readonly, this.mode, this.flow);
         setTimeout(() => {
-          console.log('sf-checklist', checklist.listelements, element.value, this.mode, this.flow);
+          console.log('sf-checklist', checklist.listelements, element.value == '', this.mode, this.flow);
           checklist.loadMode()
         }, 200)
       }
@@ -1660,7 +1660,7 @@ export class SfIReporting extends LitElement {
                 sectionChildFilledCount++;
               }
             } else {
-              console.log('eval fail1', element)
+              console.log('eval fail1', element, this.id)
             }
           } else if (element.type == "sf-i-form-select") {
             console.log('evalshowprogress sf-i-form-select value', element.value, Object.keys(element.value).length, element.mandatory);
@@ -1668,7 +1668,7 @@ export class SfIReporting extends LitElement {
               filled++;
               sectionChildFilledCount++;
             } else {
-              console.log('eval fail', element)
+              console.log('eval fail', element, this.id)
             }
           } else if (element.type == "sf-i-bricks") {
             console.log('evalshowprogress sf-i-bricks value', element.value, element.value.length, element.mandatory, element.mandatory != null);
@@ -1676,7 +1676,7 @@ export class SfIReporting extends LitElement {
               filled++;
               sectionChildFilledCount++;
             } else {
-              console.log('eval fail', element)
+              console.log('eval fail', element, this.id)
             }
           } else if (element.type == "sf-i-select") {
             console.log('evalshowprogress sf-i-select value', element.value, element.value.length, element.mandatory, element.mandatory != null);
@@ -1684,7 +1684,7 @@ export class SfIReporting extends LitElement {
               filled++;
               sectionChildFilledCount++;
             } else {
-              console.log('eval fail', element)
+              console.log('eval fail', element, this.id)
             }
           } else if (element.type == "sf-checklist") {
             console.log('evalshowprogress sf-checklist value', element.elementsjson.length, element.mandatory, element.mandatory != null);
@@ -1693,7 +1693,7 @@ export class SfIReporting extends LitElement {
                 filled++;
                 sectionChildFilledCount++;
               } else {
-                console.log('eval fail', element)
+                console.log('eval fail', element, this.id)
               }
             } else {
               for (let val of Object.keys(element.value)) {
@@ -1709,7 +1709,7 @@ export class SfIReporting extends LitElement {
               filled++;
               sectionChildFilledCount++;
             } else {
-              console.log('eval fail', element)
+              console.log('eval fail', element, this.id)
             }
           }
           if (element.mandatory != null && flagEval) {
@@ -1729,7 +1729,7 @@ export class SfIReporting extends LitElement {
         ((this._SfReportingContainer as HTMLDivElement).querySelector('#' + sectionId + "-success") as HTMLDivElement).style.display = 'none'
       }
     }
-    console.log('evalshowprogress', filled, total, this.editdisable)
+    console.log('evalshowprogress', filled, total, this.editdisable, this.id)
     if (this.editdisable == "true" && ((this._SfReportingContainer as HTMLDivElement).querySelector('.progress-bar') as HTMLDivElement) != null) {
       ((this._SfReportingContainer as HTMLDivElement).querySelector('.progress-bar') as HTMLDivElement).style.display = 'none'
     } else if (((this._SfReportingContainer as HTMLDivElement).querySelector('.progress-bar') as HTMLDivElement) != null) {
@@ -2526,7 +2526,7 @@ export class SfIReporting extends LitElement {
           this.initNewListeners();
         }, 500);
         this.fetchSchema();
-      } else if (this.flow == "edit") {
+      } else if (this.flow == "edit" || this.flow == "reporting") {
         setTimeout(() => {
           this.initEditListeners();
           this.populateDataModel();
@@ -3005,7 +3005,7 @@ export class SfIReporting extends LitElement {
         </div>
       </div>
       `
-    } else if (this.mode == "admin" && this.flow == "edit") {
+    } else if (this.mode == "admin" && (this.flow == "edit" || this.flow == "reporting")) {
       return html`
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
