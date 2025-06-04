@@ -52,6 +52,7 @@ export class SfIReporting extends LitElement {
 
   @property()
   configjson: string = "[]";
+  // configjson: string = "[{\"type\":\"sf-i-uploader\",\"name\":\"\",\"size\":\"large\",\"label\":\"Contract Document *\",\"hint\":\"Document of the contract\",\"id\":\"contractdocuments\",\"value\":[{\"arrWords\":[\"Sample\",\"Partnership\",\"Agreement\",\"THIS\",\"PARTNERSHIP\",\"AGREEMENT\",\"is\",\"made\",\"this\",\"day\",\"of\",\"2XXX,\",\"by\",\"and\",\"between\",\"Partner\",\"1\",\"and\",\"Partner\",\"2.\",\"Explanatory\",\"Statement\",\"The\",\"parties\",\"hereto\",\"desire\",\"to\",\"enter\",\"into\",\"the\",\"business\",\"of\",\"purchasing,\",\"acquiring,\",\"operating,\",\"leasing,\",\"owning\",\"and\",\"selling\",\"Grape\",\"acreage\",\"and\",\"other\",\"specialty\",\"crop(s),\",\"including\",\"but\",\"not\",\"limited\",\"to\",\"that\",\"certain\",\"parcel\",\"of\",\"land,\",\"and\",\"all\",\"improvements\",\"constructed\",\"thereon,\",\"described\",\"as\",\"[specify\",\"address]\",\"and\",\"engaging\",\"in\",\"any\",\"other\",\"lawful\",\"phase\",\"or\",\"aspect\",\"of\",\"viticulture\",\"or\",\"specialty\",\"crop\",\"agriculture.\",\"In\",\"order\",\"to\",\"accomplish\",\"their\",\"aforesaid\",\"desires,\",\"the\",\"parties\",\"hereto\",\"desire\",\"to\",\"join\",\"together\",\"in\",\"a\",\"general\",\"partnership\",\"under\",\"and\",\"pursuant\",\"to\",\"the\",\"Uniform\",\"Partnership\",\"Act,\",\"amended\",\"from\",\"time\",\"to\",\"time\",\"(the\",\"\\\"Act\\\").\",\"NOW\",\"THEREFORE,\",\"in\",\"consideration\",\"of\",\"their\",\"mutual\",\"promises,\",\"covenants,\",\"and\",\"agreements,\",\"and\",\"the\",\"Explanatory\",\"Statement,\",\"which\",\"Explanatory\",\"Statement\",\"is\",\"incorporated\",\"by\",\"reference\",\"herein\",\"and\",\"made\",\"a\",\"substantive\",\"part\",\"of\",\"this\",\"Partnership\",\"Agreement,\",\"the\",\"parties\",\"hereto\",\"do\",\"hereby\",\"promise,\",\"covenant\",\"and\",\"agree\",\"as\",\"follows:\",\"Section\",\"2.\",\"Principal\",\"Place\",\"of\",\"Business\",\"The\",\"principal\",\"office\",\"and\",\"place\",\"of\",\"business\",\"of\",\"the\",\"Partnership\",\"(the\",\"\\\"Office\\\")\",\"shall\",\"be\",\"located\",\"at\",\"Angell\",\"Road.\",\"Section\",\"3.\",\"Business\",\"and\",\"Purpose\",\"3.1.\",\"The\",\"business\",\"and\",\"purposes\",\"of\",\"the\",\"Partnership\",\"are\",\"to\",\"manage,\",\"and\",\"operate,\",\"grape\",\"vineyards.\",\"(the\",\"\\\"Vineyards\\\"),\",\"or\",\"interest\",\"therein,\",\"including\",\"but\",\"not\",\"limited\",\"to\",\"that\",\"certain\",\"parcel\",\"of\",\"land\",\"and\",\"such\",\"other\",\"businesses\",\"and\",\"purposes\",\"as\",\"the\",\"Partners\",\"may\",\"from\",\"time\",\"to\",\"time\",\"determine\",\"in\",\"accordance\",\"with\",\"Section\",\"8\",\"of\",\"this\",\"Agreement.\",\"Section\",\"4.\",\"Term\",\"The\",\"Partnership\",\"shall\",\"commence\",\"upon\",\"the\",\"date\",\"of\",\"this\",\"Agreement,\",\"as\",\"set\",\"forth\",\"above.\",\"Unless\",\"sooner\",\"terminated\",\"pursuant\",\"to\",\"the\",\"further\",\"provisions\",\"of\",\"this\",\"Agreement,\",\"the\",\"Partnership\",\"shall\",\"continue\",\"without\",\"defined\",\"term.\",\"Section\",\"5.\",\"Capital\",\"Contribution\",\"5.1.\",\"The\",\"original\",\"capital\",\"contributions\",\"to\",\"the\",\"Partnership\",\"of\",\"each\",\"of\",\"the\",\"Partners\",\"shall\",\"be\",\"made\",\"concurrently\",\"with\",\"their\",\"respective\",\"execution,\",\"acknowledgement,\",\"sealing\",\"and\",\"delivery\",\"of\",\"this\",\"Agreement\",\"in\",\"the\",\"following\",\"dollar\",\"amounts\",\"set\",\"forth\",\"after\",\"their\",\"respective\",\"names:\",\"Partner\",\"1:\",\"Capital\",\"contribution\",\"includes\",\"his\",\"existing\",\"grape\",\"acreage\",\"as\",\"of\",\"January\",\"1,\",\"2010.\",\"Grape\",\"acreage\",\"is\",\"estimated,\",\"with\",\"a\",\"5%\",\"margin\",\"of\",\"error,\",\"at\",\"190\",\"acres\",\"valued\",\"at\",\"approximately\",\"775,000.\",\"An\",\"additional\",\"cash\",\"capital\",\"contribution\",\"of\",\"$180,000\",\"will\",\"also\",\"be\",\"made.\",\"Capital\",\"contribution\",\"does\",\"not\",\"include\",\"any\",\"equipment,\",\"buildings,\",\"or\",\"open\",\"land.\",\"Partner\",\"2:\",\"Capital\",\"contribution\",\"is\",\"$180,000\",\"to\",\"be\",\"financed\",\"by\",\"Partner\",\"1\",\"or\",\"another\",\"lender.\",\"5.2.\",\"Except\",\"as\",\"specifically\",\"provided\",\"in\",\"this\",\"Agreement,\",\"or\",\"as\",\"otherwise\",\"provided\",\"by\",\"and\",\"in\",\"accordance\",\"with\",\"law\",\"to\",\"the\",\"extent\",\"such\",\"law\",\"is\",\"not\",\"inconsistent\",\"with\",\"this\",\"Agreement,\",\"no\",\"Partner\",\"shall\",\"have\",\"the\",\"right\",\"to\",\"withdraw\",\"or\",\"reduce\",\"his\",\"or\",\"her\",\"contributions\",\"to\",\"the\",\"capital\",\"of\",\"the\",\"Partnership.\",\"Section\",\"6.\",\"Profit\",\"and\",\"Loss\",\"6.1.\",\"The\",\"percentages\",\"of\",\"Partnership\",\"Rights\",\"and\",\"Partnership\",\"Interest\",\"of\",\"each\",\"of\",\"the\",\"Partners\",\"shall\",\"be\",\"as\",\"follows:\",\"Partner\",\"1:\",\"84%\",\"Partner\",\"2:\",\"16%\",\"6.2.\",\"Except\",\"as\",\"provided\",\"in\",\"Section\",\"7.3.\",\"of\",\"this\",\"Agreement,\",\"for\",\"purposes\",\"of\",\"Sections\",\"702\",\"and\",\"704\",\"of\",\"the\",\"Internal\",\"Revenue\",\"Code\",\"of\",\"1954,\",\"or\",\"the\",\"corresponding\",\"provisions\",\"of\",\"any\",\"future\",\"federal\",\"internal\",\"revenue\",\"law,\",\"or\",\"any\",\"similar\",\"tax\",\"law\",\"of\",\"any\",\"state\",\"or\",\"jurisdiction,\",\"the\",\"determination\",\"of\",\"each\",\"Partner's\",\"distributive\",\"share\",\"of\",\"all\",\"items\",\"of\",\"income,\",\"gain,\",\"loss,\",\"deduction,\",\"credit\",\"or\",\"allowance\",\"of\",\"the\",\"Partnership\",\"for\",\"any\",\"period\",\"or\",\"year\",\"shall\",\"be\",\"made\",\"in\",\"accordance\",\"with,\",\"and\",\"in\",\"proportion\",\"to,\",\"such\",\"Partner's\",\"percentage\",\"of\",\"Partnership\",\"Interest\",\"as\",\"it\",\"may\",\"then\",\"exist.\",\"Section\",\"7.\",\"Distribution\",\"of\",\"Profits\",\"7.1.\",\"Generally,\",\"gross\",\"cash\",\"distribution\",\"in\",\"proportion\",\"to\",\"Partners\",\"percentages\",\"of\",\"partnership\",\"interest,\",\"will\",\"be\",\"made\",\"based\",\"on\",\"the\",\"scheduled\",\"payments\",\"of\",\"processors\",\"or\",\"within\",\"60\",\"days\",\"of\",\"payments\",\"being\",\"made.\",\"The\",\"gross\",\"cash\",\"distribution\",\"7.2\",\"Generally,\",\"operating\",\"expenses\",\"will\",\"be\",\"shared\",\"at\",\"the\",\"time\",\"those\",\"expenses\",\"are\",\"realized\",\"in\",\"proportion\",\"to\",\"Partners\",\"percentages\",\"of\",\"partnership\",\"interest.\",\"While\",\"each\",\"purchase\",\"will\",\"not\",\"require\",\"an\",\"accounting\",\"of\",\"partnership\",\"interest,\",\"reimbursement\",\"to\",\"the\",\"payor,\",\"based\",\"on\",\"share,\",\"will\",\"be\",\"resolved\",\"every\",\"30\",\"days.\",\"7.3\",\"Exception\",\"to\",\"section\",\"7.2:\",\"Partner\",\"2\",\"will\",\"not\",\"be\",\"responsible\",\"for\",\"any\",\"operating\",\"expenses\",\"for\",\"the\",\"first\",\"year.\",\"His\",\"share\",\"of\",\"expenses\",\"during\",\"that\",\"time\",\"will\",\"be\",\"limited\",\"to\",\"his\",\"capital\",\"contribution\",\"payments.\",\"Section\",\"8.\",\"Management\",\"of\",\"the\",\"Partnership\",\"Business\",\"8.1.\",\"All\",\"decisions\",\"respecting\",\"the\",\"management,\",\"operation\",\"and\",\"control\",\"of\",\"the\",\"Partnership\",\"business\",\"and\",\"determination\",\"made\",\"in\",\"accordance\",\"with\",\"the\",\"provisions\",\"of\",\"this\",\"Agreement\",\"shall\",\"be\",\"made\",\"based\",\"upon\",\"a\",\"majority\",\"share\",\"of\",\"the\",\"partnership\",\"in\",\"favor\",\"of\",\"the\",\"decision.\",\"Majority\",\"owner\",\"Partner\",\"1\",\"has\",\"the\",\"full\",\"intention\",\"of\",\"increasing\",\"the\",\"responsibility\",\"and\",\"stake\",\"of\",\"Partner\",\"2's\",\"management,\",\"operation\",\"and\",\"control\",\"of\",\"the\",\"Partnership.\",\"Succession\",\"of\",\"such\",\"powers\",\"will\",\"take\",\"place,\",\"at\",\"first\",\"on\",\"a\",\"day\",\"to\",\"day\",\"basis.\",\"Later,\",\"based\",\"on\",\"performance,\",\"a\",\"management\",\"agreement\",\"will\",\"be\",\"incorporated\",\"into\",\"this\",\"Partnership\",\"8.2.\",\"Nothing\",\"herein\",\"contained\",\"shall\",\"be\",\"construed\",\"to\",\"constitute\",\"any\",\"Partner\",\"or\",\"the\",\"agent\",\"of\",\"another\",\"Partner,\",\"except\",\"as\",\"expressly\",\"provided\",\"herein,\",\"or\",\"in\",\"any\",\"manner\",\"to\",\"limit\",\"the\",\"Partnership\",\"to\",\"the\",\"carrying\",\"on\",\"of\",\"their\",\"own\",\"respective\",\"businesses\",\"or\",\"activities.\",\"Any\",\"of\",\"the\",\"Partners,\",\"or\",\"any\",\"agent,\",\"servant\",\"or\",\"employee\",\"of\",\"any\",\"of\",\"the\",\"Partners,\",\"may\",\"engage\",\"in\",\"and\",\"possess\",\"any\",\"interest\",\"in\",\"other\",\"businesses\",\"or\",\"ventures\",\"of\",\"every\",\"nature\",\"and\",\"description,\",\"independently\",\"or\",\"with\",\"other\",\"persons,\",\"whether\",\"or\",\"not,\",\"directly\",\"or\",\"indirectly,\",\"in\",\"competition\",\"with\",\"the\",\"business\",\"or\",\"purpose\",\"of\",\"the\",\"Partnership,\",\"and\",\"neither\",\"the\",\"Partnership\",\"nor\",\"any\",\"of\",\"the\",\"Partners\",\"shall\",\"have\",\"any\",\"rights,\",\"by\",\"virtue\",\"of\",\"this\",\"Agreement\",\"or\",\"otherwise,\",\"in\",\"and\",\"to\",\"such\",\"independent\",\"ventures\",\"or\",\"the\",\"income\",\"or\",\"profits\",\"derived\"],\"arrWordsMeta\":{\"PAGE\":3,\"LINE\":99,\"WORD\":898},\"jobId\":\"97abbe83ae66c8233ce1bdc3a8db646a2c269e7a46fa58a31d51439c88a9fa69\",\"key\":\"5cb5a798-f1d0-4937-a703-a3e45b49ed59\",\"ext\":\"pdf\"}],\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"multiselect-dropdown\",\"maxselect\":\"1\",\"apiid\":\"1peg5170d3\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\",\"extract\":\"yes\",\"maxsize\":\"5242880\",\"allowdownload\":\"yes\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":false,\"displayinhistory\":true,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"date\",\"name\":\"\",\"size\":\"large\",\"label\":\"Date of Execution *\",\"hint\":\"The date of execution of the contract\",\"id\":\"dateofexecution\",\"value\":\"2024-11-01\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":false,\"displayinhistory\":true,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"date\",\"name\":\"\",\"size\":\"large\",\"label\":\"Due Date *\",\"hint\":\"The due date for the contract.\",\"id\":\"duedate\",\"value\":\"2025-10-31\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":false,\"displayinhistory\":true,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"textarea\",\"name\":\"\",\"size\":\"small\",\"label\":\"Remarks\",\"hint\":\"Remarks on the contract\",\"id\":\"remarks\",\"value\":\"OK\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":null,\"copytoreopen\":true,\"displayinhistory\":true,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"sf-checklist\",\"name\":\"\",\"size\":\"small\",\"label\":\"Terms *\",\"hint\":\"Terms in the contract\",\"id\":\"terms\",\"value\":\"\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":true,\"displayinhistory\":true,\"elementsjson\":\"[{\\\"name\\\":\\\"Test term 1\\\"},{\\\"name\\\":\\\"Test term 2\\\"}]\",\"customreporting\":true}]";
   // configjson: string = "[{\"type\":\"sf-i-form\",\"size\":\"large\",\"label\":\"Tags\",\"hint\":\"Tags applied to notice\",\"id\":\"tags\",\"mode\":\"multiselect-dropdown\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/tagging\",\"searchstring\":\"Tag\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\",\"maxselect\":\"100\",\"mandatory\":\"\"}]";
   // configjson: string = "[{\"type\":\"textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Prepared by\",\"hint\":\"Mention the names of people who participated in preparing this document\",\"id\":\"preparedby\",\"value\":\"prepared by test\",\"collapse\":\"true\"},{\"type\":\"textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Approved by\",\"hint\":\"Mention the names of people who participated in reviewing this document\",\"id\":\"approvedby\",\"value\":\"test approved by\",\"collapse\":\"true\"},{\"type\":\"textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Purpose\",\"hint\":\"This is a checklist for reporting the statutory internal audit results of the infection control program\",\"id\":\"purpose\",\"value\":\"test purpose\",\"collapse\":\"true\"},{\"type\":\"section\",\"name\":\"Compliance with Biomedical Waste Management Rules, 2016\",\"size\":\"\",\"label\":\"\",\"hint\":\"\",\"id\":\"section-0\",\"value\":\"\",\"collapse\":\"false\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Is the hospital registered with the State Pollution Control Board (SPCB) for biomedical waste management?\",\"hint\":\"\",\"id\":\"bmwspcb\",\"value\":[\"No\",\"\"],\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are biomedical waste segregation protocols (color-coded bins) in place and followed as per rules?\",\"hint\":\"\",\"id\":\"bmwcolorcoding\",\"value\":[\"Yes\",\"\"],\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are disposal records for biomedical waste maintained as required by law?\",\"hint\":\"\",\"id\":\"bmwdisposal\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Is there a valid agreement with an authorized biomedical waste disposal vendor?\",\"hint\":\"\",\"id\":\"bmwvendoragreement\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are healthcare staff trained in biomedical waste segregation and disposal protocols?\",\"hint\":\"\",\"id\":\"bmwtraining\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"section\",\"name\":\"Compliance with The Drugs and Cosmetics Act, 1940 (Infection Control Equipment and Materials)\",\"size\":\"\",\"label\":\"\",\"hint\":\"\",\"id\":\"section-1\",\"value\":\"\",\"collapse\":\"false\"},{\"type\":\"yesno+textarea\",\"options\":[\"option1\",\"option2\",\"option3\"],\"name\":\"\",\"size\":\"large\",\"label\":\"Are hand hygiene products (e.g., alcohol-based hand rubs) procured from licensed vendors as per statutory regulations?\",\"hint\":\"\",\"id\":\"hhvendors\",\"value\":[\"option2\",\"\"],\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are disinfectants, sterilants, and antiseptics used in the hospital in compliance with the Drugs and Cosmetics Act?\",\"hint\":\"\",\"id\":\"disinfectantsdca\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Is there a regular check on the expiration dates and quality standards of infection control materials?\",\"hint\":\"\",\"id\":\"expirycheck\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"section\",\"name\":\"Compliance with The Indian Epidemic Diseases Act, 1897 (Outbreak Management)\",\"size\":\"\",\"label\":\"\",\"hint\":\"\",\"id\":\"section-2\",\"value\":\"\",\"collapse\":\"false\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Is there a policy in place for managing infectious disease outbreaks in compliance with the Indian Epidemic Diseases Act?\",\"hint\":\"\",\"id\":\"outbreakpolicy\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are protocols in place for isolation, patient segregation, and reporting of notifiable diseases as per government directives?\",\"hint\":\"\",\"id\":\"diseasereporting\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are outbreak reports documented and communicated to relevant authorities (local health departments, as per law)?\",\"hint\":\"\",\"id\":\"outbreakreporting\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"section\",\"name\":\"Compliance with The Water (Prevention and Control of Pollution) Act, 1974 (Water Quality Monitoring)\",\"size\":\"\",\"label\":\"\",\"hint\":\"\",\"id\":\"section-3\",\"value\":\"\",\"collapse\":\"false\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Is the hospital water supply tested regularly for microbiological contaminants?\",\"hint\":\"\",\"id\":\"watertesting\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are there documented records of water quality reports, and are they in compliance with prescribed standards?\",\"hint\":\"\",\"id\":\"waterqualityreporting\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Is there an arrangement for safe water storage and waste-water disposal in line with statutory requirements?\",\"hint\":\"\",\"id\":\"waterstorage\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"section\",\"name\":\"Compliance with The Air (Prevention and Control of Pollution) Act, 1981 (Air Quality Management)\",\"size\":\"\",\"label\":\"\",\"hint\":\"\",\"id\":\"section-4\",\"value\":\"\",\"collapse\":\"false\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are air conditioning and ventilation systems in place that comply with regulatory standards, especially in critical areas like OTs and ICUs?\",\"hint\":\"\",\"id\":\"acinplace\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are air filters in the hospital HVAC systems cleaned or replaced as per environmental laws and infection control guidelines?\",\"hint\":\"\",\"id\":\"airfilters\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are regular air quality audits conducted, and are reports maintained?\",\"hint\":\"\",\"id\":\"airqualityaudits\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"section\",\"name\":\"Compliance with The Public Health Act (Surveillance and Reporting)\",\"size\":\"\",\"label\":\"\",\"hint\":\"\",\"id\":\"section-5\",\"value\":\"\",\"collapse\":\"false\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Is there a surveillance system for monitoring hospital-acquired infections (HAIs)?\",\"hint\":\"\",\"id\":\"haisurveillance\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are notifiable infections reported to local health authorities as per the law?\",\"hint\":\"\",\"id\":\"infectionreporting\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are infection surveillance records maintained, and are they in compliance with public health laws?\",\"hint\":\"\",\"id\":\"infectionsurveillance\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"section\",\"name\":\"Compliance with The Occupational Safety and Health Act (Workplace Safety)\",\"size\":\"\",\"label\":\"\",\"hint\":\"\",\"id\":\"section-6\",\"value\":\"\",\"collapse\":\"false\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are healthcare workers provided with adequate personal protective equipment (PPE) in line with statutory safety regulations?\",\"hint\":\"\",\"id\":\"ppeallocation\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Is there a needle stick and sharps injury prevention policy in place, and is it compliant with the OSHA guidelines?\",\"hint\":\"\",\"id\":\"safeipolicy\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are protocols for staff vaccination (e.g., Hepatitis B, Influenza) and post-exposure prophylaxis (PEP) established?\",\"hint\":\"\",\"id\":\"prophylaxis\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"section\",\"name\":\"Compliance with The Clinical Establishments (Registration and Regulation) Act, 2010 (General Infection Control Requirements)\",\"size\":\"\",\"label\":\"\",\"hint\":\"\",\"id\":\"section-7\",\"value\":\"\",\"collapse\":\"false\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Is the hospital registered under the Clinical Establishments Act, and does it meet the infection control standards prescribed?\",\"hint\":\"\",\"id\":\"registration\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are infection control protocols updated and audited regularly, as required by the Act?\",\"hint\":\"\",\"id\":\"hicprotocolsupdated\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are records of infection control compliance maintained and available for inspection by regulatory authorities?\",\"hint\":\"\",\"id\":\"compliancerecords\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"section\",\"name\":\"Compliance with Fire Safety Regulations (Infection Control During Emergency Evacuations)\",\"size\":\"\",\"label\":\"\",\"hint\":\"\",\"id\":\"section-8\",\"value\":\"\",\"collapse\":\"false\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are fire safety protocols in place that ensure infection control measures (e.g., patient isolation) during evacuations?\",\"hint\":\"\",\"id\":\"firesafetyprotocols\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are infection control materials (e.g., masks, gloves) readily available for use during fire drills or actual emergencies?\",\"hint\":\"\",\"id\":\"hicmaterials\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"section\",\"name\":\"Compliance with The National Health Mission Guidelines (Sanitation and Hygiene)\",\"size\":\"\",\"label\":\"\",\"hint\":\"\",\"id\":\"section-9\",\"value\":\"\",\"collapse\":\"false\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are the hospital’s sanitation practices in compliance with National Health Mission standards for hospital cleanliness and hygiene?\",\"hint\":\"\",\"id\":\"sanitizationpractices\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are there dedicated housekeeping protocols for the cleaning and disinfection of patient care areas as per government guidelines?\",\"hint\":\"\",\"id\":\"housekeepingprotocols\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are sanitation records maintained, and are they available for regulatory review?\",\"hint\":\"\",\"id\":\"sanitiziationrecords\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"section\",\"name\":\"Compliance with The Indian Council of Medical Research (ICMR) Guidelines (Antibiotic Stewardship)\",\"size\":\"\",\"label\":\"\",\"hint\":\"\",\"id\":\"section-10\",\"value\":\"\",\"collapse\":\"false\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Is the hospital following ICMR guidelines for antibiotic stewardship to prevent the development of antimicrobial resistance (AMR)?\",\"hint\":\"\",\"id\":\"icmramsguidelines\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are antibiotic use patterns monitored, and are they compliant with ICMR’s antimicrobial stewardship guidelines?\",\"hint\":\"\",\"id\":\"patternsmonitoring\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are periodic audits conducted to assess adherence to guidelines, and are the audit reports documented?\",\"hint\":\"\",\"id\":\"amsaudits\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"section\",\"name\":\"Compliance with The Indian Medical Council (Professional Conduct, Etiquette, and Ethics) Regulations, 2002\",\"size\":\"\",\"label\":\"\",\"hint\":\"\",\"id\":\"section-11\",\"value\":\"\",\"collapse\":\"false\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are healthcare workers adhering to professional conduct and ethical guidelines for infection prevention as prescribed by the Medical Council of India?\",\"hint\":\"\",\"id\":\"professionalconduct\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are there protocols in place to report unethical or unsafe infection control practices?\",\"hint\":\"\",\"id\":\"unethicalreporting\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"section\",\"name\":\"Compliance with Employee State Insurance (ESI) Act, 1948 (Healthcare Worker Safety)\",\"size\":\"\",\"label\":\"\",\"hint\":\"\",\"id\":\"section-12\",\"value\":\"\",\"collapse\":\"false\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are healthcare workers insured under the ESI scheme, particularly those involved in high-risk infection control activities?\",\"hint\":\"\",\"id\":\"esiinsured\",\"value\":\"\",\"collapse\":\"true\"},{\"type\":\"yesno+textarea\",\"name\":\"\",\"size\":\"large\",\"label\":\"Are there protocols for compensation in case of occupational hazards (e.g., infections contracted at work)?\",\"hint\":\"\",\"id\":\"compensationprotocols\",\"value\":\"\",\"collapse\":\"true\"}]";
   // configjson: string = "[{\"type\":\"textarea\",\"size\":\"large\",\"label\":\"Prepared by\",\"hint\":\"Mention the names of people who participated in preparing this document\",\"id\":\"preparedby\"},{\"type\":\"textarea\",\"size\":\"large\",\"label\":\"Approved by\",\"hint\":\"Mention the names of people who participated in reviewing this document\",\"id\":\"approvedby\"},[{\"type\":\"itemname\",\"name\":\"External Reporting Agency\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Name\",\"hint\":\"State the name of the agency\",\"id\":\"name{iter}\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Type\",\"hint\":\"State the type of the agency such as government (local, state, nationa), private, educational institute, etc.\",\"id\":\"type{iter}\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Contact Person\",\"hint\":\"Name of the contact person\",\"id\":\"contact-person{iter}\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Phone Number\",\"hint\":\"Phone number of the contact person\",\"id\":\"contact-phone{iter}\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Email\",\"hint\":\"Email address of the contact person\",\"id\":\"contact-email{iter}\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Reporting Method\",\"hint\":\"Method of reporting such as online/email/phone/fax, etc.\",\"id\":\"reporting-method{iter}\"},{\"type\":\"textarea\",\"size\":\"large\",\"label\":\"Role\",\"hint\":\"When to report for e.g. report local outbreak and infection trends, national reporting of infection control and outbreaks, global disease surveillance, response coordination, state-level outbreak and epidemic reporting\",\"id\":\"role{iter}\"}]]";
@@ -111,14 +112,99 @@ export class SfIReporting extends LitElement {
   list: any[] = [];
 
   published: boolean = false;
-  
+
   terminated: boolean = false;
 
   lastCalendarGenerated: string = ""
   nextCalendarScheduled: string = ""
-  // selectedItem: any = {};
+  selectedItem: any = {};
   // selectedItem: any = { id: "2b1d4da9-7cfe-4861-91f2-1727d0cc70b4" };
-  selectedItem: any = {"contractdocuments":[{"arrWords":["FlaggGRC","Governance","IRskl","Complierce","ISO","27001","Certified","IS","YOUR","ORGANIZATION","READY","FOR","INDIA'S","DPDP","ACT?"],"arrWordsMeta":{"PAGE":1,"LINE":7,"WORD":15},"jobId":"22d56d6c41f9930e5f7aea16613241b19fd36b4a0fd2ae0e9e284376387670f2","filename":"dpdp.jpg","key":"ea08e215-a394-429a-ab6b-9b761f1f87b6","ext":"jpg"}],"refno":"Security/S/PUN/12","dateofexecution":"2025-05-23","duedate":"30/05/2025","party1":"XYZ Security Pvt. Ltd.","party2":"FlaggGRC TL","party3":"","countryid":"07d73b44-648d-4301-82c4-d6df43397824","countryname":"India (ABC Global-Country)","entityid":"c989a44e-7d3d-427e-b712-90eacf585075","entityname":"ABC Limited - India (ABC Global-India-Entity)","locations":["Pune (ABC Global-India-ABC Limited - India-Location);4fb7b672-5cce-443f-869b-6b35247d6331"],"tags":["Safety Measures (ABC Global-Tags);c5b639f8-eea1-47e3-8bf2-dec2ea13170f"],"reporters":["Local Reporter 1;e9684b5d-ddbc-46d3-ae07-51706bf75410"],"approvers":["Local Approver 1;c44dcd04-aebb-4417-ba6b-fac170efd5d0"],"functionheads":["Chief Compliance Officer;5fe96caa-1a44-4a2d-921a-920d29433eca"],"contracttypeid":"0338b199-0c1f-44fa-9c13-a051143ea704","contracttypename":"Security","context":"Physical security services","remarks":"There are no remarks","makercheckers":[],"auditors":[],"viewers":[],"terms":[{"name":"All personnel should wear uniform"},{"name":"Security services personnel should have ID cards"}],"customreporting":"[{\"type\":\"sf-i-uploader\",\"name\":\"\",\"size\":\"large\",\"label\":\"Contract Document *\",\"hint\":\"Document of the contract\",\"id\":\"contractdocuments\",\"value\":[{\"arrWords\":[\"FlaggGRC\",\"Governance\",\"IRskl\",\"Complierce\",\"ISO\",\"27001\",\"Certified\",\"IS\",\"YOUR\",\"ORGANIZATION\",\"READY\",\"FOR\",\"INDIA'S\",\"DPDP\",\"ACT?\"],\"arrWordsMeta\":{\"PAGE\":1,\"LINE\":7,\"WORD\":15},\"jobId\":\"22d56d6c41f9930e5f7aea16613241b19fd36b4a0fd2ae0e9e284376387670f2\",\"filename\":\"dpdp.jpg\",\"key\":\"ea08e215-a394-429a-ab6b-9b761f1f87b6\",\"ext\":\"jpg\"}],\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"multiselect-dropdown\",\"maxselect\":\"1\",\"apiid\":\"1peg5170d3\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\",\"extract\":\"yes\",\"maxsize\":\"5242880\",\"allowdownload\":\"yes\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":false,\"displayinhistory\":true,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"date\",\"name\":\"\",\"size\":\"large\",\"label\":\"Date of Execution *\",\"hint\":\"The date of execution of the contract\",\"id\":\"dateofexecution\",\"value\":\"2025-05-23\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":false,\"displayinhistory\":true,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"date\",\"name\":\"\",\"size\":\"large\",\"label\":\"Due Date *\",\"hint\":\"The due date for the contract.\",\"id\":\"duedate\",\"value\":\"2025-05-30\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":false,\"displayinhistory\":true,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"textarea\",\"name\":\"\",\"size\":\"small\",\"label\":\"Remarks\",\"hint\":\"Remarks on the contract\",\"id\":\"remarks\",\"value\":\"There are no remarks\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":null,\"copytoreopen\":true,\"displayinhistory\":true,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"sf-checklist\",\"name\":\"\",\"size\":\"small\",\"label\":\"Terms *\",\"hint\":\"Terms in the contract\",\"id\":\"terms\",\"value\":\"\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":true,\"displayinhistory\":true,\"elementsjson\":\"[{\\\"name\\\":\\\"All personnel should wear uniform\\\"},{\\\"name\\\":\\\"Security services personnel should have ID cards\\\"}]\",\"customreporting\":true}]","id":"9dcba65e-7408-4b41-97b2-37bce405052b","tagsmap":{"Safety Measures (ABC Global-Tags);c5b639f8-eea1-47e3-8bf2-dec2ea13170f":true},"reportersmap":{"e9684b5d-ddbc-46d3-ae07-51706bf75410":true},"approversmap":{"c44dcd04-aebb-4417-ba6b-fac170efd5d0":true},"functionheadsmap":{"5fe96caa-1a44-4a2d-921a-920d29433eca":true},"auditorsmap":{},"viewersmap":{},"locationname":"Pune (ABC Global-India-ABC Limited - India-Location)","locationid":"4fb7b672-5cce-443f-869b-6b35247d6331","isnotice":true,"module":"agreement","obligationtitle":"Security/S/PUN/12","documents":[],"comments":[],"approved":false,"lastupdated":"","dateofcompletion":"","docs":["Not Required"]}
+  // selectedItem: any = {
+  //   "contractdocuments": [
+  //     {
+  //       "arrWords": [],
+  //       "arrWordsMeta": {
+  //         "PAGE": 1
+  //       },
+  //       "jobId": "d202aa2d59058bd3e59bbc216056077b3c551c84960a5d1011b2a4664ad00763",
+  //       "filename": "01logo.jpg",
+  //       "key": "803c23bd-5003-4b10-a967-9626ba80dea7",
+  //       "ext": "jpg"
+  //     }
+  //   ],
+  //   "refno": "Term test",
+  //   "dateofexecution": "2025-05-07",
+  //   "duedate": "14/05/2025",
+  //   "party1": "Signode",
+  //   "party2": "ABCD",
+  //   "party3": "",
+  //   "countryid": "07d73b44-648d-4301-82c4-d6df43397824",
+  //   "countryname": "India (ABC Global-Country)",
+  //   "entityid": "c989a44e-7d3d-427e-b712-90eacf585075",
+  //   "entityname": "ABC Limited - India (ABC Global-India-Entity)",
+  //   "locations": [
+  //     "Pune (ABC Global-India-ABC Limited - India-Location);4fb7b672-5cce-443f-869b-6b35247d6331"
+  //   ],
+  //   "tags": [
+  //     "Advertising Conditions (ABC Global-Tags);2cd4f501-1dcf-4f76-be0b-779a0721ad2f"
+  //   ],
+  //   "reporters": [
+  //     "Local Reporter 1;e9684b5d-ddbc-46d3-ae07-51706bf75410"
+  //   ],
+  //   "approvers": [
+  //     "Local Approver 1;c44dcd04-aebb-4417-ba6b-fac170efd5d0"
+  //   ],
+  //   "functionheads": [
+  //     "Chief Compliance Officer;5fe96caa-1a44-4a2d-921a-920d29433eca"
+  //   ],
+  //   "contracttypeid": "82f5700c-9374-474f-87b0-cabe688ac278",
+  //   "contracttypename": "Printers AMC",
+  //   "context": "Printer AMC ",
+  //   "remarks": "Termination testing",
+  //   "makercheckers": [],
+  //   "auditors": [],
+  //   "viewers": [],
+  //   "terms": [
+  //     {
+  //       "name": "Contract term 1"
+  //     },
+  //     {
+  //       "name": "contract term 2"
+  //     },
+  //     {
+  //       "name": "contract term 3"
+  //     }
+  //   ],
+  //   "customreporting": "[{\"type\":\"sf-i-uploader\",\"name\":\"\",\"size\":\"large\",\"label\":\"Contract Document *\",\"hint\":\"Document of the contract\",\"id\":\"contractdocuments\",\"value\":[{\"arrWords\":[],\"arrWordsMeta\":{\"PAGE\":1},\"jobId\":\"d202aa2d59058bd3e59bbc216056077b3c551c84960a5d1011b2a4664ad00763\",\"filename\":\"01logo.jpg\",\"key\":\"803c23bd-5003-4b10-a967-9626ba80dea7\",\"ext\":\"jpg\"}],\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"multiselect-dropdown\",\"maxselect\":\"1\",\"apiid\":\"1peg5170d3\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\",\"extract\":\"yes\",\"maxsize\":\"5242880\",\"allowdownload\":\"yes\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":false,\"displayinhistory\":true,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"date\",\"name\":\"\",\"size\":\"large\",\"label\":\"Date of Execution *\",\"hint\":\"The date of execution of the contract\",\"id\":\"dateofexecution\",\"value\":\"2025-05-07\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":false,\"displayinhistory\":true,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"date\",\"name\":\"\",\"size\":\"large\",\"label\":\"Due Date *\",\"hint\":\"The due date for the contract.\",\"id\":\"duedate\",\"value\":\"2025-05-14\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":false,\"displayinhistory\":true,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"textarea\",\"name\":\"\",\"size\":\"small\",\"label\":\"Remarks\",\"hint\":\"Remarks on the contract\",\"id\":\"remarks\",\"value\":\"Termination testing\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":null,\"copytoreopen\":true,\"displayinhistory\":true,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"sf-checklist\",\"name\":\"\",\"size\":\"small\",\"label\":\"Terms *\",\"hint\":\"Terms in the contract\",\"id\":\"terms\",\"value\":\"\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":true,\"displayinhistory\":true,\"elementsjson\":\"[{\\\"name\\\":\\\"Contract term 1\\\"},{\\\"name\\\":\\\"contract term 2\\\"},{\\\"name\\\":\\\"contract term 3\\\"}]\",\"customreporting\":true}]",
+  //   "id": "ce42475e-44d7-4bcc-a025-9723cddbec31",
+  //   "tagsmap": {
+  //     "Advertising Conditions (ABC Global-Tags);2cd4f501-1dcf-4f76-be0b-779a0721ad2f": true
+  //   },
+  //   "reportersmap": {
+  //     "e9684b5d-ddbc-46d3-ae07-51706bf75410": true
+  //   },
+  //   "approversmap": {
+  //     "c44dcd04-aebb-4417-ba6b-fac170efd5d0": true
+  //   },
+  //   "functionheadsmap": {
+  //     "5fe96caa-1a44-4a2d-921a-920d29433eca": true
+  //   },
+  //   "auditorsmap": {},
+  //   "viewersmap": {},
+  //   "locationname": "Pune (ABC Global-India-ABC Limited - India-Location)",
+  //   "locationid": "4fb7b672-5cce-443f-869b-6b35247d6331",
+  //   "isnotice": true,
+  //   "module": "agreement",
+  //   "obligationtitle": "Term test",
+  //   "documents": [],
+  //   "comments": [],
+  //   "approved": false,
+  //   "lastupdated": "",
+  //   "dateofcompletion": "",
+  //   "docs": [
+  //     "Not Required"
+  //   ]
+  // }
 
   selectedItemIds: any = [];
 
@@ -654,6 +740,7 @@ export class SfIReporting extends LitElement {
         if (element.id != "" && element.type != "section") {
           if (element.type == "sf-i-form") {
             let form: SfIForm = (this._SfReportingContainer as HTMLDivElement).querySelector('#' + element.id) as SfIForm;
+            if(form == null){continue;}
             if (element.savenameseparate == "yes") {
               valueObj[element.id + 'id'] = form.selectedValues()[0] ?? "";
               valueObj[element.id + 'name'] = form.selectedTexts()[0] ?? "";
@@ -679,6 +766,7 @@ export class SfIReporting extends LitElement {
           } else if (element.type == "sf-i-bricks") {
             let bricks: SfIBricks = (this._SfReportingContainer as HTMLDivElement).querySelector('#' + element.id) as SfIBricks;
             console.log('sf-i-bricks id', element.id);
+            if(bricks == null){continue;}
             if (element.savenameseparate == "yes") {
               valueObj[element.id + 'id'] = bricks.selectedValues()[0] ?? "";
               valueObj[element.id + 'name'] = bricks.selectedTexts()[0] ?? "";
@@ -687,15 +775,18 @@ export class SfIReporting extends LitElement {
             }
           } else if (element.type == "sf-i-select") {
             let select: SfISelect = (this._SfReportingContainer as HTMLDivElement).querySelector('#' + element.id) as SfISelect;
+            if(select == null){continue;}
             valueObj[element.id + 'id'] = select.selectedValues()[0] ?? "";
             valueObj[element.id + 'name'] = select.selectedTexts()[0] ?? "";
           } else if (element.type == "sf-checklist") {
             let checklist: SfChecklist = (this._SfReportingContainer as HTMLDivElement).querySelector('#' + element.id) as SfChecklist;
-            if(this.mode == "admin"){
-              valueObj[element.id] = checklist.listelements ?? "";
-            }else{
-              valueObj[element.id] = checklist.listselection ?? "";
-            }
+            console.log('checklist selected values')
+            // if (this.mode == "admin" && this.flow != "reporting") {
+            //   valueObj[element.id] = checklist.listelements ?? "";
+            // } else {
+            valueObj[element.id] = checklist.selectedValues() ?? "";
+            // }
+            console.log('checklist selected values', valueObj[element.id]);
           } else {
             valueObj[element.id] = element.value;
           }
@@ -703,10 +794,10 @@ export class SfIReporting extends LitElement {
       }
     }
 
-    if(reportingArr.length > 0){
+    if (reportingArr.length > 0) {
       valueObj['customreporting'] = JSON.stringify(reportingArr)
     }
-    if(this.showterminate == "true"){
+    if (this.showterminate == "true") {
       valueObj['terminated'] = this.terminated;
     }
     return valueObj
@@ -772,6 +863,24 @@ export class SfIReporting extends LitElement {
 
   deleteConfirmClick = () => {
     this.submitDelete()
+  }
+
+  getSchema = () => {
+    let schema = this.getConfigJson()
+    for (let element of this.dataModel) {
+      if (element.type == 'sf-checklist') {
+        console.log('schema element', element)
+        for (let [i, schemaElement] of schema.entries()) {
+          if (schemaElement.id == element.id) {
+            schemaElement.elementsjson = element.elementsjson
+            schema[i] = schemaElement
+            console.log('schema schemaelement', schemaElement, schema[i])
+          }
+        }
+      }
+    }
+    console.log('returning Schema', schema)
+    return schema;
   }
 
   getBricksValues = (element: DataObject, selectedValues: string[] = []) => {
@@ -878,11 +987,11 @@ export class SfIReporting extends LitElement {
   }
   initDetailsListeners = () => {
     if (this.editdisable == "true") {
-      if(this._SfReportingButtonBack != null)(this._SfReportingButtonBack as HTMLButtonElement).style.display = 'none';
-      if(this._SfReportingButtonEdit != null)(this._SfReportingButtonEdit as HTMLButtonElement).style.display = 'none';
-      if(this._SfReportingButtonDelete != null)(this._SfReportingButtonDelete as HTMLButtonElement).style.display = 'none';
-      if(this._SfReportingButtonDeleteCancel != null)(this._SfReportingButtonDeleteCancel as HTMLButtonElement).style.display = 'none';
-      if(this._SfReportingButtonDeleteConfirm != null)(this._SfReportingButtonDeleteConfirm as HTMLButtonElement).style.display = 'none';
+      if (this._SfReportingButtonBack != null) (this._SfReportingButtonBack as HTMLButtonElement).style.display = 'none';
+      if (this._SfReportingButtonEdit != null) (this._SfReportingButtonEdit as HTMLButtonElement).style.display = 'none';
+      if (this._SfReportingButtonDelete != null) (this._SfReportingButtonDelete as HTMLButtonElement).style.display = 'none';
+      if (this._SfReportingButtonDeleteCancel != null) (this._SfReportingButtonDeleteCancel as HTMLButtonElement).style.display = 'none';
+      if (this._SfReportingButtonDeleteConfirm != null) (this._SfReportingButtonDeleteConfirm as HTMLButtonElement).style.display = 'none';
     } else {
       (this._SfReportingButtonBack as HTMLButtonElement)?.removeEventListener('click', this.backClick);
       (this._SfReportingButtonBack as HTMLButtonElement)?.addEventListener('click', this.backClick);
@@ -1007,7 +1116,7 @@ export class SfIReporting extends LitElement {
       }
     }
 
-    html += "</div></div>";
+    html += "</div></div></div>";
     if (this.flow == "new") {
 
       html += `
@@ -1019,13 +1128,13 @@ export class SfIReporting extends LitElement {
                 </div>
               </div>`
     }
-    if (this.showterminate == "true") {
+    if (this.showterminate == "true" || this.flow != "reporting") {
 
       html += `
               <div part="terminate-container"  class="d-flex flex-col flex-grow">
                 
                 <div class="d-flex" part=${this.terminated ? "terminate-container-terminated" : "terminate-container-active"}  id="terminate-container">
-                  <input type="checkbox" id="input-terminate-checkbox" class="input-terminate-checkbox" part="input-terminate-checkbox" ${this.terminated ? "checked" : ""}>
+                  <input type="checkbox" id="input-terminate-checkbox" class="input-terminate-checkbox" part="input-terminate-checkbox" ${this.terminated ? "checked" : ""} ${(this.editdisable == "true" || this.flow != "reporting") ? "disabled" : ""}>
                   <label id="input-terminate-checkbox-label" for="input-terminate-checkbox" part="textarea-label">Terminate</label>
                 </div>
               </div>`
@@ -1045,7 +1154,7 @@ export class SfIReporting extends LitElement {
     (this._SfReportingContainer as HTMLDivElement).innerHTML = html;
     (this._SfReportingContainer as HTMLDivElement).style.display = 'block';
     this.initSectionListeners();
-    
+
     // (this._SfReportingButtonContainer as HTMLDivElement).style.display = 'flex';
     if (this.mode == "view") {
       //   (this._SfReportingButtonEdit as HTMLButtonElement).style.display = 'flex';
@@ -1066,10 +1175,13 @@ export class SfIReporting extends LitElement {
     for (let [i, element] of this.dataModel.entries()) {
       if (element.type == "sf-i-form") {
         let form: SfIForm = (this._SfReportingContainer as HTMLDivElement).querySelector('#' + element.id) as SfIForm;
+        if(form == null){continue;}
         if (this.mode == "view" || this.flow == "details") {
           form.flow = "read"
         }
         if (element.value != '') {
+          console.log('setting sf-i-form searchphrase', element.searchstring, element.value, element.id)
+          form.searchPhrase = form.flow == "read" ? element.searchstring : ''
           form.selectedSearchId = element.value
         }
 
@@ -1077,6 +1189,7 @@ export class SfIReporting extends LitElement {
       } else if (element.type == "sf-i-bricks") {
         console.log('bricks element value', element.value, element.id);
         let bricks: SfIBricks = (this._SfReportingContainer as HTMLDivElement).querySelector('#' + element.id) as SfIBricks
+        if(bricks == null){continue;}
         let selectedDependedValues = []
         for (let dependency of element.dependencies) {
           for (let tempElement of this.dataModel) {
@@ -1195,12 +1308,19 @@ export class SfIReporting extends LitElement {
           }
         })
       } else if (element.type == "sf-i-select") {
-        console.log('rendering sf-i-select', element.id)
+        console.log('rendering sf-i-select', element.id, element.value);
         await customElements.whenDefined('sf-i-select');
         let select: SfISelect = (this._SfReportingContainer as HTMLDivElement).querySelector('#' + element.id) as SfISelect
+        if(select == null){continue;}
         select.flow = (this.mode == "view" || this.flow == "details") ? "read" : ""
         if (element.value != '') {
-          let valArr = [element.value[0].split(';')[1]]
+          let valArr;
+          if(element.value[0].indexOf(';') >= 0){
+            valArr = [element.value[0].split(';')[1]]
+            console.log('rendering sf-i-select', valArr)
+          }else{
+            valArr = [element.value[0]]
+          }
           select.selectedId = valArr
         }
         select.loadMode()
@@ -1209,17 +1329,33 @@ export class SfIReporting extends LitElement {
         console.log('rendering sf-checklist', element.id, JSON.stringify(element.value));
         await customElements.whenDefined('sf-checklist');
         let checklist: SfChecklist = (this._SfReportingContainer as HTMLDivElement).querySelector('#' + element.id) as SfChecklist
-        if (this.mode == 'admin' && this.flow != "reporting") {
-          checklist.listelements = (element.value != '' ? element.value : [])
-        } else {
-          checklist.listelements = element.elementsjson != '' ? JSON.parse(element.elementsjson) : (element.value != '' ? element.value : [])
-          checklist.listselection = JSON.stringify(element.value) != '' ? element.value : {}
+        // if (this.mode == 'admin' && this.flow != "reporting") {
+        //   // if(this.flow == "edit"){
+        //     // checklist.listelements = element.elementsjson != '' ? JSON.parse(element.elementsjson) : []
+        //     let tempSelection: {[key:string]:boolean} = {}
+        //     console.log('checklist edit', element.elementsjson);
+        //     for(let itemname of element.elementsjson != '' ? JSON.parse(element.elementsjson) : []){
+        //       tempSelection[itemname] = false
+        //     }
+        //     checklist.listselection = tempSelection
+        //     console.log('checklist edit', element.value, tempSelection);
+        //   // }else{
+        //   //   checklist.listelements = element.elementsjson != '' ? JSON.parse(element.elementsjson) : []
+        //   // }
+        // } else {
+        // checklist.listelements = element.elementsjson != '' ? JSON.parse(element.elementsjson) : (element.value != '' ? element.value : [])
+        let tempSelection: { [key: string]: boolean } = {}
+        for (let itemname of element.elementsjson != '' ? JSON.parse(element.elementsjson) : (element.value != '' ? element.value : [])) {
+          tempSelection[itemname] = false
         }
+        console.log('checklist reporting', element.value, tempSelection);
+        checklist.listselection = Util.isPlainObject(element.value) ? element.value : tempSelection
+        // }
         checklist.readonly = (this.mode == "view" || this.flow == "details")
-        checklist.mode = this.mode
+        checklist.mode = (this.mode == "view" || this.flow == "details") ? "view" : this.mode
         // console.log('sf-checklist', checklist.listelements, checklist.readonly, this.mode, this.flow);
         setTimeout(() => {
-          console.log('sf-checklist', checklist.listelements, element.value == '', this.mode, this.flow);
+          console.log('sf-checklist', checklist.listelements, checklist.listselection, element.elementsjson, this.mode, this.flow, checklist.mode);
           checklist.loadMode()
         }, 200)
       }
@@ -1392,7 +1528,7 @@ export class SfIReporting extends LitElement {
         `
         for (let [index, historyItem] of this.getPrepopulateJson().history[historyDate].entries()) {
           console.log('historyitem', historyItem)
-          html += `<sf-i-reporting name="" id="history-reporting-${historyDate}-${index}" class="history-reporting" exportparts="uploader-extracted-text:reporting-uploader-extracted-text, uploader-sf-upload-message:reporting-uploader-sf-upload-message, uploader-sf-upload-submessage:reporting-uploader-sf-upload-submessage, uploader-extracted-text-chip:reporting-uploader-extracted-text-chip, uploader-extracted-text-chip-failed:reporting-uploader-extracted-text-chip-failed, uploader-doctype-verify-badge:reporting-uploader-doctype-verify-badge,span-submit-published:reporting-span-submit-published, span-submit-unpublished:reporting-span-submit-unpublished, reporting-container:reporting-reporting-container, button-icon:reporting-button-icon, uploader-button-icon:reporting-uploader-button-icon, sf-i-form-modal-container:reporting-sf-i-form-modal-container, next-calendar-date:reporting-next-calendar-date, last-calendar-date:reporting-last-calendar-date, input-publish-checkbox:reporting-input-publish-checkbox, button-icon-light:reporting-button-icon-light, button-icon-small:reporting-button-icon-small, uploader-input-label:reporting-uploader-input-label, input-radio:reporting-input-radio, radio-label:reporting-radio-label, input-textarea:reporting-input-textarea, input-date:reporting-input-date, input-select-single:reporting-input-select-single, textarea-container:reporting-textarea-container, section-body:reporting-section-body, section-container:reporting-section-container, date-container:reporting-date-container, input-sf-i-uploader:reporting-input-sf-i-uploader, published-container:reporting-published-container, selected-option:reporting-selected-option, input-select-multi-option:reporting-input-select-multi-option, select-option-label:reporting-select-option-label, input-sf-i-form:reporting-input-sf-i-form, input-sf-i-bricks:reporting-input-sf-i-bricks, uploader-input:reporting-uploader-input, form-container:reporting-form-container, published-container:reporting-published-container, form-container-published:reporting-form-container-published, subsection:reporting-subsection, results-title:reporting-results-title, td-head:reporting-td-head, td-action:reporting-td-action, td-body:reporting-td-body, td-body-2:reporting-td-body-2, add-button:reporting-add-button, uploader-button:reporting-uploader-button, section-head-collapsed:reporting-section-head-collapsed, section-title-expanded:reporting-section-title-expanded, section-title-collapsed:reporting-section-title-collapsed, section-head-expanded:reporting-section-head-expanded, progress-bar-finished:reporting-progress-bar-finished, progress-bar-complete:reporting-progress-bar-complete, progress-bar-incomplete:reporting-progress-bar-incomplete, section-success-icon:reporting-section-success-icon, section-body:reporting-section-body, title-section:reporting-title-section, button-lg:reporting-button-lg, uploader-detail-container:reporting-uploader-detail-container, textarea-label:reporting-textarea-label, date-label:reporting-date-label, commentbox:reporting-commentbox, comment-username:reporting-comment-username, detail-head:reporting-detail-head" name="Object Details" mode="view" editdisable="true" formviewclass="flex-wrap" configjson="${JSON.stringify(historyItem.schema).replace(/"/g, '&quot;')}" prepopulatevaljson="${JSON.stringify(historyItem.object).replace(/&quot;/g, '\\&quot;').replace(/"/g, '&quot;')}"></sf-i-reporting>`
+          html += `<sf-i-reporting name="" projectid="${this.projectid}" id="history-reporting-${historyDate}-${index}" class="history-reporting" exportparts="uploader-extracted-text:reporting-uploader-extracted-text, uploader-sf-upload-message:reporting-uploader-sf-upload-message, uploader-sf-upload-submessage:reporting-uploader-sf-upload-submessage, uploader-extracted-text-chip:reporting-uploader-extracted-text-chip, uploader-extracted-text-chip-failed:reporting-uploader-extracted-text-chip-failed, uploader-doctype-verify-badge:reporting-uploader-doctype-verify-badge,span-submit-published:reporting-span-submit-published, span-submit-unpublished:reporting-span-submit-unpublished, reporting-container:reporting-reporting-container, button-icon:reporting-button-icon, uploader-button-icon:reporting-uploader-button-icon, sf-i-form-modal-container:reporting-sf-i-form-modal-container, next-calendar-date:reporting-next-calendar-date, last-calendar-date:reporting-last-calendar-date, input-publish-checkbox:reporting-input-publish-checkbox, button-icon-light:reporting-button-icon-light, button-icon-small:reporting-button-icon-small, uploader-input-label:reporting-uploader-input-label, input-radio:reporting-input-radio, radio-label:reporting-radio-label, input-textarea:reporting-input-textarea, input-textarea-disabled:reporting-input-textarea-disabled, input-date:reporting-input-date, input-date-disabled:reporting-input-date-disabled, input-select-single:reporting-input-select-single, textarea-container:reporting-textarea-container, section-body:reporting-section-body, section-container:reporting-section-container, date-container:reporting-date-container, input-sf-i-uploader:reporting-input-sf-i-uploader, published-container:reporting-published-container, selected-option:reporting-selected-option, input-select-multi-option:reporting-input-select-multi-option, select-option-label:reporting-select-option-label, input-sf-i-form:reporting-input-sf-i-form, input-sf-i-bricks:reporting-input-sf-i-bricks, uploader-input:reporting-uploader-input, form-container:reporting-form-container, published-container:reporting-published-container, form-container-published:reporting-form-container-published, subsection:reporting-subsection, results-title:reporting-results-title, td-head:reporting-td-head, td-action:reporting-td-action, td-body:reporting-td-body, td-body-2:reporting-td-body-2, add-button:reporting-add-button, uploader-button:reporting-uploader-button, section-head-collapsed:reporting-section-head-collapsed, section-title-expanded:reporting-section-title-expanded, section-title-collapsed:reporting-section-title-collapsed, section-head-expanded:reporting-section-head-expanded, progress-bar-finished:reporting-progress-bar-finished, progress-bar-complete:reporting-progress-bar-complete, progress-bar-incomplete:reporting-progress-bar-incomplete, section-success-icon:reporting-section-success-icon, section-body:reporting-section-body, title-section:reporting-title-section, button-lg:reporting-button-lg, uploader-detail-container:reporting-uploader-detail-container, textarea-label:reporting-textarea-label, date-label:reporting-date-label, commentbox:reporting-commentbox, comment-username:reporting-comment-username, detail-head:reporting-detail-head, reporting-uploader-extracted-text:reporting-reporting-uploader-extracted-text, reporting-uploader-sf-upload-message:reporting-reporting-uploader-sf-upload-message, reporting-uploader-sf-upload-submessage:reporting-reporting-uploader-sf-upload-submessage, reporting-uploader-extracted-text-chip:reporting-reporting-uploader-extracted-text-chip, reporting-uploader-extracted-text-chip-failed:reporting-reporting-uploader-extracted-text-chip-failed, reporting-uploader-doctype-verify-badge:reporting-reporting-uploader-doctype-verify-badge, reporting-span-submit-published:reporting-reporting-span-submit-published, reporting-span-submit-unpublished:reporting-reporting-span-submit-unpublished, reporting-reporting-container:reporting-reporting-reporting-container, reporting-button-icon:reporting-reporting-button-icon, reporting-uploader-button-icon:reporting-reporting-uploader-button-icon, reporting-sf-i-form-modal-container:reporting-reporting-sf-i-form-modal-container, reporting-next-calendar-date:reporting-reporting-next-calendar-date, reporting-last-calendar-date:reporting-reporting-last-calendar-date, reporting-input-publish-checkbox:reporting-reporting-input-publish-checkbox, reporting-button-icon-light:reporting-reporting-button-icon-light, reporting-button-icon-small:reporting-reporting-button-icon-small, reporting-uploader-input-label:reporting-reporting-uploader-input-label, reporting-input-radio:reporting-reporting-input-radio, reporting-radio-label:reporting-reporting-radio-label, reporting-input-textarea:reporting-reporting-input-textarea, reporting-input-textarea-disabled:reporting-reporting-input-textarea-disabled, reporting-input-date:reporting-reporting-input-date, reporting-input-date-disabled:reporting-reporting-input-date-disabled, reporting-input-select-single:reporting-reporting-input-select-single, reporting-textarea-container:reporting-reporting-textarea-container, reporting-section-body:reporting-reporting-section-body, reporting-section-container:reporting-reporting-section-container, reporting-date-container:reporting-reporting-date-container, reporting-input-sf-i-uploader:reporting-reporting-input-sf-i-uploader, reporting-published-container:reporting-reporting-published-container, reporting-selected-option:reporting-reporting-selected-option, reporting-input-select-multi-option:reporting-reporting-input-select-multi-option, reporting-select-option-label:reporting-reporting-select-option-label, reporting-input-sf-i-form:reporting-reporting-input-sf-i-form, reporting-input-sf-i-bricks:reporting-reporting-input-sf-i-bricks, reporting-uploader-input:reporting-reporting-uploader-input, reporting-form-container:reporting-reporting-form-container, reporting-published-container:reporting-reporting-published-container, reporting-form-container-published:reporting-reporting-form-container-published, reporting-subsection:reporting-reporting-subsection, reporting-results-title:reporting-reporting-results-title, reporting-td-head:reporting-reporting-td-head, reporting-td-action:reporting-reporting-td-action, reporting-td-body:reporting-reporting-td-body, reporting-td-body-2:reporting-reporting-td-body-2, reporting-add-button:reporting-reporting-add-button, reporting-uploader-button:reporting-reporting-uploader-button, reporting-section-head-collapsed:reporting-reporting-section-head-collapsed, reporting-section-title-expanded:reporting-reporting-section-title-expanded, reporting-section-title-collapsed:reporting-reporting-section-title-collapsed, reporting-section-head-expanded:reporting-reporting-section-head-expanded, reporting-progress-bar-finished:reporting-reporting-progress-bar-finished, reporting-progress-bar-complete:reporting-reporting-progress-bar-complete, reporting-progress-bar-incomplete:reporting-reporting-progress-bar-incomplete, reporting-section-success-icon:reporting-reporting-section-success-icon, reporting-section-body:reporting-reporting-section-body, reporting-title-section:reporting-reporting-title-section, reporting-button-lg:reporting-reporting-button-lg, reporting-uploader-detail-container:reporting-reporting-uploader-detail-container, reporting-textarea-label:reporting-reporting-textarea-label, reporting-date-label:reporting-reporting-date-label, reporting-commentbox:reporting-reporting-commentbox, reporting-comment-username:reporting-reporting-comment-username, reporting-detail-head:reporting-reporting-detail-head, input-sf-i-select:reporting-input-sf-i-select,reporting-input-sf-i-select:reporting-reporting-input-sf-i-select, select-input-select:reporting-select-input-select, checklist-container:reporting-checklist-container, checklist-title:reporting-checklist-title, checklist-list:reporting-checklist-list, checklist-item:reporting-checklist-item, checklist-checkbox:reporting-checklist-checkbox, checklist-checkbox-label:reporting-checklist-checkbox-label, reporting-checklist-container:reporting-reporting-checklist-container, reporting-checklist-title:reporting-reporting-checklist-title, reporting-checklist-list:reporting-reporting-checklist-list, reporting-checklist-item:reporting-reporting-checklist-item, reporting-checklist-checkbox:reporting-reporting-checklist-checkbox, reporting-checklist-checkbox-label:reporting-reporting-checklist-checkbox-label, checklist-add-input:reporting-checklist-add-input, checklist-add-button:reporting-checklist-add-button, terminate-container:reporting-terminate-container, terminate-container-terminated:reporting-terminate-container-terminated, terminate-container-active:reporting-terminate-container-active, input-terminate-checkbox: reporting-input-terminate-checkbox, reporting-terminate-container:reporting-reporting-terminate-container, reporting-terminate-container-terminated:reporting-reporting-terminate-container-terminated, reporting-terminate-container-active:reporting-reporting-terminate-container-active, reporting-input-terminate-checkbox: reporting-reporting-input-terminate-checkbox, uploader-container:reporting-uploader-container, reporting-uploader-container:reporting-reporting-uploader-container, not-selected:reporting-not-selected, reporting-not-selected:reportinig-reporting-not-selected" name="Object Details" mode="view" editdisable="true" formviewclass="flex-wrap" configjson="${JSON.stringify(historyItem.schema).replace(/"/g, '&quot;')}" prepopulatevaljson="${JSON.stringify(historyItem.object).replace(/&quot;/g, '\\&quot;').replace(/"/g, '&quot;')}"></sf-i-reporting>`
           let comments = historyItem.object.comments ?? []
           if (historyItem.object.documents != null && historyItem.object.documents.length > 0) {
             html += '<div class="d-flex justify-between mb-20">';
@@ -1553,16 +1689,24 @@ export class SfIReporting extends LitElement {
             // }
           } else if (element.type == "sf-i-form") {
             if (element.savenameseparate == "yes") {
+              this.dataModel[i].searchstring = [this.getPrepopulateJson()[element.id + 'name']]
               this.dataModel[i].value = [this.getPrepopulateJson()[element.id + 'id']]
               // this.dataModel[i].value = (this.getPrepopulateJson()[element.id + 'name'].trim() ?? '')  + ';' + (this.getPrepopulateJson()[element.id + 'id'] ?? '')
             } else if ((parseInt(element.maxselect) ?? 0) >= 1) {
               if (this.getPrepopulateJson()[element.id + 'id'] != null) {
                 this.dataModel[i].value = [this.getPrepopulateJson()[element.id + 'id'] ?? '']
+                this.dataModel[i].searchstring = [this.getPrepopulateJson()[element.id + 'name'] ?? '']
               } else {
                 let tempArr: any[] = []
-                for (let val of this.getPrepopulateJson()[element.id]) {
-                  tempArr.push(val.split(';')[1] ?? '');
+                let tempName: string = ''
+                console.log(element.id, this.getPrepopulateJson()[element.id])
+                if (this.getPrepopulateJson()[element.id] != null) {
+                  for (let val of this.getPrepopulateJson()[element.id]) {
+                    tempName = (val.split(';')[0] ?? '');
+                    tempArr.push(val.split(';')[1] ?? '');
+                  }
                 }
+                this.dataModel[i].searchstring = tempName
                 this.dataModel[i].value = tempArr
               }
             }
@@ -1570,16 +1714,16 @@ export class SfIReporting extends LitElement {
           } else if (element.type == "sf-i-bricks") {
             if (element.savenameseparate == "yes") {
               this.dataModel[i].value = [this.getPrepopulateJson()[element.id + 'name'] + ';' + this.getPrepopulateJson()[element.id + 'id']]
-              console.log('prepopulating sf-i-bricks',JSON.stringify(this.dataModel[i].value), this.getPrepopulateJson()[element.id + 'id'], this.getPrepopulateJson()[element.id + 'name'])
+              console.log('prepopulating sf-i-bricks', JSON.stringify(this.dataModel[i].value), this.getPrepopulateJson()[element.id + 'id'], this.getPrepopulateJson()[element.id + 'name'])
             } else {
               this.dataModel[i].value = this.getPrepopulateJson()[element.id]
             }
           } else if (element.type == "sf-checklist") {
-            if(this.mode == 'admin'){
-              this.dataModel[i].elementsjson = (this.getPrepopulateJson()[element.id] != null ? JSON.stringify(this.getPrepopulateJson()[element.id]) : '')
-            } else {
-              this.dataModel[i].value = this.getPrepopulateJson()[element.id] ?? []
-            }
+            // if (this.mode == 'admin' && this.flow == "edit") {
+            //   this.dataModel[i].elementsjson = (this.getPrepopulateJson()[element.id] != null ? JSON.stringify(this.getPrepopulateJson()[element.id]) : '')
+            // } else {
+            this.dataModel[i].value = this.getPrepopulateJson()[element.id] ?? []
+            // }
           } else if (element.type == "sf-i-select") {
             this.dataModel[i].value = [this.getPrepopulateJson()[element.id + 'name'] + ';' + this.getPrepopulateJson()[element.id + 'id']]
           } else if (element.type == "sf-i-uploader") {
@@ -1714,10 +1858,11 @@ export class SfIReporting extends LitElement {
           }
           if (element.mandatory != null && flagEval) {
             if (element.value == "" || element.value == null || element.value.length < 1) {
-              if(element.elementsjson == null || element.elementsjson == ''){
+              if (element.elementsjson == null || element.elementsjson == '') {
+                console.log('evalprogress flageval', element, this.id);
                 flagEval = false
               }
-            } 
+            }
           }
         }
       }
@@ -1729,7 +1874,7 @@ export class SfIReporting extends LitElement {
         ((this._SfReportingContainer as HTMLDivElement).querySelector('#' + sectionId + "-success") as HTMLDivElement).style.display = 'none'
       }
     }
-    console.log('evalshowprogress', filled, total, this.editdisable, this.id)
+    console.log('evalshowprogress', filled, total, this.editdisable, flagEval, this.id)
     if (this.editdisable == "true" && ((this._SfReportingContainer as HTMLDivElement).querySelector('.progress-bar') as HTMLDivElement) != null) {
       ((this._SfReportingContainer as HTMLDivElement).querySelector('.progress-bar') as HTMLDivElement).style.display = 'none'
     } else if (((this._SfReportingContainer as HTMLDivElement).querySelector('.progress-bar') as HTMLDivElement) != null) {
@@ -2077,8 +2222,9 @@ export class SfIReporting extends LitElement {
     let checklists = (this._SfReportingContainer as HTMLDivElement).querySelectorAll('.reporting-sf-checklist') as NodeListOf<SfChecklist>
     for (let checklist of checklists) {
       checklist.addEventListener('valueChanged', async (ev: any) => {
-
-        let target = ev.target as SfChecklist;
+        await new Promise(resolve => setTimeout(resolve, 500));
+        console.log('checklist', ev.detail.id);
+        let target = (this._SfReportingContainer as HTMLDivElement).querySelector('#' + ev.detail.id) as SfChecklist;
         let genId = target.id.slice(0, target.id.lastIndexOf('-'));
         console.log('sf-checklist value changed', target.id)
         for (let [i, element] of this.dataModel.entries()) {
@@ -2087,9 +2233,12 @@ export class SfIReporting extends LitElement {
 
               if (this.mode == 'admin') {
                 this.dataModel[i].elementsjson = JSON.stringify(target.listelements)
-              } else if (Object.keys(target.selectedValues()).length > 0) {
-                this.dataModel[i].value = target.selectedValues()
               }
+              //   console.log('target json', this.dataModel[i].elementsjson)
+              // } else if (Object.keys(target.selectedValues()).length > 0) {
+              this.dataModel[i].value = target.selectedValues()
+              console.log('eval checklist value', JSON.stringify(this.dataModel[i].value), JSON.stringify(target.selectedValues()))
+              // }
             }
           } else {
             if (element.schema.indexOf(genId) >= 0) {
@@ -2251,30 +2400,36 @@ export class SfIReporting extends LitElement {
       elementHtml += `<div part="textarea-container" class="d-flex flex-col flex-grow">
                         <label id="${dataObj.id}-label" part="textarea-label">${elementLabel}</label>
                         <div part="td-body-2"><sf-i-elastic-text text="${dataObj.hint}" minLength="50"></sf-i-elastic-text></div>
-                        <${this.editdisable == "true" ? 'div' : 'textarea'} rows="${dataObj.size == "small" ? "4" : (dataObj.size == "smallest" ? "1" : "10")}" id="${dataObj.id}" type="text" class=" reporting-textarea" part="input-textarea" ${this.mode == "view" || this.flow == "details" ? "readonly" : ""}>${dataObj.value}</${this.editdisable == "true" ? 'div' : 'textarea'}>
+                        ${((dataObj.mandatory == null && dataObj.value == '') && (this.mode == "view" || this.flow == "details" || this.editdisable == "true")) ? '<div part="not-selected">Not Selected</div>' :
+          `<${this.editdisable == "true" ? 'div' : 'textarea'} rows="${dataObj.size == "small" ? "4" : (dataObj.size == "smallest" ? "1" : "10")}" id="${dataObj.id}" type="text" class=" reporting-textarea" part="${this.mode == "view" || this.flow == "details" || this.editdisable == "true" ? "input-textarea-disabled" : "input-textarea"}" ${this.mode == "view" || this.flow == "details" ? "readonly" : ""}>${dataObj.value}</${this.editdisable == "true" ? 'div' : 'textarea'}>`}
                       </div>`
     } else if (dataObj.type == "yesno+textarea") {
       elementHtml += `<div part="textarea-container"  class="d-flex flex-col flex-grow">
                         <label id="${dataObj.id}-label" part="textarea-label">${elementLabel}</label>
                         <div part="td-body-2"><sf-i-elastic-text text="${dataObj.hint}" minLength="50"></sf-i-elastic-text></div>
-                        <div class="d-flex">`
-      for (let option of dataObj.options) {
-        elementHtml += `<input type="radio" id="${dataObj.id}-${option.toLowerCase().replace(/ /g, '_')}" name="${dataObj.id}" class="reporting-radio" part="input-radio" value="${option}" ${this.mode == "view" || this.flow == "details" ? "disabled" : ""} ${dataObj.value[0] == option ? "checked" : ""}><label id="${dataObj.id}-${option.toLowerCase().replace(/ /g, '_')}-label" part="radio-label">${option}</label>`
-      }
-      elementHtml += `</div>
-                        <${this.editdisable == "true" ? 'div' : 'textarea'} rows="${dataObj.size == "small" ? "4" : "10"}" id="${dataObj.id}-textarea" type="text" class="reporting-textarea" part="input-textarea" ${this.mode == "view" || this.flow == "details" ? "readonly" : ""}>${dataObj.value[1] ?? ""}</${this.editdisable == "true" ? 'div' : 'textarea'}>
-                      </div>`
+                        ${((dataObj.mandatory == null && dataObj.value == '') && (this.mode == "view" || this.flow == "details" || this.editdisable == "true")) ? '<div part="not-selected">Not Selected</div>' :
+          `<div class="d-flex">`}`
+      if ((dataObj.mandatory != null || dataObj.value != '') ||
+        (this.mode != "view" && this.flow != "details" && this.editdisable != "true")) {
+        for (let option of dataObj.options) {
+          elementHtml += `<input type="radio" id="${dataObj.id}-${option.toLowerCase().replace(/ /g, '_')}" name="${dataObj.id}" class="reporting-radio" part="input-radio" value="${option}" ${this.mode == "view" || this.flow == "details" ? "disabled" : ""} ${dataObj.value[0] == option ? "checked" : ""}><label id="${dataObj.id}-${option.toLowerCase().replace(/ /g, '_')}-label" part="radio-label">${option}</label>`
+        }
+        elementHtml += `</div>
+                        <${this.editdisable == "true" ? 'div' : 'textarea'} rows="${dataObj.size == "small" ? "4" : "10"}" id="${dataObj.id}-textarea" type="text" class="reporting-textarea" part="${this.mode == "view" || this.flow == "details" || this.editdisable == "true" ? "input-textarea-disabled" : "input-textarea"}" ${this.mode == "view" || this.flow == "details" ? "readonly" : ""}>${dataObj.value[1] ?? ""}</${this.editdisable == "true" ? 'div' : 'textarea'}>
+                      </div>`}
     } else if (dataObj.type == "date") {
       elementHtml += `<div part="date-container" class="d-flex flex-col flex-grow">
                         <label id="${dataObj.id}-label" part="date-label">${elementLabel}</label>
                         <div part="td-body-2"><sf-i-elastic-text text="${dataObj.hint}" minLength="50"></sf-i-elastic-text></div>
-                        <input class="reporting-date" id="${dataObj.id}" part="input-date" type="date" ${this.mode == "view" || this.flow == "details" ? "readonly" : ""} value="${dataObj.value}"/>
+                        ${((dataObj.mandatory == null && dataObj.value == '') && (this.mode == "view" || this.flow == "details" || this.editdisable == "true")) ? '<div part="not-selected">Not Selected</div>' : `
+                        <input class="reporting-date" id="${dataObj.id}" part=${(this.editdisable == "true" || this.mode == "view" || this.flow == "details") ? "input-date-disabled" : "input-date"} type="date" ${this.mode == "view" || this.flow == "details" ? "readonly" : ""} value="${dataObj.value}" ${this.editdisable == "true" ? "disabled" : ""}/>`}
                       </div>`
     } else if (dataObj.type == "sf-i-form") {
       elementHtml += `<div part="date-container" class="d-flex flex-col flex-grow">
                         <label id="${dataObj.id}-label" part="date-label">${elementLabel}</label>
                         <div part="td-body-2"><sf-i-elastic-text text="${dataObj.hint}" minLength="50"></sf-i-elastic-text></div>
-                        <sf-i-form exportparts="td-action:form-td-action, td-body" id="${dataObj.id}" class="reporting-sf-i-form" part="input-sf-i-form" name="${dataObj.name}" label="" apiId="${dataObj.apiid}" mode="${dataObj.mode}" searchPhrase="${(dataObj.mode == "multiselect-dropdown" ? (this.projectname + "&") : "") + dataObj.searchstring}" selectProjection="${dataObj.selectprojection}" ignoreProjections="${dataObj.ignoredprojections}" ${parseInt(dataObj.maxselect) == 0 ? "" : `maxselect="${dataObj.maxselect}"`} ${dataObj.mandatory != null ? "mandatory=\"\"" : ""}></sf-i-form>
+                        ${((dataObj.mandatory == null && dataObj.value == '') && (this.mode == "view" || this.flow == "details" || this.editdisable == "true")) ? '<div part="not-selected">Not Selected</div>' :
+          `<sf-i-form exportparts="td-action:form-td-action, td-body" id="${dataObj.id}" class="reporting-sf-i-form" part="input-sf-i-form" name="${dataObj.name}" label="" apiId="${dataObj.apiid}" mode="${dataObj.mode}" searchPhrase="${(dataObj.mode == "multiselect-dropdown" ? (this.projectname + "&") : "") + dataObj.searchstring}" selectProjection="${dataObj.selectprojection}" ignoreProjections="${dataObj.ignoredprojections}" ${parseInt(dataObj.maxselect) == 0 ? "" : `maxselect="${dataObj.maxselect}"`} ${dataObj.mandatory != null ? "mandatory=\"\"" : ""}></sf-i-form>`}
                       </div>`
     } else if (dataObj.type == "sf-i-form-select") {
       let valToBeShown = ""
@@ -2290,7 +2445,8 @@ export class SfIReporting extends LitElement {
       elementHtml += `<div part="date-container" class="d-flex flex-col flex-grow">
                         <label id="${dataObj.id}-label" part="date-label">${elementLabel}</label>
                         <div part="td-body-2"><sf-i-elastic-text text="${dataObj.hint}" minLength="50"></sf-i-elastic-text></div>
-                        <div class="d-flex flex-col align-start" part="form-select-container">
+                        ${((dataObj.mandatory == null && dataObj.value == '') && (this.mode == "view" || this.flow == "details" || this.editdisable == "true")) ? '<div part="not-selected">Not Selected</div>' : 
+                        `<div class="d-flex flex-col align-start" part="form-select-container">
                           <div class"d-flex align-center" part="form-selected-value">
                             ${(Object.keys(dataObj.value) ?? []).length > 0 ? (`
                               <div class="selected-option d-flex justtify-center align-center" part="selected-option" id="selected-option-${dataObj.id}">
@@ -2302,7 +2458,7 @@ export class SfIReporting extends LitElement {
           }
                                 `)
         }
-                          </div>
+                          </div>`}
                         </div>
                       </div>`
     } else if (dataObj.type == "sf-i-bricks") {
@@ -2316,13 +2472,14 @@ export class SfIReporting extends LitElement {
       elementHtml += `<div part="date-container" class="d-flex flex-col flex-grow">
                         <label id="${dataObj.id}-label" part="date-label">${elementLabel}</label>
                         <div part="td-body-2"><sf-i-elastic-text text="${dataObj.hint}" minLength="50"></sf-i-elastic-text></div>
-                        <sf-i-select class="reporting-sf-i-select" exportparts="input-select:select-input-select" id="${dataObj.id}" part="input-sf-i-select" label="" apiId="${dataObj.apiid}" ${dataObj.mandatory != null ? "mandatory=\"\"" : ""}></sf-i-select>
+                        ${((dataObj.mandatory == null && dataObj.value == '') && (this.mode == "view" || this.flow == "details" || this.editdisable == "true")) ? '<div part="not-selected">Not Selected</div>' : 
+                        `<sf-i-select class="reporting-sf-i-select" exportparts="input-select:select-input-select" id="${dataObj.id}" part="input-sf-i-select" label="" apiId="${dataObj.apiid}" ${dataObj.mandatory != null ? "mandatory=\"\"" : ""}></sf-i-select>`}
                       </div>`
     } else if (dataObj.type == "sf-checklist") {
       elementHtml += `<div part="date-container" class="d-flex flex-col flex-grow">
                         <label id="${dataObj.id}-label" part="date-label">${elementLabel}</label>
                         <div part="td-body-2"><sf-i-elastic-text text="${dataObj.hint}" minLength="50"></sf-i-elastic-text></div>
-                        <sf-checklist class="reporting-sf-checklist" exportparts="checklist-container, checklist-title, checklist-list, checklist-item, checklist-checkbox, checklist-checkbox-label" id="${dataObj.id}" part="input-sf-checklist" ${dataObj.mandatory != null ? "mandatory=\"\"" : ""}></sf-checklist>
+                        <sf-checklist class="reporting-sf-checklist" exportparts="checklist-container, checklist-title, checklist-list, checklist-item, checklist-checkbox, checklist-checkbox-label, checklist-add-input, checklist-add-button" id="${dataObj.id}" part="input-sf-checklist" ${dataObj.mandatory != null ? "mandatory=\"\"" : ""}></sf-checklist>
                       </div>`
     } else if (dataObj.type == "sf-i-uploader") {
       elementHtml += `<div part="uploader-container" class="d-flex flex-col flex-grow">
@@ -2454,6 +2611,7 @@ export class SfIReporting extends LitElement {
         this.showLoader();
         let jsonData = await this.csvToJson(file);
         console.log('jsonData', jsonData);
+        await this.fetchSchema()
         for (let element of jsonData) {
           this.published = false
           // this.prepopulateValJson = JSON.stringify(element)
@@ -2644,10 +2802,10 @@ export class SfIReporting extends LitElement {
     if (xhr.status == 200) {
       const jsonRespose = JSON.parse(xhr.responseText);
       this.configjson = JSON.stringify(jsonRespose.schema);
-      // if(this.flow == "new"){
-      this.populateDataModel();
-      this.populateView();
-      // }
+      if (this.flow == "new") {
+        this.populateDataModel();
+        this.populateView();
+      }
     } else {
       const jsonRespose = JSON.parse(xhr.responseText);
       this.setError(jsonRespose.error);
@@ -2688,6 +2846,7 @@ export class SfIReporting extends LitElement {
       console.log('details response', jsonRespose)
       let resultObject = jsonRespose.object
       this.published = resultObject.published ?? false
+      this.terminated = resultObject.terminated ?? false
       this.configjson = resultObject.schema;
       this.prepopulateValJson = resultObject.object
       this.populateDataModel()
@@ -2702,7 +2861,7 @@ export class SfIReporting extends LitElement {
     console.log('adding', obj);
     let url = "https://" + this.apiId + "/add";
 
-    let body: any = { projectid: this.projectid, object: obj, schema: this.getConfigJson(), published: this.published }
+    let body: any = { projectid: this.projectid, object: obj, schema: this.getSchema(), published: this.published }
 
     console.log('adding', body, url);
     const authorization = btoa(Util.readCookie('email') + ":" + Util.readCookie('accessToken'));
@@ -2724,10 +2883,10 @@ export class SfIReporting extends LitElement {
 
   submitEdit = async () => {
     let url = "https://" + this.apiId + "/update";
-    let body = { projectid: this.projectid, objectid: this.selectedItem.id, object: this.selectedValues(), schema: this.getConfigJson(), published: this.published }
+    let body = { projectid: this.projectid, objectid: this.selectedItem.id, object: this.selectedValues(), schema: this.getSchema(), published: this.published }
     if (Object.keys(this.reopenedItem).length > 0) {
       url = "https://" + this.apiId + "/reopen"
-      body = { projectid: this.projectid, object: this.selectedValues(), schema: this.getConfigJson(), objectid: this.reopenedItem.id, published: this.published }
+      body = { projectid: this.projectid, object: this.selectedValues(), schema: this.getSchema(), objectid: this.reopenedItem.id, published: this.published }
     }
     console.log('updating', body, url)
     const authorization = btoa(Util.readCookie('email') + ":" + Util.readCookie('accessToken'));

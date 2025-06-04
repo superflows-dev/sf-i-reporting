@@ -18,6 +18,7 @@ import { DataObject, AddButtonObject } from './dataObjects';
  */
 export declare class SfIReporting extends LitElement {
     apiId: string;
+    apiIdUploader: string;
     projectid: string;
     projectname: string;
     configjson: string;
@@ -29,6 +30,7 @@ export declare class SfIReporting extends LitElement {
     name: string;
     ignoreprojections: string;
     editdisable: string;
+    showterminate: string;
     getIgnoreProjections: () => any;
     usermap: string;
     getUserMap: () => any;
@@ -36,10 +38,12 @@ export declare class SfIReporting extends LitElement {
     dataModel: any[];
     list: any[];
     published: boolean;
+    terminated: boolean;
     lastCalendarGenerated: string;
     nextCalendarScheduled: string;
     selectedItem: any;
     selectedItemIds: any;
+    reopenedItem: any;
     static styles: import("lit").CSSResult;
     _SfRowError: any;
     _SfRowErrorMessage: any;
@@ -49,6 +53,7 @@ export declare class SfIReporting extends LitElement {
     _SfRowNotifMessage: any;
     _SfLoader: any;
     _SfIReportingC: any;
+    _SfIReportingCCopy: any;
     _SfReportingContainer: any;
     _SfReportingContainerShort: any;
     _SfReportingButtonSubmit: any;
@@ -83,6 +88,7 @@ export declare class SfIReporting extends LitElement {
     deleteClick: () => void;
     deleteCancelClick: () => void;
     deleteConfirmClick: () => void;
+    getSchema: () => any;
     getBricksValues: (element: DataObject, selectedValues?: string[]) => any[][];
     initListeners: () => void;
     initListListeners: () => void;
@@ -90,11 +96,14 @@ export declare class SfIReporting extends LitElement {
     initDetailsListeners: () => void;
     initEditListeners: () => void;
     populateDataModel: () => void;
-    populateView: (scrollTopTarget?: number) => void;
-    prepopulateValues: () => void;
+    populateView: (scrollTopTarget?: number) => Promise<void>;
+    populateHistory: () => void;
+    prepopulateValues: (showView?: boolean) => void;
     evalShowProgress: () => void;
     evalTimeout: any;
     initInputListeners: () => void;
+    checkDependencies: (id: string) => Promise<void>;
+    updateShortlistedSearchPhrases: (id: string) => void;
     initSectionListeners: () => void;
     renderAddSection: (addObj: AddButtonObject, iter: number) => string;
     renderSectionContainer: (addObj: AddButtonObject) => string;
@@ -102,6 +111,7 @@ export declare class SfIReporting extends LitElement {
     renderElement: (dataObj: DataObject) => string;
     populateViewShort: () => void;
     populateList: () => void;
+    csvToJson: (file: File) => Promise<any>;
     loadMode: () => Promise<void>;
     prepareXhrPresignedGet: (url: string, loaderElement: any, loaderText?: string) => Promise<unknown>;
     prepareXhrPresignedDelete: (url: string, loaderElement: any, loaderText?: string) => Promise<unknown>;
@@ -115,7 +125,7 @@ export declare class SfIReporting extends LitElement {
     fetchSchema: () => Promise<void>;
     fetchList: () => Promise<void>;
     fetchDetails: () => Promise<void>;
-    submitNew: () => Promise<void>;
+    submitNew: (obj?: any) => Promise<void>;
     submitEdit: () => Promise<void>;
     submitDelete: () => Promise<void>;
     submitPublish: () => Promise<void>;
@@ -123,6 +133,8 @@ export declare class SfIReporting extends LitElement {
     initDecryptListeners: () => void;
     evalDecrypt: () => void;
     submitDecrypt: () => Promise<void>;
+    showLoader: () => Promise<void>;
+    hideLoader: () => Promise<void>;
     protected firstUpdated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void;
     connectedCallback(): void;
     render(): import("lit-html").TemplateResult<1>;

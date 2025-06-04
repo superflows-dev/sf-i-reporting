@@ -171,8 +171,12 @@ function isInteger(value: string) {
     return /^-?\d+$/.test(value);
 }
 
+function isPlainObject(value: any): boolean {
+  return Object.prototype.toString.call(value) === '[object Object]';
+}
+
 const exportFunctions = {
-   callApi, callApiPresignedDelete, callApiPresignedGet, validateName, readCookie, delay, timeSince, isInteger
+   callApi, callApiPresignedDelete, callApiPresignedGet, validateName, readCookie, delay, timeSince, isInteger, isPlainObject
 };
 
 export default exportFunctions;

@@ -79,8 +79,68 @@ async function callApiPresignedGet(url) {
 const delay = (delayInms) => {
     return new Promise(resolve => setTimeout(resolve, delayInms));
 };
+const timeSince = (date) => {
+    var seconds = Math.floor((new Date().getTime() - date) / 1000);
+    if (seconds > 0) {
+        var interval = seconds / 31536000;
+        if (interval > 1) {
+            return Math.floor(interval) + " years ago";
+        }
+        interval = seconds / 2592000;
+        if (interval > 1) {
+            return Math.floor(interval) + " months ago";
+        }
+        interval = seconds / 86400;
+        if (interval > 1) {
+            return Math.floor(interval) + " days ago";
+        }
+        interval = seconds / 3600;
+        if (interval > 1) {
+            return Math.floor(interval) + " hours ago";
+        }
+        interval = seconds / 60;
+        if (interval > 1) {
+            return Math.floor(interval) + " minutes ago";
+        }
+        return Math.floor(seconds) + " seconds ago";
+    }
+    else {
+        var interval = Math.abs(seconds) / 31536000;
+        console.log('timesince', seconds);
+        console.log('interval year', interval);
+        if (interval > 1) {
+            return Math.floor(interval) + " years later";
+        }
+        interval = Math.abs(seconds) / 2592000;
+        console.log('interval months', interval);
+        if (interval > 1) {
+            return Math.floor(interval) + " months later";
+        }
+        interval = Math.abs(seconds) / 86400;
+        console.log('interval days', interval);
+        if (interval > 1) {
+            return Math.floor(interval) + " days later";
+        }
+        interval = Math.abs(seconds) / 3600;
+        console.log('interval hours', interval);
+        if (interval > 1) {
+            return Math.floor(interval) + " hours later";
+        }
+        interval = Math.abs(seconds) / 60;
+        if (interval > 1) {
+            return Math.floor(interval) + " minutes later";
+        }
+        return Math.floor(Math.abs(seconds)) + " seconds";
+    }
+};
+function isInteger(value) {
+    return /^-?\d+$/.test(value);
+}
+function isPlainObject(value) {
+    return Object.prototype.toString.call(value) === '[object Object]';
+}
 const exportFunctions = {
-    callApi, callApiPresignedDelete, callApiPresignedGet, validateName, readCookie, delay
+    callApi, callApiPresignedDelete, callApiPresignedGet, validateName, readCookie, delay, timeSince, isInteger, isPlainObject
 };
 export default exportFunctions;
 //# sourceMappingURL=util.js.map

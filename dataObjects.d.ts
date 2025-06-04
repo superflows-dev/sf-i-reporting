@@ -5,7 +5,7 @@ export interface DataObject {
     label: string;
     hint: string;
     id: string;
-    value: string | string[];
+    value: any;
     options: string[];
     collapse: string;
     apiid: string;
@@ -16,7 +16,16 @@ export interface DataObject {
     ignoredprojections: string | string[];
     savenameseparate: string;
     dependencies: string[];
+    allowedextensions: string;
+    extract: string;
+    maxsize: string;
+    allowdownload: string;
+    selectfields: string[];
     mandatory: any;
+    copytoreopen: boolean;
+    displayinhistory: boolean;
+    elementsjson: string;
+    customreporting: boolean;
 }
 export declare function createDataObject(element: any, iter?: number): DataObject;
 export interface AddButtonObject {

@@ -1,7 +1,7 @@
 {
   "name": "sf-i-reporting",
   "private": false,
-  "version": "1.0.90",
+  "version": "1.0.102",
   "description": "Superflows Reporting Component",
   "main": "sf-i-reporting.js",
   "module": "sf-i-reporting.js",
@@ -56,9 +56,9 @@
     "sf-checklist": "^1.0.17",
     "sf-i-bricks": "^1.0.10",
     "sf-i-elastic-text": "^1.0.17",
-    "sf-i-form": "^1.0.184",
+    "sf-i-form": "^1.0.186",
     "sf-i-select": "^1.0.93",
-    "sf-i-uploader": "^1.0.116",
+    "sf-i-uploader": "^1.0.119",
     "sinon": "^15.0.1"
   },
   "devDependencies": {
