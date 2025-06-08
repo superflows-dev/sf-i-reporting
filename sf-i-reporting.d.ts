@@ -35,6 +35,7 @@ export declare class SfIReporting extends LitElement {
     usermap: string;
     getUserMap: () => any;
     formviewclass: string;
+    disableocr: string;
     dataModel: any[];
     list: any[];
     published: boolean;

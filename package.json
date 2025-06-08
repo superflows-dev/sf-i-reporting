@@ -1,7 +1,7 @@
 {
   "name": "sf-i-reporting",
   "private": false,
-  "version": "1.0.102",
+  "version": "1.0.105",
   "description": "Superflows Reporting Component",
   "main": "sf-i-reporting.js",
   "module": "sf-i-reporting.js",
