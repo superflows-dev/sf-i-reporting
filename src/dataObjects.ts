@@ -11,7 +11,7 @@ export interface DataObject {
     apiid: string,
     mode: string,
     maxselect: string,
-    searchstring: string,
+    searchstring: string | string[],
     selectprojection: string,
     ignoredprojections: string | string[],
     savenameseparate: string,
@@ -24,6 +24,7 @@ export interface DataObject {
     mandatory: any,
     copytoreopen: boolean,
     displayinhistory: boolean,
+    hideinadmin: boolean,
     elementsjson: string,
     customreporting: boolean
 }
@@ -56,10 +57,15 @@ export function createDataObject(element: any, iter?: number): DataObject {
             mandatory: element.mandatory ?? null,
             copytoreopen: (element.copytoreopen ?? "") == "yes",
             displayinhistory: (element.displayinhistory ?? "") == "yes",
+            hideinadmin: (element.hideinadmin ?? "") == "yes",
             elementsjson: element.elementsjson ?? "",
             customreporting: (element.customreporting ?? "") == "yes"
         }
     }else{
+        let dependencies = element.dependencies ?? []
+        for(let [i,dependency] of dependencies.entries()){
+            dependencies[i] = dependency.replace(/{iter}/g,"-" + iter + "")
+        }
         return{
             type: element.type,
             name: (element.name ?? "").replace(/{iter}/g,iter + ""),
@@ -77,7 +83,7 @@ export function createDataObject(element: any, iter?: number): DataObject {
             selectprojection: element.selectprojection ?? "",
             ignoredprojections: element.ignoredprojections ?? "",
             savenameseparate: element.savenameseparate ?? "no",
-            dependencies: element.dependencies ?? [],
+            dependencies: dependencies,
             allowedextensions: element.allowedextensions ?? "",
             extract: element.extract ?? "",
             maxsize: element.maxsize ?? "",
@@ -86,6 +92,7 @@ export function createDataObject(element: any, iter?: number): DataObject {
             mandatory: element.mandatory ?? null,
             copytoreopen: (element.copytoreopen ?? "") == "yes",
             displayinhistory: (element.displayinhistory ?? "") == "yes",
+            hideinadmin: (element.hideinadmin ?? "") == "yes",
             elementsjson: element.elementsjson ?? "",
             customreporting: (element.customreporting ?? "") == "yes"
         }
@@ -94,18 +101,22 @@ export function createDataObject(element: any, iter?: number): DataObject {
 
 export interface AddButtonObject {
     id: string,
+    type: string,
     label: string,
     schema: string,
     direction: string,
+    customreporting: boolean,
     children: DataObject[][]
 }
 
 export function createAddButtonObject(element: any): AddButtonObject {
     return{
         id: element.id,
+        type: "",
         label: element.label,
         schema: element.schema,
         direction: element.direction ?? "column",
+        customreporting: (element.customreporting ?? "") == "yes",
         children: []
     }
 }
