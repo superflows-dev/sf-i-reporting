@@ -3,15 +3,19 @@ export interface DataObject {
     name: string;
     size: string;
     label: string;
+    selectlabel: string;
+    subselectlabel: string;
     hint: string;
     id: string;
     value: any;
     options: string[];
     collapse: string;
     apiid: string;
+    apiidselect: string;
+    apiidsubselect: string;
     mode: string;
     maxselect: string;
-    searchstring: string;
+    searchstring: string | string[];
     selectprojection: string;
     ignoredprojections: string | string[];
     savenameseparate: string;
@@ -24,15 +28,18 @@ export interface DataObject {
     mandatory: any;
     copytoreopen: boolean;
     displayinhistory: boolean;
+    hideinadmin: boolean;
     elementsjson: string;
     customreporting: boolean;
 }
 export declare function createDataObject(element: any, iter?: number): DataObject;
 export interface AddButtonObject {
     id: string;
+    type: string;
     label: string;
     schema: string;
     direction: string;
+    customreporting: boolean;
     children: DataObject[][];
 }
 export declare function createAddButtonObject(element: any): AddButtonObject;

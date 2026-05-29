@@ -4,7 +4,6 @@ declare function callApiPresignedDelete(url: string): Promise<unknown>;
 declare function callApiPresignedGet(url: string): Promise<unknown>;
 declare function isInteger(value: string): boolean;
 declare function isPlainObject(value: any): boolean;
-declare function loadPdfMake(): Promise<any>;
 declare const exportFunctions: {
     callApi: typeof callApi;
     callApiPresignedDelete: typeof callApiPresignedDelete;
@@ -15,7 +14,6 @@ declare const exportFunctions: {
     timeSince: (date: number) => string;
     isInteger: typeof isInteger;
     isPlainObject: typeof isPlainObject;
-    loadPdfMake: typeof loadPdfMake;
 };
 export default exportFunctions;
 //# sourceMappingURL=util.d.ts.map

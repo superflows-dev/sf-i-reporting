@@ -1,0 +1,1 @@
+{"version":3,"file":"docxtemplater.d copy.js","sourceRoot":"","sources":["../src/types/docxtemplater.d copy.ts"],"names":[],"mappings":"","sourcesContent":["declare module \"docxtemplater/build/docxtemplater.js\" {\r\n  import Docxtemplater from \"docxtemplater\";\r\n  export default Docxtemplater;\r\n}"]}

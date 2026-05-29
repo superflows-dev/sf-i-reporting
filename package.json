@@ -1,7 +1,7 @@
 {
   "name": "sf-i-reporting",
   "private": false,
-  "version": "1.0.122",
+  "version": "1.0.124",
   "description": "Superflows Reporting Component",
   "main": "sf-i-reporting.js",
   "module": "sf-i-reporting.js",
@@ -51,8 +51,14 @@
   "license": "MIT",
   "repository": "superflows-dev/sf-i-reporting",
   "dependencies": {
+    "docxtemplater": "^3.68.3",
+    "file-saver": "^2.0.5",
     "fs": "^0.0.1-security",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.2.0",
     "lit": "^2.8.0",
+    "pdfmake": "^0.3.0-beta.5",
+    "pizzip": "^3.2.0",
     "sf-checklist": "^1.0.17",
     "sf-i-bricks": "^1.0.10",
     "sf-i-elastic-text": "^1.0.17",
@@ -67,8 +73,11 @@
     "@11ty/eleventy-plugin-syntaxhighlight": "^4.0.0",
     "@custom-elements-manifest/analyzer": "^0.6.3",
     "@open-wc/testing": "^3.1.7",
-    "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-replace": "^4.0.0",
+    "@types/file-saver": "^2.0.7",
+    "@types/html2pdf.js": "^0.10.0",
+    "@types/pdfmake": "^0.3.2",
+    "@types/pizzip": "^3.0.5",
     "@typescript-eslint/eslint-plugin": "^5.25.0",
     "@typescript-eslint/parser": "^5.25.0",
     "@web/dev-server": "^0.1.31",
@@ -77,13 +86,14 @@
     "@web/test-runner-playwright": "^0.8.8",
     "@webcomponents/webcomponentsjs": "^2.6.0",
     "eslint": "^8.57.1",
+    "html2pdf.js": "^0.14.0",
     "lit-analyzer": "^1.2.1",
     "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
     "rollup": "^2.73.0",
     "rollup-plugin-summary": "^1.4.3",
     "rollup-plugin-terser": "^7.0.2",
-    "typescript": "~4.7.4"
+    "typescript": "^5.9.3"
   },
   "customElements": "custom-elements.json"
 }

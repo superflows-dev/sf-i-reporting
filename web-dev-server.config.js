@@ -12,8 +12,10 @@ if (!['dev', 'prod'].includes(mode)) {
 }
 
 export default {
-  nodeResolve: {exportConditions: mode === 'dev' ? ['development'] : []},
+  nodeResolve: {exportConditions: mode === 'dev' ? ["development", "browser", "default"] : []},
   preserveSymlinks: true,
+  // allow deep node_modules imports
+  watch: true,
   plugins: [
     legacyPlugin({
       polyfills: {

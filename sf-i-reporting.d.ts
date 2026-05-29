@@ -98,7 +98,8 @@ export declare class SfIReporting extends LitElement {
     initEditListeners: () => void;
     populateDataModel: () => void;
     populateView: (scrollTopTarget?: number) => Promise<void>;
-    populateHistory: () => void;
+    populateMultipleSubselectModal: (childElement: any) => void;
+    populateHistory: (selectedDate?: string | null) => void;
     prepopulateValues: (showView?: boolean) => void;
     evalShowProgress: () => void;
     evalTimeout: any;
@@ -126,6 +127,7 @@ export declare class SfIReporting extends LitElement {
     fetchSchema: () => Promise<void>;
     fetchList: () => Promise<void>;
     fetchDetails: () => Promise<void>;
+    fetchHistory: (date: string) => Promise<void>;
     submitNew: (obj?: any) => Promise<void>;
     submitEdit: () => Promise<void>;
     submitDelete: () => Promise<void>;

@@ -8,7 +8,7 @@ import { LitElement, html, css, PropertyValueMap } from 'lit';
 // import {customElement, query, queryAssignedElements, property} from 'lit/decorators.js';
 import { customElement, query, property } from 'lit/decorators.js';
 // import {customElement, query, property} from 'lit/decorators.js';
-import Util from './util';
+import Util from './utils/util';
 // import {LitElement, html, css} from 'lit';
 // import {customElement} from 'lit/decorators.js';
 import { DataObject, AddButtonObject, createDataObject, createAddButtonObject, isAddButtonObject } from './dataObjects';
@@ -66,6 +66,7 @@ export class SfIReporting extends LitElement {
   // configjson: string = "[{\"type\":\"date\",\"name\":\"\",\"size\":\"large\",\"label\":\"Last Check Date *\",\"hint\":\"The date on which this RCM Source was last checked\",\"id\":\"lastcheckdate\",\"value\":\"2025-07-10\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":false,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},[{\"id\":\"sourcereport\",\"type\":\"sourcereport\",\"label\":\"Source Report\",\"schema\":\"[{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Remarks {iter}\\\",\\\"hint\\\":\\\"Remarks on the RCM Source\\\",\\\"id\\\":\\\"remarks{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Impact {iter}\\\",\\\"apiid\\\":\\\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\\\",\\\"hint\\\":\\\"RCM Source Impact\\\",\\\"id\\\":\\\"rcmsourceimpact{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"}]\",\"direction\":\"column\",\"customreporting\":true,\"children\":[],\"name\":\"Source Report\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Remarks {iter}\",\"hint\":\"Remarks on the RCM Source\",\"id\":\"remarks{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Impact {iter}\",\"apiid\":\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Impact\",\"id\":\"rcmsourceimpact{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"}]]"
   // configjson: string = "[{\"type\":\"date\",\"name\":\"\",\"size\":\"large\",\"label\":\"Last Check Date *\",\"hint\":\"The date on which this RCM Source was last checked\",\"id\":\"lastcheckdate\",\"value\":\"2025-07-10\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":false,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},[{\"id\":\"sourcereport\",\"type\":\"sourcereport\",\"label\":\"Source Report\",\"schema\":\"[{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Country {iter}\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/country\\\",\\\"hint\\\":\\\"Country\\\",\\\"id\\\":\\\"country{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-sub-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"State {iter}\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/state\\\",\\\"hint\\\":\\\"State\\\",\\\"id\\\":\\\"state{iter}\\\",\\\"dependencies\\\":[\\\"country{iter}\\\"],\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-form-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Statute {iter}\\\",\\\"hint\\\":\\\"Statute for RCM Source\\\",\\\"id\\\":\\\"statute{iter}\\\",\\\"mode\\\":\\\"select\\\",\\\"dependencies\\\":[\\\"country{iter}\\\"],\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/statute\\\",\\\"selectprojection\\\":\\\"name\\\",\\\"ignoredprojections\\\":\\\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\\\",\\\"maxselect\\\":\\\"1\\\",\\\"displayinhistory\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Name {iter}\\\",\\\"hint\\\":\\\"Notification name from the source\\\",\\\"id\\\":\\\"notification-name-{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Reference {iter}\\\",\\\"hint\\\":\\\"Notification reference from the source\\\",\\\"id\\\":\\\"notification-reference{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"date\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Publication Date {iter}\\\",\\\"hint\\\":\\\"The date on which this notification is published.\\\",\\\"id\\\":\\\"publication-date{iter}\\\",\\\"mandatory\\\":\\\"\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"date\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Effective Date {iter}\\\",\\\"hint\\\":\\\"The date on which this notification is effective.\\\",\\\"id\\\":\\\"effective-date{iter}\\\",\\\"mandatory\\\":\\\"\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Remarks {iter}\\\",\\\"hint\\\":\\\"Remarks on the RCM Source\\\",\\\"id\\\":\\\"remarks{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Impact {iter}\\\",\\\"apiid\\\":\\\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\\\",\\\"hint\\\":\\\"RCM Source Impact\\\",\\\"id\\\":\\\"rcmsourceimpact{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Type {iter}\\\",\\\"apiid\\\":\\\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\\\",\\\"hint\\\":\\\"RCM Source Type\\\",\\\"id\\\":\\\"rcmsourcetype{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-uploader\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Document {iter}\\\",\\\"hint\\\":\\\"Document of the contract\\\",\\\"id\\\":\\\"documents{iter}\\\",\\\"mode\\\":\\\"multiselect-dropdown\\\",\\\"apiid\\\":\\\"1peg5170d3\\\",\\\"allowedextensions\\\":\\\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\\\",\\\"extract\\\":\\\"no\\\",\\\"maxselect\\\":\\\"1\\\",\\\"maxsize\\\":\\\"10242880\\\",\\\"allowdownload\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"}]\",\"direction\":\"column\",\"customreporting\":true,\"children\":[],\"name\":\"Source Report\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"Country {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/country\",\"hint\":\"Country\",\"id\":\"country{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-sub-select\",\"size\":\"large\",\"label\":\"State {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/state\",\"hint\":\"State\",\"id\":\"state{iter}\",\"dependencies\":[\"country{iter}\"],\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-form-select\",\"size\":\"large\",\"label\":\"Statute {iter}\",\"hint\":\"Statute for RCM Source\",\"id\":\"statute{iter}\",\"mode\":\"select\",\"dependencies\":[\"country{iter}\"],\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/statute\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\",\"maxselect\":\"1\",\"displayinhistory\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Name {iter}\",\"hint\":\"Notification name from the source\",\"id\":\"notification-name-{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Reference {iter}\",\"hint\":\"Notification reference from the source\",\"id\":\"notification-reference{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Publication Date {iter}\",\"hint\":\"The date on which this notification is published.\",\"id\":\"publication-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Effective Date {iter}\",\"hint\":\"The date on which this notification is effective.\",\"id\":\"effective-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Remarks {iter}\",\"hint\":\"Remarks on the RCM Source\",\"id\":\"remarks{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Impact {iter}\",\"apiid\":\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Impact\",\"id\":\"rcmsourceimpact{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Type {iter}\",\"apiid\":\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Type\",\"id\":\"rcmsourcetype{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-uploader\",\"size\":\"large\",\"label\":\"RCM Document {iter}\",\"hint\":\"Document of the contract\",\"id\":\"documents{iter}\",\"mode\":\"multiselect-dropdown\",\"apiid\":\"1peg5170d3\",\"allowedextensions\":\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\",\"extract\":\"no\",\"maxselect\":\"1\",\"maxsize\":\"10242880\",\"allowdownload\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"}]]"
   // configjson: string = "[{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Name *\",\"hint\":\"RCM Source name\",\"id\":\"name\",\"mandatory\":\"\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Description\",\"hint\":\"RCM Source description\",\"id\":\"description\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"RCM Source URL *\",\"hint\":\"RCM Source url\",\"id\":\"url\",\"mandatory\":\"\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"RCM Source Frequency *\",\"hint\":\"RCM Source checking frequency\",\"id\":\"frequency\",\"mandatory\":\"\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Last Check Date *\",\"hint\":\"The date on which this RCM Source was last checked\",\"id\":\"lastcheckdate\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Due Date *\",\"hint\":\"The date on which this RCM Source is to be checked next.\",\"id\":\"duedate\",\"mandatory\":\"\",\"displayinhistory\":\"yes\"},{\"type\":\"sf-i-bricks\",\"size\":\"large\",\"label\":\"Country *\",\"hint\":\"Country for RCM Source\",\"id\":\"country\",\"mode\":\"select\",\"savenameseparate\":\"yes\",\"maxselect\":\"1\",\"mandatory\":\"\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\"},{\"type\":\"sf-i-bricks\",\"size\":\"large\",\"label\":\"Entity *\",\"hint\":\"Entity for RCM Source\",\"id\":\"entity\",\"dependencies\":[\"country\"],\"mode\":\"select\",\"savenameseparate\":\"yes\",\"maxselect\":\"1\",\"mandatory\":\"\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\"},{\"type\":\"sf-i-bricks\",\"size\":\"large\",\"label\":\"Location *\",\"hint\":\"Location for RCM Source\",\"id\":\"locations\",\"dependencies\":[\"country\",\"entity\"],\"mode\":\"select\",\"mandatory\":\"\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\"},{\"type\":\"sf-i-bricks\",\"size\":\"large\",\"label\":\"Tags *\",\"hint\":\"Tags applied to RCM Source\",\"id\":\"tags\",\"mode\":\"multiselect\",\"dependencies\":[\"country\",\"entity\",\"locations\"],\"searchstring\":\"-Tags\",\"mandatory\":\"\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\"},{\"type\":\"sf-i-form\",\"size\":\"large\",\"label\":\"Reporter *\",\"hint\":\"Reporter for the RCM Source\",\"id\":\"reporters\",\"mode\":\"multiselect-dropdown\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/userprofile\",\"searchstring\":\"\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]\",\"maxselect\":\"1\",\"mandatory\":\"\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\"},{\"type\":\"sf-i-form\",\"size\":\"large\",\"label\":\"Approver *\",\"hint\":\"Approver for the RCM Source\",\"id\":\"approvers\",\"mode\":\"multiselect-dropdown\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/userprofile\",\"searchstring\":\"\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]\",\"maxselect\":\"1\",\"mandatory\":\"\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\"},{\"type\":\"sf-i-form\",\"size\":\"large\",\"label\":\"Function head *\",\"hint\":\"Function head for the RCM Source\",\"id\":\"functionheads\",\"mode\":\"multiselect-dropdown\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/userprofile\",\"searchstring\":\"\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]\",\"maxselect\":\"1\",\"mandatory\":\"\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"Category *\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/category\",\"hint\":\"Category\",\"id\":\"category\",\"mandatory\":\"\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\"},{\"type\":\"sf-i-sub-select\",\"size\":\"large\",\"label\":\"SubCategory *\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/subcategory\",\"hint\":\"Subcategory\",\"id\":\"subcategory\",\"dependencies\":[\"category\"],\"mandatory\":\"\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\"},{\"type\":\"section\",\"name\":\"Additional Fields\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Context\",\"hint\":\"Context of the RCM Source\",\"id\":\"context\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\"},{\"type\":\"sf-i-form\",\"size\":\"large\",\"label\":\"Disable Approval\",\"hint\":\"Disable approval required for the RCM Source\",\"id\":\"makercheckers\",\"mode\":\"multiselect-dropdown\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/tagging\",\"searchstring\":\"MakerChecker\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\",\"maxselect\":\"1\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\"},{\"type\":\"sf-i-form\",\"size\":\"large\",\"label\":\"Auditor\",\"hint\":\"Auditor for the RCM Source\",\"id\":\"auditors\",\"mode\":\"multiselect-dropdown\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/userprofile\",\"searchstring\":\"\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]\",\"maxselect\":\"1\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\"},{\"type\":\"sf-i-form\",\"size\":\"large\",\"label\":\"Viewer\",\"hint\":\"Viewer for the RCM Source\",\"id\":\"viewers\",\"mode\":\"multiselect-dropdown\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/userprofile\",\"searchstring\":\"\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]\",\"maxselect\":\"1\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\"},[{\"type\":\"sourcereport\",\"id\":\"sourcereport\",\"name\":\"Source Report\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"Country {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/country\",\"hint\":\"Country\",\"id\":\"country{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-sub-select\",\"size\":\"large\",\"label\":\"State {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/state\",\"hint\":\"State\",\"id\":\"state{iter}\",\"dependencies\":[\"country{iter}\"],\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-form-select\",\"size\":\"large\",\"label\":\"Statute {iter}\",\"hint\":\"Statute for RCM Source\",\"id\":\"statute{iter}\",\"mode\":\"multiselect-list\",\"dependencies\":[\"country{iter}\"],\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/statute\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\",\"maxselect\":\"100\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-form-select\",\"size\":\"large\",\"label\":\"Projects {iter}\",\"hint\":\"Projects to whom RCM Source is applicable\",\"id\":\"projects{iter}\",\"mode\":\"multiselect-list\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/project\",\"selectprojection\":\"project\",\"ignoredprojections\":\"[&quot;logo&quot;,&quot;plan&quot;,&quot;address&quot;,&quot;emails&quot;,&quot;vertical&quot;,&quot;cycledate&quot;,&quot;shortid&quot;,&quot;startdate&quot;,&quot;contractdate&quot;,&quot;quality&quot;,&quot;locations&quot;,&quot;shortnumid&quot;,&quot;confighome&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]\",\"maxselect\":\"100\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Name {iter}\",\"hint\":\"Notification name from the source\",\"id\":\"notification-name-{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Reference {iter}\",\"hint\":\"Notification reference from the source\",\"id\":\"notification-reference{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Regulatory Authority {iter}\",\"hint\":\"Regulatory authority related to the source\",\"id\":\"regulatory-authority{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Publication Date {iter}\",\"hint\":\"The date on which this notification is published.\",\"id\":\"publication-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Effective Date {iter}\",\"hint\":\"The date on which this notification is effective.\",\"id\":\"effective-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Remarks {iter}\",\"hint\":\"Remarks on the RCM Source\",\"id\":\"remarks{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Impact {iter}\",\"apiid\":\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Impact\",\"id\":\"rcmsourceimpact{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Type {iter}\",\"apiid\":\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Type\",\"id\":\"rcmsourcetype{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Tool Updation Status {iter}\",\"hint\":\"Status of this source reflecting in the tool\",\"id\":\"tool-updation-status{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-uploader\",\"size\":\"large\",\"label\":\"RCM Document {iter}\",\"hint\":\"Document for this rcm notification\",\"id\":\"document{iter}\",\"mode\":\"multiselect-dropdown\",\"apiid\":\"1peg5170d3\",\"allowedextensions\":\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\",\"extract\":\"no\",\"maxselect\":\"1\",\"maxsize\":\"10242880\",\"allowdownload\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"}]]"
+  // configjson: string = "[{\"type\":\"section\",\"name\":\"Document Control\"},{\"type\":\"textarea\",\"size\":\"large\",\"label\":\"Classification\",\"hint\":\"Public, internal, confidential or sensitive\",\"id\":\"confidential\"},{\"type\":\"textarea\",\"size\":\"large\",\"label\":\"Prepared by\",\"hint\":\"Mention the names of people who participated in preparing this document\",\"id\":\"preparedby\"},{\"type\":\"textarea\",\"size\":\"large\",\"label\":\"Approved by\",\"hint\":\"Mention the names of people who participated in reviewing this document\",\"id\":\"approvedby\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Version\",\"hint\":\"<major_number>.<minor_number>\",\"id\":\"version\"},{\"type\":\"textarea\",\"size\":\"large\",\"label\":\"Revision History\",\"hint\":\"Mention the version number and the reason for the change\",\"id\":\"revision_history\"},{\"type\":\"section\",\"name\":\"Main Document\"},[{\"type\":\"itemname\",\"name\":\"Objective\",\"direction\":\"row\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Date Opened\",\"hint\":\"\",\"id\":\"dateopened{iter}\"},{\"type\":\"textarea\",\"size\":\"large\",\"label\":\"Plan\",\"hint\":\"\",\"id\":\"plan{iter}\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Owner\",\"hint\":\"\",\"id\":\"owner{iter}\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Date Target\",\"hint\":\"\",\"id\":\"datetarget{iter}\"},{\"type\":\"textarea\",\"size\":\"large\",\"label\":\"How To Measure\",\"hint\":\"\",\"id\":\"howtomeasure{iter}\"},{\"type\":\"textarea\",\"size\":\"large\",\"label\":\"Percentage Status\",\"hint\":\"\",\"id\":\"status{iter}\"}]]"
   getConfigJson = () => {
     // @ts-ignore: JSON is global in browser/Node.js
     return JSON.parse(this.configjson)
@@ -73,6 +74,7 @@ export class SfIReporting extends LitElement {
 
   @property()
   prepopulateValJson: string = "[]";
+  // prepopulateValJson: string = "{\"lastcheckdate\":\"2026-02-17\",\"Source Report\":[{\"country-0id\":\"42aae0da-ac44-4a0d-962c-f7693dbe095b\",\"country-0name\":\"India\",\"state-0id\":\"\",\"state-0name\":\"\",\"statute-0\":[{\"id\":\"424ac0fe-c046-4b0b-8a3f-1bfeb7cb333a\",\"country\":[\"India\"],\"jurisdiction\":[\"Federal\"],\"state\":[],\"name\":\"Beedi and Cigar Workers (Conditions of Employment) Act, 1966\",\"category\":[\"ESG\"],\"subcategory\":[\"Labour and Employment\"],\"updatetype\":[\"Correction Update\"],\"shortid\":[\"liinpg8a\"]}],\"projects-0\":\"\",\"subcategories-0\":[{\"selectValue\":\"ESG;e1739f2e-7a94-489a-a9cb-221227cdbe11\",\"subSelectValue\":\"Labour and Employment;ab5f7755-5713-4903-ac54-ca1a35016645\"},{\"selectValue\":\"ESG;e1739f2e-7a94-489a-a9cb-221227cdbe11\",\"subSelectValue\":\"Environment, Health and Safety;b8621182-714d-4e3b-9ad3-4a4fd559eea9\"}],\"notification-name--0\":\"\",\"notification-reference-0\":\"\",\"regulatory-authority-0\":\"\",\"publication-date-0\":\"\",\"effective-date-0\":\"\",\"remarks-0\":\"\",\"rcmsourceimpact-0id\":\"\",\"rcmsourceimpact-0name\":\"\",\"rcmsourcetype-0id\":\"\",\"rcmsourcetype-0name\":\"\",\"tool-updation-status-0\":\"\",\"document-0\":[]}],\"customreporting\":\"[{\\\"type\\\":\\\"date\\\",\\\"name\\\":\\\"\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Last Check Date *\\\",\\\"selectlabel\\\":\\\"\\\",\\\"subselectlabel\\\":\\\"\\\",\\\"hint\\\":\\\"The date on which this RCM Source was last checked\\\",\\\"id\\\":\\\"lastcheckdate\\\",\\\"value\\\":\\\"2026-02-17\\\",\\\"options\\\":[\\\"Yes\\\",\\\"No\\\"],\\\"collapse\\\":\\\"true\\\",\\\"mode\\\":\\\"\\\",\\\"maxselect\\\":\\\"\\\",\\\"apiid\\\":\\\"\\\",\\\"apiidselect\\\":\\\"\\\",\\\"apiidsubselect\\\":\\\"\\\",\\\"searchstring\\\":\\\"\\\",\\\"selectprojection\\\":\\\"\\\",\\\"ignoredprojections\\\":\\\"\\\",\\\"savenameseparate\\\":\\\"no\\\",\\\"dependencies\\\":[],\\\"allowedextensions\\\":\\\"\\\",\\\"extract\\\":\\\"\\\",\\\"maxsize\\\":\\\"\\\",\\\"allowdownload\\\":\\\"\\\",\\\"selectfields\\\":[],\\\"mandatory\\\":\\\"\\\",\\\"copytoreopen\\\":false,\\\"displayinhistory\\\":true,\\\"hideinadmin\\\":false,\\\"elementsjson\\\":\\\"\\\",\\\"customreporting\\\":true},[{\\\"id\\\":\\\"sourcereport\\\",\\\"type\\\":\\\"sourcereport\\\",\\\"label\\\":\\\"Source Report\\\",\\\"schema\\\":\\\"[{\\\\\\\"type\\\\\\\":\\\\\\\"sf-i-select\\\\\\\",\\\\\\\"size\\\\\\\":\\\\\\\"large\\\\\\\",\\\\\\\"label\\\\\\\":\\\\\\\"Country {iter}\\\\\\\",\\\\\\\"apiid\\\\\\\":\\\\\\\"dnytrdlrmxgsy.cloudfront.net/country\\\\\\\",\\\\\\\"hint\\\\\\\":\\\\\\\"Country\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"country{iter}\\\\\\\",\\\\\\\"copytoreopen\\\\\\\":\\\\\\\"yes\\\\\\\",\\\\\\\"displayinhistory\\\\\\\":\\\\\\\"yes\\\\\\\",\\\\\\\"customreporting\\\\\\\":\\\\\\\"yes\\\\\\\"},{\\\\\\\"type\\\\\\\":\\\\\\\"sf-i-sub-select\\\\\\\",\\\\\\\"size\\\\\\\":\\\\\\\"large\\\\\\\",\\\\\\\"label\\\\\\\":\\\\\\\"State {iter}\\\\\\\",\\\\\\\"apiid\\\\\\\":\\\\\\\"dnytrdlrmxgsy.cloudfront.net/state\\\\\\\",\\\\\\\"hint\\\\\\\":\\\\\\\"State\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"state{iter}\\\\\\\",\\\\\\\"dependencies\\\\\\\":[\\\\\\\"country{iter}\\\\\\\"],\\\\\\\"copytoreopen\\\\\\\":\\\\\\\"yes\\\\\\\",\\\\\\\"displayinhistory\\\\\\\":\\\\\\\"yes\\\\\\\",\\\\\\\"customreporting\\\\\\\":\\\\\\\"yes\\\\\\\"},{\\\\\\\"type\\\\\\\":\\\\\\\"sf-i-form-select\\\\\\\",\\\\\\\"size\\\\\\\":\\\\\\\"large\\\\\\\",\\\\\\\"label\\\\\\\":\\\\\\\"Statute {iter}\\\\\\\",\\\\\\\"hint\\\\\\\":\\\\\\\"Statute for RCM Source\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"statute{iter}\\\\\\\",\\\\\\\"mode\\\\\\\":\\\\\\\"multiselect-list\\\\\\\",\\\\\\\"dependencies\\\\\\\":[\\\\\\\"country{iter}\\\\\\\"],\\\\\\\"apiid\\\\\\\":\\\\\\\"dnytrdlrmxgsy.cloudfront.net/statute\\\\\\\",\\\\\\\"selectprojection\\\\\\\":\\\\\\\"name\\\\\\\",\\\\\\\"ignoredprojections\\\\\\\":\\\\\\\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\\\\\\\",\\\\\\\"maxselect\\\\\\\":\\\\\\\"100\\\\\\\",\\\\\\\"displayinhistory\\\\\\\":\\\\\\\"yes\\\\\\\",\\\\\\\"customreporting\\\\\\\":\\\\\\\"yes\\\\\\\"},{\\\\\\\"type\\\\\\\":\\\\\\\"sf-i-form-select\\\\\\\",\\\\\\\"size\\\\\\\":\\\\\\\"large\\\\\\\",\\\\\\\"label\\\\\\\":\\\\\\\"Projects {iter}\\\\\\\",\\\\\\\"hint\\\\\\\":\\\\\\\"Projects to whom RCM Source is applicable\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"projects{iter}\\\\\\\",\\\\\\\"mode\\\\\\\":\\\\\\\"multiselect-list\\\\\\\",\\\\\\\"apiid\\\\\\\":\\\\\\\"dnytrdlrmxgsy.cloudfront.net/project\\\\\\\",\\\\\\\"selectprojection\\\\\\\":\\\\\\\"project\\\\\\\",\\\\\\\"ignoredprojections\\\\\\\":\\\\\\\"[&quot;logo&quot;,&quot;plan&quot;,&quot;address&quot;,&quot;emails&quot;,&quot;vertical&quot;,&quot;cycledate&quot;,&quot;shortid&quot;,&quot;startdate&quot;,&quot;contractdate&quot;,&quot;quality&quot;,&quot;locations&quot;,&quot;shortnumid&quot;,&quot;confighome&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]\\\\\\\",\\\\\\\"maxselect\\\\\\\":\\\\\\\"100\\\\\\\",\\\\\\\"displayinhistory\\\\\\\":\\\\\\\"yes\\\\\\\",\\\\\\\"customreporting\\\\\\\":\\\\\\\"yes\\\\\\\"},{\\\\\\\"type\\\\\\\":\\\\\\\"sf-i-multiple-subselect\\\\\\\",\\\\\\\"size\\\\\\\":\\\\\\\"large\\\\\\\",\\\\\\\"label\\\\\\\":\\\\\\\"Subcategories {iter}\\\\\\\",\\\\\\\"hint\\\\\\\":\\\\\\\"Subcategories to whom RCM Source is applicable\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"subcategories{iter}\\\\\\\",\\\\\\\"mode\\\\\\\":\\\\\\\"multiselect-list\\\\\\\",\\\\\\\"apiidselect\\\\\\\":\\\\\\\"dnytrdlrmxgsy.cloudfront.net/category\\\\\\\",\\\\\\\"selectlabel\\\\\\\":\\\\\\\"Category\\\\\\\",\\\\\\\"apiidsubselect\\\\\\\":\\\\\\\"dnytrdlrmxgsy.cloudfront.net/subcategory\\\\\\\",\\\\\\\"subselectlabel\\\\\\\":\\\\\\\"Subcategory\\\\\\\",\\\\\\\"displayinhistory\\\\\\\":\\\\\\\"yes\\\\\\\",\\\\\\\"customreporting\\\\\\\":\\\\\\\"yes\\\\\\\"},{\\\\\\\"type\\\\\\\":\\\\\\\"textarea\\\\\\\",\\\\\\\"size\\\\\\\":\\\\\\\"small\\\\\\\",\\\\\\\"label\\\\\\\":\\\\\\\"Notification Name {iter}\\\\\\\",\\\\\\\"hint\\\\\\\":\\\\\\\"Notification name from the source\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"notification-name-{iter}\\\\\\\",\\\\\\\"displayinhistory\\\\\\\":\\\\\\\"yes\\\\\\\",\\\\\\\"customreporting\\\\\\\":\\\\\\\"yes\\\\\\\"},{\\\\\\\"type\\\\\\\":\\\\\\\"textarea\\\\\\\",\\\\\\\"size\\\\\\\":\\\\\\\"small\\\\\\\",\\\\\\\"label\\\\\\\":\\\\\\\"Notification Reference {iter}\\\\\\\",\\\\\\\"hint\\\\\\\":\\\\\\\"Notification reference from the source\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"notification-reference{iter}\\\\\\\",\\\\\\\"displayinhistory\\\\\\\":\\\\\\\"yes\\\\\\\",\\\\\\\"customreporting\\\\\\\":\\\\\\\"yes\\\\\\\"},{\\\\\\\"type\\\\\\\":\\\\\\\"textarea\\\\\\\",\\\\\\\"size\\\\\\\":\\\\\\\"small\\\\\\\",\\\\\\\"label\\\\\\\":\\\\\\\"Regulatory Authority {iter}\\\\\\\",\\\\\\\"hint\\\\\\\":\\\\\\\"Regulatory authority related to the source\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"regulatory-authority{iter}\\\\\\\",\\\\\\\"displayinhistory\\\\\\\":\\\\\\\"yes\\\\\\\",\\\\\\\"customreporting\\\\\\\":\\\\\\\"yes\\\\\\\"},{\\\\\\\"type\\\\\\\":\\\\\\\"date\\\\\\\",\\\\\\\"size\\\\\\\":\\\\\\\"large\\\\\\\",\\\\\\\"label\\\\\\\":\\\\\\\"Publication Date {iter}\\\\\\\",\\\\\\\"hint\\\\\\\":\\\\\\\"The date on which this notification is published.\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"publication-date{iter}\\\\\\\",\\\\\\\"mandatory\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"displayinhistory\\\\\\\":\\\\\\\"yes\\\\\\\",\\\\\\\"customreporting\\\\\\\":\\\\\\\"yes\\\\\\\"},{\\\\\\\"type\\\\\\\":\\\\\\\"date\\\\\\\",\\\\\\\"size\\\\\\\":\\\\\\\"large\\\\\\\",\\\\\\\"label\\\\\\\":\\\\\\\"Effective Date {iter}\\\\\\\",\\\\\\\"hint\\\\\\\":\\\\\\\"The date on which this notification is effective.\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"effective-date{iter}\\\\\\\",\\\\\\\"mandatory\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"displayinhistory\\\\\\\":\\\\\\\"yes\\\\\\\",\\\\\\\"customreporting\\\\\\\":\\\\\\\"yes\\\\\\\"},{\\\\\\\"type\\\\\\\":\\\\\\\"textarea\\\\\\\",\\\\\\\"size\\\\\\\":\\\\\\\"small\\\\\\\",\\\\\\\"label\\\\\\\":\\\\\\\"Remarks {iter}\\\\\\\",\\\\\\\"hint\\\\\\\":\\\\\\\"Remarks on the RCM Source\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"remarks{iter}\\\\\\\",\\\\\\\"copytoreopen\\\\\\\":\\\\\\\"yes\\\\\\\",\\\\\\\"displayinhistory\\\\\\\":\\\\\\\"yes\\\\\\\",\\\\\\\"customreporting\\\\\\\":\\\\\\\"yes\\\\\\\"},{\\\\\\\"type\\\\\\\":\\\\\\\"sf-i-select\\\\\\\",\\\\\\\"size\\\\\\\":\\\\\\\"large\\\\\\\",\\\\\\\"label\\\\\\\":\\\\\\\"RCM Source Impact {iter}\\\\\\\",\\\\\\\"apiid\\\\\\\":\\\\\\\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\\\\\\\",\\\\\\\"hint\\\\\\\":\\\\\\\"RCM Source Impact\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"rcmsourceimpact{iter}\\\\\\\",\\\\\\\"displayinhistory\\\\\\\":\\\\\\\"yes\\\\\\\",\\\\\\\"customreporting\\\\\\\":\\\\\\\"yes\\\\\\\"},{\\\\\\\"type\\\\\\\":\\\\\\\"sf-i-select\\\\\\\",\\\\\\\"size\\\\\\\":\\\\\\\"large\\\\\\\",\\\\\\\"label\\\\\\\":\\\\\\\"RCM Source Type {iter}\\\\\\\",\\\\\\\"apiid\\\\\\\":\\\\\\\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\\\\\\\",\\\\\\\"hint\\\\\\\":\\\\\\\"RCM Source Type\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"rcmsourcetype{iter}\\\\\\\",\\\\\\\"displayinhistory\\\\\\\":\\\\\\\"yes\\\\\\\",\\\\\\\"customreporting\\\\\\\":\\\\\\\"yes\\\\\\\"},{\\\\\\\"type\\\\\\\":\\\\\\\"textarea\\\\\\\",\\\\\\\"size\\\\\\\":\\\\\\\"small\\\\\\\",\\\\\\\"label\\\\\\\":\\\\\\\"Tool Updation Status {iter}\\\\\\\",\\\\\\\"hint\\\\\\\":\\\\\\\"Status of this source reflecting in the tool\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"tool-updation-status{iter}\\\\\\\",\\\\\\\"displayinhistory\\\\\\\":\\\\\\\"yes\\\\\\\",\\\\\\\"customreporting\\\\\\\":\\\\\\\"yes\\\\\\\"},{\\\\\\\"type\\\\\\\":\\\\\\\"sf-i-uploader\\\\\\\",\\\\\\\"size\\\\\\\":\\\\\\\"large\\\\\\\",\\\\\\\"label\\\\\\\":\\\\\\\"RCM Document {iter}\\\\\\\",\\\\\\\"hint\\\\\\\":\\\\\\\"Document for this rcm notification\\\\\\\",\\\\\\\"id\\\\\\\":\\\\\\\"document{iter}\\\\\\\",\\\\\\\"mode\\\\\\\":\\\\\\\"multiselect-dropdown\\\\\\\",\\\\\\\"apiid\\\\\\\":\\\\\\\"1peg5170d3\\\\\\\",\\\\\\\"allowedextensions\\\\\\\":\\\\\\\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\\\\\\\",\\\\\\\"extract\\\\\\\":\\\\\\\"no\\\\\\\",\\\\\\\"maxselect\\\\\\\":\\\\\\\"1\\\\\\\",\\\\\\\"maxsize\\\\\\\":\\\\\\\"10242880\\\\\\\",\\\\\\\"allowdownload\\\\\\\":\\\\\\\"yes\\\\\\\",\\\\\\\"displayinhistory\\\\\\\":\\\\\\\"yes\\\\\\\",\\\\\\\"customreporting\\\\\\\":\\\\\\\"yes\\\\\\\"}]\\\",\\\"direction\\\":\\\"column\\\",\\\"customreporting\\\":true,\\\"children\\\":[[{\\\"type\\\":\\\"sf-i-select\\\",\\\"name\\\":\\\"\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Country 0\\\",\\\"selectlabel\\\":\\\"\\\",\\\"subselectlabel\\\":\\\"\\\",\\\"hint\\\":\\\"Country\\\",\\\"id\\\":\\\"country-0\\\",\\\"options\\\":[\\\"Yes\\\",\\\"No\\\"],\\\"value\\\":[\\\"42aae0da-ac44-4a0d-962c-f7693dbe095b\\\"],\\\"collapse\\\":\\\"true\\\",\\\"mode\\\":\\\"\\\",\\\"maxselect\\\":\\\"\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/country\\\",\\\"apiidselect\\\":\\\"\\\",\\\"apiidsubselect\\\":\\\"\\\",\\\"searchstring\\\":\\\"\\\",\\\"selectprojection\\\":\\\"\\\",\\\"ignoredprojections\\\":\\\"\\\",\\\"savenameseparate\\\":\\\"no\\\",\\\"dependencies\\\":[],\\\"allowedextensions\\\":\\\"\\\",\\\"extract\\\":\\\"\\\",\\\"maxsize\\\":\\\"\\\",\\\"allowdownload\\\":\\\"\\\",\\\"selectfields\\\":[],\\\"mandatory\\\":null,\\\"copytoreopen\\\":true,\\\"displayinhistory\\\":true,\\\"hideinadmin\\\":false,\\\"elementsjson\\\":\\\"\\\",\\\"customreporting\\\":true},{\\\"type\\\":\\\"sf-i-sub-select\\\",\\\"name\\\":\\\"\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"State 0\\\",\\\"selectlabel\\\":\\\"\\\",\\\"subselectlabel\\\":\\\"\\\",\\\"hint\\\":\\\"State\\\",\\\"id\\\":\\\"state-0\\\",\\\"options\\\":[\\\"Yes\\\",\\\"No\\\"],\\\"value\\\":\\\"\\\",\\\"collapse\\\":\\\"true\\\",\\\"mode\\\":\\\"\\\",\\\"maxselect\\\":\\\"\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/state\\\",\\\"apiidselect\\\":\\\"\\\",\\\"apiidsubselect\\\":\\\"\\\",\\\"searchstring\\\":\\\"\\\",\\\"selectprojection\\\":\\\"\\\",\\\"ignoredprojections\\\":\\\"\\\",\\\"savenameseparate\\\":\\\"no\\\",\\\"dependencies\\\":[\\\"country-0\\\"],\\\"allowedextensions\\\":\\\"\\\",\\\"extract\\\":\\\"\\\",\\\"maxsize\\\":\\\"\\\",\\\"allowdownload\\\":\\\"\\\",\\\"selectfields\\\":[],\\\"mandatory\\\":null,\\\"copytoreopen\\\":true,\\\"displayinhistory\\\":true,\\\"hideinadmin\\\":false,\\\"elementsjson\\\":\\\"\\\",\\\"customreporting\\\":true},{\\\"type\\\":\\\"sf-i-form-select\\\",\\\"name\\\":\\\"\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Statute 0\\\",\\\"selectlabel\\\":\\\"\\\",\\\"subselectlabel\\\":\\\"\\\",\\\"hint\\\":\\\"Statute for RCM Source\\\",\\\"id\\\":\\\"statute-0\\\",\\\"options\\\":[\\\"Yes\\\",\\\"No\\\"],\\\"value\\\":[{\\\"id\\\":\\\"424ac0fe-c046-4b0b-8a3f-1bfeb7cb333a\\\",\\\"country\\\":[\\\"India\\\"],\\\"jurisdiction\\\":[\\\"Federal\\\"],\\\"state\\\":[],\\\"name\\\":\\\"Beedi and Cigar Workers (Conditions of Employment) Act, 1966\\\",\\\"category\\\":[\\\"ESG\\\"],\\\"subcategory\\\":[\\\"Labour and Employment\\\"],\\\"updatetype\\\":[\\\"Correction Update\\\"],\\\"shortid\\\":[\\\"liinpg8a\\\"]}],\\\"collapse\\\":\\\"true\\\",\\\"mode\\\":\\\"multiselect-list\\\",\\\"maxselect\\\":\\\"100\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/statute\\\",\\\"apiidselect\\\":\\\"\\\",\\\"apiidsubselect\\\":\\\"\\\",\\\"searchstring\\\":\\\"\\\",\\\"selectprojection\\\":\\\"name\\\",\\\"ignoredprojections\\\":\\\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\\\",\\\"savenameseparate\\\":\\\"no\\\",\\\"dependencies\\\":[\\\"country-0\\\"],\\\"allowedextensions\\\":\\\"\\\",\\\"extract\\\":\\\"\\\",\\\"maxsize\\\":\\\"\\\",\\\"allowdownload\\\":\\\"\\\",\\\"selectfields\\\":[],\\\"mandatory\\\":null,\\\"copytoreopen\\\":false,\\\"displayinhistory\\\":true,\\\"hideinadmin\\\":false,\\\"elementsjson\\\":\\\"\\\",\\\"customreporting\\\":true},{\\\"type\\\":\\\"sf-i-form-select\\\",\\\"name\\\":\\\"\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Projects 0\\\",\\\"selectlabel\\\":\\\"\\\",\\\"subselectlabel\\\":\\\"\\\",\\\"hint\\\":\\\"Projects to whom RCM Source is applicable\\\",\\\"id\\\":\\\"projects-0\\\",\\\"options\\\":[\\\"Yes\\\",\\\"No\\\"],\\\"value\\\":\\\"\\\",\\\"collapse\\\":\\\"true\\\",\\\"mode\\\":\\\"multiselect-list\\\",\\\"maxselect\\\":\\\"100\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/project\\\",\\\"apiidselect\\\":\\\"\\\",\\\"apiidsubselect\\\":\\\"\\\",\\\"searchstring\\\":\\\"\\\",\\\"selectprojection\\\":\\\"project\\\",\\\"ignoredprojections\\\":\\\"[&quot;logo&quot;,&quot;plan&quot;,&quot;address&quot;,&quot;emails&quot;,&quot;vertical&quot;,&quot;cycledate&quot;,&quot;shortid&quot;,&quot;startdate&quot;,&quot;contractdate&quot;,&quot;quality&quot;,&quot;locations&quot;,&quot;shortnumid&quot;,&quot;confighome&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]\\\",\\\"savenameseparate\\\":\\\"no\\\",\\\"dependencies\\\":[],\\\"allowedextensions\\\":\\\"\\\",\\\"extract\\\":\\\"\\\",\\\"maxsize\\\":\\\"\\\",\\\"allowdownload\\\":\\\"\\\",\\\"selectfields\\\":[],\\\"mandatory\\\":null,\\\"copytoreopen\\\":false,\\\"displayinhistory\\\":true,\\\"hideinadmin\\\":false,\\\"elementsjson\\\":\\\"\\\",\\\"customreporting\\\":true},{\\\"type\\\":\\\"sf-i-multiple-subselect\\\",\\\"name\\\":\\\"\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Subcategories 0\\\",\\\"selectlabel\\\":\\\"Category\\\",\\\"subselectlabel\\\":\\\"Subcategory\\\",\\\"hint\\\":\\\"Subcategories to whom RCM Source is applicable\\\",\\\"id\\\":\\\"subcategories-0\\\",\\\"options\\\":[\\\"Yes\\\",\\\"No\\\"],\\\"value\\\":[{\\\"selectValue\\\":\\\"ESG;e1739f2e-7a94-489a-a9cb-221227cdbe11\\\",\\\"subSelectValue\\\":\\\"Labour and Employment;ab5f7755-5713-4903-ac54-ca1a35016645\\\"},{\\\"selectValue\\\":\\\"ESG;e1739f2e-7a94-489a-a9cb-221227cdbe11\\\",\\\"subSelectValue\\\":\\\"Environment, Health and Safety;b8621182-714d-4e3b-9ad3-4a4fd559eea9\\\"}],\\\"collapse\\\":\\\"true\\\",\\\"mode\\\":\\\"multiselect-list\\\",\\\"maxselect\\\":\\\"\\\",\\\"apiid\\\":\\\"\\\",\\\"apiidselect\\\":\\\"dnytrdlrmxgsy.cloudfront.net/category\\\",\\\"apiidsubselect\\\":\\\"dnytrdlrmxgsy.cloudfront.net/subcategory\\\",\\\"searchstring\\\":\\\"\\\",\\\"selectprojection\\\":\\\"\\\",\\\"ignoredprojections\\\":\\\"\\\",\\\"savenameseparate\\\":\\\"no\\\",\\\"dependencies\\\":[],\\\"allowedextensions\\\":\\\"\\\",\\\"extract\\\":\\\"\\\",\\\"maxsize\\\":\\\"\\\",\\\"allowdownload\\\":\\\"\\\",\\\"selectfields\\\":[],\\\"mandatory\\\":null,\\\"copytoreopen\\\":false,\\\"displayinhistory\\\":true,\\\"hideinadmin\\\":false,\\\"elementsjson\\\":\\\"\\\",\\\"customreporting\\\":true},{\\\"type\\\":\\\"textarea\\\",\\\"name\\\":\\\"\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Name 0\\\",\\\"selectlabel\\\":\\\"\\\",\\\"subselectlabel\\\":\\\"\\\",\\\"hint\\\":\\\"Notification name from the source\\\",\\\"id\\\":\\\"notification-name--0\\\",\\\"options\\\":[\\\"Yes\\\",\\\"No\\\"],\\\"value\\\":\\\"\\\",\\\"collapse\\\":\\\"true\\\",\\\"mode\\\":\\\"\\\",\\\"maxselect\\\":\\\"\\\",\\\"apiid\\\":\\\"\\\",\\\"apiidselect\\\":\\\"\\\",\\\"apiidsubselect\\\":\\\"\\\",\\\"searchstring\\\":\\\"\\\",\\\"selectprojection\\\":\\\"\\\",\\\"ignoredprojections\\\":\\\"\\\",\\\"savenameseparate\\\":\\\"no\\\",\\\"dependencies\\\":[],\\\"allowedextensions\\\":\\\"\\\",\\\"extract\\\":\\\"\\\",\\\"maxsize\\\":\\\"\\\",\\\"allowdownload\\\":\\\"\\\",\\\"selectfields\\\":[],\\\"mandatory\\\":null,\\\"copytoreopen\\\":false,\\\"displayinhistory\\\":true,\\\"hideinadmin\\\":false,\\\"elementsjson\\\":\\\"\\\",\\\"customreporting\\\":true},{\\\"type\\\":\\\"textarea\\\",\\\"name\\\":\\\"\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Reference 0\\\",\\\"selectlabel\\\":\\\"\\\",\\\"subselectlabel\\\":\\\"\\\",\\\"hint\\\":\\\"Notification reference from the source\\\",\\\"id\\\":\\\"notification-reference-0\\\",\\\"options\\\":[\\\"Yes\\\",\\\"No\\\"],\\\"value\\\":\\\"\\\",\\\"collapse\\\":\\\"true\\\",\\\"mode\\\":\\\"\\\",\\\"maxselect\\\":\\\"\\\",\\\"apiid\\\":\\\"\\\",\\\"apiidselect\\\":\\\"\\\",\\\"apiidsubselect\\\":\\\"\\\",\\\"searchstring\\\":\\\"\\\",\\\"selectprojection\\\":\\\"\\\",\\\"ignoredprojections\\\":\\\"\\\",\\\"savenameseparate\\\":\\\"no\\\",\\\"dependencies\\\":[],\\\"allowedextensions\\\":\\\"\\\",\\\"extract\\\":\\\"\\\",\\\"maxsize\\\":\\\"\\\",\\\"allowdownload\\\":\\\"\\\",\\\"selectfields\\\":[],\\\"mandatory\\\":null,\\\"copytoreopen\\\":false,\\\"displayinhistory\\\":true,\\\"hideinadmin\\\":false,\\\"elementsjson\\\":\\\"\\\",\\\"customreporting\\\":true},{\\\"type\\\":\\\"textarea\\\",\\\"name\\\":\\\"\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Regulatory Authority 0\\\",\\\"selectlabel\\\":\\\"\\\",\\\"subselectlabel\\\":\\\"\\\",\\\"hint\\\":\\\"Regulatory authority related to the source\\\",\\\"id\\\":\\\"regulatory-authority-0\\\",\\\"options\\\":[\\\"Yes\\\",\\\"No\\\"],\\\"value\\\":\\\"\\\",\\\"collapse\\\":\\\"true\\\",\\\"mode\\\":\\\"\\\",\\\"maxselect\\\":\\\"\\\",\\\"apiid\\\":\\\"\\\",\\\"apiidselect\\\":\\\"\\\",\\\"apiidsubselect\\\":\\\"\\\",\\\"searchstring\\\":\\\"\\\",\\\"selectprojection\\\":\\\"\\\",\\\"ignoredprojections\\\":\\\"\\\",\\\"savenameseparate\\\":\\\"no\\\",\\\"dependencies\\\":[],\\\"allowedextensions\\\":\\\"\\\",\\\"extract\\\":\\\"\\\",\\\"maxsize\\\":\\\"\\\",\\\"allowdownload\\\":\\\"\\\",\\\"selectfields\\\":[],\\\"mandatory\\\":null,\\\"copytoreopen\\\":false,\\\"displayinhistory\\\":true,\\\"hideinadmin\\\":false,\\\"elementsjson\\\":\\\"\\\",\\\"customreporting\\\":true},{\\\"type\\\":\\\"date\\\",\\\"name\\\":\\\"\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Publication Date 0\\\",\\\"selectlabel\\\":\\\"\\\",\\\"subselectlabel\\\":\\\"\\\",\\\"hint\\\":\\\"The date on which this notification is published.\\\",\\\"id\\\":\\\"publication-date-0\\\",\\\"options\\\":[\\\"Yes\\\",\\\"No\\\"],\\\"value\\\":\\\"\\\",\\\"collapse\\\":\\\"true\\\",\\\"mode\\\":\\\"\\\",\\\"maxselect\\\":\\\"\\\",\\\"apiid\\\":\\\"\\\",\\\"apiidselect\\\":\\\"\\\",\\\"apiidsubselect\\\":\\\"\\\",\\\"searchstring\\\":\\\"\\\",\\\"selectprojection\\\":\\\"\\\",\\\"ignoredprojections\\\":\\\"\\\",\\\"savenameseparate\\\":\\\"no\\\",\\\"dependencies\\\":[],\\\"allowedextensions\\\":\\\"\\\",\\\"extract\\\":\\\"\\\",\\\"maxsize\\\":\\\"\\\",\\\"allowdownload\\\":\\\"\\\",\\\"selectfields\\\":[],\\\"mandatory\\\":\\\"\\\",\\\"copytoreopen\\\":false,\\\"displayinhistory\\\":true,\\\"hideinadmin\\\":false,\\\"elementsjson\\\":\\\"\\\",\\\"customreporting\\\":true},{\\\"type\\\":\\\"date\\\",\\\"name\\\":\\\"\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Effective Date 0\\\",\\\"selectlabel\\\":\\\"\\\",\\\"subselectlabel\\\":\\\"\\\",\\\"hint\\\":\\\"The date on which this notification is effective.\\\",\\\"id\\\":\\\"effective-date-0\\\",\\\"options\\\":[\\\"Yes\\\",\\\"No\\\"],\\\"value\\\":\\\"\\\",\\\"collapse\\\":\\\"true\\\",\\\"mode\\\":\\\"\\\",\\\"maxselect\\\":\\\"\\\",\\\"apiid\\\":\\\"\\\",\\\"apiidselect\\\":\\\"\\\",\\\"apiidsubselect\\\":\\\"\\\",\\\"searchstring\\\":\\\"\\\",\\\"selectprojection\\\":\\\"\\\",\\\"ignoredprojections\\\":\\\"\\\",\\\"savenameseparate\\\":\\\"no\\\",\\\"dependencies\\\":[],\\\"allowedextensions\\\":\\\"\\\",\\\"extract\\\":\\\"\\\",\\\"maxsize\\\":\\\"\\\",\\\"allowdownload\\\":\\\"\\\",\\\"selectfields\\\":[],\\\"mandatory\\\":\\\"\\\",\\\"copytoreopen\\\":false,\\\"displayinhistory\\\":true,\\\"hideinadmin\\\":false,\\\"elementsjson\\\":\\\"\\\",\\\"customreporting\\\":true},{\\\"type\\\":\\\"textarea\\\",\\\"name\\\":\\\"\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Remarks 0\\\",\\\"selectlabel\\\":\\\"\\\",\\\"subselectlabel\\\":\\\"\\\",\\\"hint\\\":\\\"Remarks on the RCM Source\\\",\\\"id\\\":\\\"remarks-0\\\",\\\"options\\\":[\\\"Yes\\\",\\\"No\\\"],\\\"value\\\":\\\"\\\",\\\"collapse\\\":\\\"true\\\",\\\"mode\\\":\\\"\\\",\\\"maxselect\\\":\\\"\\\",\\\"apiid\\\":\\\"\\\",\\\"apiidselect\\\":\\\"\\\",\\\"apiidsubselect\\\":\\\"\\\",\\\"searchstring\\\":\\\"\\\",\\\"selectprojection\\\":\\\"\\\",\\\"ignoredprojections\\\":\\\"\\\",\\\"savenameseparate\\\":\\\"no\\\",\\\"dependencies\\\":[],\\\"allowedextensions\\\":\\\"\\\",\\\"extract\\\":\\\"\\\",\\\"maxsize\\\":\\\"\\\",\\\"allowdownload\\\":\\\"\\\",\\\"selectfields\\\":[],\\\"mandatory\\\":null,\\\"copytoreopen\\\":true,\\\"displayinhistory\\\":true,\\\"hideinadmin\\\":false,\\\"elementsjson\\\":\\\"\\\",\\\"customreporting\\\":true},{\\\"type\\\":\\\"sf-i-select\\\",\\\"name\\\":\\\"\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Impact 0\\\",\\\"selectlabel\\\":\\\"\\\",\\\"subselectlabel\\\":\\\"\\\",\\\"hint\\\":\\\"RCM Source Impact\\\",\\\"id\\\":\\\"rcmsourceimpact-0\\\",\\\"options\\\":[\\\"Yes\\\",\\\"No\\\"],\\\"value\\\":\\\"\\\",\\\"collapse\\\":\\\"true\\\",\\\"mode\\\":\\\"\\\",\\\"maxselect\\\":\\\"\\\",\\\"apiid\\\":\\\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\\\",\\\"apiidselect\\\":\\\"\\\",\\\"apiidsubselect\\\":\\\"\\\",\\\"searchstring\\\":\\\"\\\",\\\"selectprojection\\\":\\\"\\\",\\\"ignoredprojections\\\":\\\"\\\",\\\"savenameseparate\\\":\\\"no\\\",\\\"dependencies\\\":[],\\\"allowedextensions\\\":\\\"\\\",\\\"extract\\\":\\\"\\\",\\\"maxsize\\\":\\\"\\\",\\\"allowdownload\\\":\\\"\\\",\\\"selectfields\\\":[],\\\"mandatory\\\":null,\\\"copytoreopen\\\":false,\\\"displayinhistory\\\":true,\\\"hideinadmin\\\":false,\\\"elementsjson\\\":\\\"\\\",\\\"customreporting\\\":true},{\\\"type\\\":\\\"sf-i-select\\\",\\\"name\\\":\\\"\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Type 0\\\",\\\"selectlabel\\\":\\\"\\\",\\\"subselectlabel\\\":\\\"\\\",\\\"hint\\\":\\\"RCM Source Type\\\",\\\"id\\\":\\\"rcmsourcetype-0\\\",\\\"options\\\":[\\\"Yes\\\",\\\"No\\\"],\\\"value\\\":\\\"\\\",\\\"collapse\\\":\\\"true\\\",\\\"mode\\\":\\\"\\\",\\\"maxselect\\\":\\\"\\\",\\\"apiid\\\":\\\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\\\",\\\"apiidselect\\\":\\\"\\\",\\\"apiidsubselect\\\":\\\"\\\",\\\"searchstring\\\":\\\"\\\",\\\"selectprojection\\\":\\\"\\\",\\\"ignoredprojections\\\":\\\"\\\",\\\"savenameseparate\\\":\\\"no\\\",\\\"dependencies\\\":[],\\\"allowedextensions\\\":\\\"\\\",\\\"extract\\\":\\\"\\\",\\\"maxsize\\\":\\\"\\\",\\\"allowdownload\\\":\\\"\\\",\\\"selectfields\\\":[],\\\"mandatory\\\":null,\\\"copytoreopen\\\":false,\\\"displayinhistory\\\":true,\\\"hideinadmin\\\":false,\\\"elementsjson\\\":\\\"\\\",\\\"customreporting\\\":true},{\\\"type\\\":\\\"textarea\\\",\\\"name\\\":\\\"\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Tool Updation Status 0\\\",\\\"selectlabel\\\":\\\"\\\",\\\"subselectlabel\\\":\\\"\\\",\\\"hint\\\":\\\"Status of this source reflecting in the tool\\\",\\\"id\\\":\\\"tool-updation-status-0\\\",\\\"options\\\":[\\\"Yes\\\",\\\"No\\\"],\\\"value\\\":\\\"\\\",\\\"collapse\\\":\\\"true\\\",\\\"mode\\\":\\\"\\\",\\\"maxselect\\\":\\\"\\\",\\\"apiid\\\":\\\"\\\",\\\"apiidselect\\\":\\\"\\\",\\\"apiidsubselect\\\":\\\"\\\",\\\"searchstring\\\":\\\"\\\",\\\"selectprojection\\\":\\\"\\\",\\\"ignoredprojections\\\":\\\"\\\",\\\"savenameseparate\\\":\\\"no\\\",\\\"dependencies\\\":[],\\\"allowedextensions\\\":\\\"\\\",\\\"extract\\\":\\\"\\\",\\\"maxsize\\\":\\\"\\\",\\\"allowdownload\\\":\\\"\\\",\\\"selectfields\\\":[],\\\"mandatory\\\":null,\\\"copytoreopen\\\":false,\\\"displayinhistory\\\":true,\\\"hideinadmin\\\":false,\\\"elementsjson\\\":\\\"\\\",\\\"customreporting\\\":true},{\\\"type\\\":\\\"sf-i-uploader\\\",\\\"name\\\":\\\"\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Document 0\\\",\\\"selectlabel\\\":\\\"\\\",\\\"subselectlabel\\\":\\\"\\\",\\\"hint\\\":\\\"Document for this rcm notification\\\",\\\"id\\\":\\\"document-0\\\",\\\"options\\\":[\\\"Yes\\\",\\\"No\\\"],\\\"value\\\":[],\\\"collapse\\\":\\\"true\\\",\\\"mode\\\":\\\"multiselect-dropdown\\\",\\\"maxselect\\\":\\\"1\\\",\\\"apiid\\\":\\\"1peg5170d3\\\",\\\"apiidselect\\\":\\\"\\\",\\\"apiidsubselect\\\":\\\"\\\",\\\"searchstring\\\":\\\"\\\",\\\"selectprojection\\\":\\\"\\\",\\\"ignoredprojections\\\":\\\"\\\",\\\"savenameseparate\\\":\\\"no\\\",\\\"dependencies\\\":[],\\\"allowedextensions\\\":\\\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\\\",\\\"extract\\\":\\\"no\\\",\\\"maxsize\\\":\\\"10242880\\\",\\\"allowdownload\\\":\\\"yes\\\",\\\"selectfields\\\":[],\\\"mandatory\\\":null,\\\"copytoreopen\\\":false,\\\"displayinhistory\\\":true,\\\"hideinadmin\\\":false,\\\"elementsjson\\\":\\\"\\\",\\\"customreporting\\\":true}]],\\\"name\\\":\\\"Source Report\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Country {iter}\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/country\\\",\\\"hint\\\":\\\"Country\\\",\\\"id\\\":\\\"country{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-sub-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"State {iter}\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/state\\\",\\\"hint\\\":\\\"State\\\",\\\"id\\\":\\\"state{iter}\\\",\\\"dependencies\\\":[\\\"country{iter}\\\"],\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-form-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Statute {iter}\\\",\\\"hint\\\":\\\"Statute for RCM Source\\\",\\\"id\\\":\\\"statute{iter}\\\",\\\"mode\\\":\\\"multiselect-list\\\",\\\"dependencies\\\":[\\\"country{iter}\\\"],\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/statute\\\",\\\"selectprojection\\\":\\\"name\\\",\\\"ignoredprojections\\\":\\\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\\\",\\\"maxselect\\\":\\\"100\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-form-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Projects {iter}\\\",\\\"hint\\\":\\\"Projects to whom RCM Source is applicable\\\",\\\"id\\\":\\\"projects{iter}\\\",\\\"mode\\\":\\\"multiselect-list\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/project\\\",\\\"selectprojection\\\":\\\"project\\\",\\\"ignoredprojections\\\":\\\"[&quot;logo&quot;,&quot;plan&quot;,&quot;address&quot;,&quot;emails&quot;,&quot;vertical&quot;,&quot;cycledate&quot;,&quot;shortid&quot;,&quot;startdate&quot;,&quot;contractdate&quot;,&quot;quality&quot;,&quot;locations&quot;,&quot;shortnumid&quot;,&quot;confighome&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]\\\",\\\"maxselect\\\":\\\"100\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-multiple-subselect\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Subcategories {iter}\\\",\\\"hint\\\":\\\"Subcategories to whom RCM Source is applicable\\\",\\\"id\\\":\\\"subcategories{iter}\\\",\\\"mode\\\":\\\"multiselect-list\\\",\\\"apiidselect\\\":\\\"dnytrdlrmxgsy.cloudfront.net/category\\\",\\\"selectlabel\\\":\\\"Category\\\",\\\"apiidsubselect\\\":\\\"dnytrdlrmxgsy.cloudfront.net/subcategory\\\",\\\"subselectlabel\\\":\\\"Subcategory\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Name {iter}\\\",\\\"hint\\\":\\\"Notification name from the source\\\",\\\"id\\\":\\\"notification-name-{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Reference {iter}\\\",\\\"hint\\\":\\\"Notification reference from the source\\\",\\\"id\\\":\\\"notification-reference{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Regulatory Authority {iter}\\\",\\\"hint\\\":\\\"Regulatory authority related to the source\\\",\\\"id\\\":\\\"regulatory-authority{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"date\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Publication Date {iter}\\\",\\\"hint\\\":\\\"The date on which this notification is published.\\\",\\\"id\\\":\\\"publication-date{iter}\\\",\\\"mandatory\\\":\\\"\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"date\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Effective Date {iter}\\\",\\\"hint\\\":\\\"The date on which this notification is effective.\\\",\\\"id\\\":\\\"effective-date{iter}\\\",\\\"mandatory\\\":\\\"\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Remarks {iter}\\\",\\\"hint\\\":\\\"Remarks on the RCM Source\\\",\\\"id\\\":\\\"remarks{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Impact {iter}\\\",\\\"apiid\\\":\\\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\\\",\\\"hint\\\":\\\"RCM Source Impact\\\",\\\"id\\\":\\\"rcmsourceimpact{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Type {iter}\\\",\\\"apiid\\\":\\\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\\\",\\\"hint\\\":\\\"RCM Source Type\\\",\\\"id\\\":\\\"rcmsourcetype{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Tool Updation Status {iter}\\\",\\\"hint\\\":\\\"Status of this source reflecting in the tool\\\",\\\"id\\\":\\\"tool-updation-status{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-uploader\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Document {iter}\\\",\\\"hint\\\":\\\"Document for this rcm notification\\\",\\\"id\\\":\\\"document{iter}\\\",\\\"mode\\\":\\\"multiselect-dropdown\\\",\\\"apiid\\\":\\\"1peg5170d3\\\",\\\"allowedextensions\\\":\\\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\\\",\\\"extract\\\":\\\"no\\\",\\\"maxselect\\\":\\\"1\\\",\\\"maxsize\\\":\\\"10242880\\\",\\\"allowdownload\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"}]]\",\"terminated\":false}";
   // prepopulateValJson: string = "{\"preparedby\":\"prepared by test\",\"approvedby\":\"approved by test\",\"iccresponsibilities\":\"committee resp\",\"Committee Member\":[{\"iccstructurerole-0\":\"role 1\",\"iccstructureresponsibilities-0\":\"resp 1\"},{\"iccstructurerole-1\":\"role 2\",\"iccstructureresponsibilities-1\":\"resp 2\"}],\"iccmeetings\":\"meet committee\",\"ictresponsibilities\":\"team resp\",\"Team Member\":[{\"ictstructurerole-0\":\"role team 1\",\"ictstructureresponsibilities-0\":\"resp team 1\"},{\"ictstructurerole-1\":\"role team 2\",\"ictstructureresponsibilities-1\":\"resp team 2\"}],\"ictmeetings\":\"meet team\",\"aims\":\"obj test\",\"hhpolicies\":\"proc hand hyg\",\"hhsops\":\"hand hyg sop\",\"hhmonitoring\":\"hand hyg monit\",\"ppepolicies\":\"ppe usage\",\"ppesops\":\"ppe usage sop\",\"ppemonitoring\":\"ppe usage monit\",\"hkcleaning\":\"housekeep test\",\"hkdilution\":\"dilution \",\"hkmonitoring\":\"housekeep monit\",\"cssddesign\":\"ccsd desg\",\"cssdprocedures\":\"\",\"cssdvalidation\":\"ccsd valid test\",\"cssdreuserecall\":\"reuse recall\",\"bmwsegregation\":\"bio waste mgmt\",\"bmwstatutory\":\"satutory prov\",\"staffstatutory\":\"staff inf prev\",\"staffinfectionreporting\":\"staff inf report\",\"staffworkrestrictions\":\"work restrict\",\"staffprophylaxis\":\"prophyl\",\"safeimedication\":\"\",\"safeiinjection\":\"\",\"safeiinjuryprevention\":\"\",\"amsclinicalconditions\":\"\",\"amssusceptibility\":\"\",\"amsusagepolicy\":\"\",\"amsstewardshipcommittee\":\"\",\"amsworkflows\":\"\",\"rncriskassessment\":\"\",\"haicarebundles\":\"\",\"haimonitoring\":\"\",\"dskstatutory\":\"\",\"dskriskassessment\":\"\",\"dskscreening\":\"\",\"dskhygiene\":\"\",\"llmprocedures\":\"\",\"surveillanceinfections\":\"\",\"surveillanceantimicrobial\":\"\",\"surveillanceenvironment\":\"\",\"inventorypolicy\":\"\",\"availabilitypolicy\":\"\",\"trainingpolicy\":\"\",\"auditpolicy\":\"\",\"qualitypolicy\":\"\",\"vendorselectionpolicy\":\"\",\"maintenancepolicy\":\"\"}";
   // prepopulateValJson: string = "{\"contractdocuments\":[{\"arrWords\":[\"Flagg\",\"GRC\"],\"arrWordsMeta\":{\"PAGE\":1,\"LINE\":2,\"WORD\":2},\"jobId\":\"139182bd46abb07587276a4d8e180ab246536417c26fe56656ece31a80cd06de\",\"filename\":\"unnamed.png\",\"key\":\"f1095679-4a97-4994-941d-1e2f61cdff13\",\"ext\":\"png\"}],\"dateofexecution\":\"2025-05-20\",\"dateofexpiry\":\"2025-05-23\",\"dateofrenewal\":\"2025-05-24\",\"duedate\":\"2025-05-24\",\"context\":\"Renewal\",\"remarks\":\"Renewal\",\"terms\":{\"First term\":true,\"Second term\":true}}";
   // prepopulateValJson: string = "{\"lastcheckdate\":\"2025-07-11\",\"Source Report\":[{\"remarks-0\":\"Test remark 1\",\"rcmsourceimpact-0id\":\"\",\"rcmsourceimpact-0name\":\"\"},{\"remarks-1\":\"Test remark 2\",\"rcmsourceimpact-1id\":\"76dd19e3-00fb-4554-a471-2841ba1f73ce\",\"rcmsourceimpact-1name\":\"RCM Source Impact 1\"}],\"terminated\":false}";
@@ -133,2687 +135,8 @@ export class SfIReporting extends LitElement {
 
   lastCalendarGenerated: string = ""
   nextCalendarScheduled: string = ""
-  // selectedItem: any = {};
+  selectedItem: any = {};
   // selectedItem: any = { id: "2b1d4da9-7cfe-4861-91f2-1727d0cc70b4" };
-  selectedItem: any = {
-    "name": "Test RCM Source",
-    "description": "THis is a test RCM source for notification",
-    "url": "www.flagggrc.com",
-    "frequency": "*/*/*",
-    "lastcheckdate": "2025-09-30",
-    "duedate": "03/10/2025",
-    "countryid": "07d73b44-648d-4301-82c4-d6df43397824",
-    "countryname": "India (ABC Global-Country)",
-    "entityid": "c989a44e-7d3d-427e-b712-90eacf585075",
-    "entityname": "ABC Limited - India (ABC Global-India-Entity)",
-    "locations": [
-        "Pune (ABC Global-India-ABC Limited - India-Location);4fb7b672-5cce-443f-869b-6b35247d6331"
-    ],
-    "tags": [
-        "Advertising Conditions (ABC Global-Tags);2cd4f501-1dcf-4f76-be0b-779a0721ad2f"
-    ],
-    "reporters": [
-        "Local Reporter 1;e9684b5d-ddbc-46d3-ae07-51706bf75410"
-    ],
-    "approvers": [
-        "Local Approver 1;c44dcd04-aebb-4417-ba6b-fac170efd5d0"
-    ],
-    "functionheads": [
-        "Chief Compliance Officer;5fe96caa-1a44-4a2d-921a-920d29433eca"
-    ],
-    "categoryid": "0da8f379-2006-4ad2-ba20-699345cd87d7",
-    "categoryname": "Sector Specific",
-    "subcategoryid": "00c5ad85-0609-4190-b6a7-3162e3ea5376",
-    "subcategoryname": "Food",
-    "context": "",
-    "makercheckers": [],
-    "auditors": [],
-    "viewers": [],
-    "projects": {
-        "id": "d7d4d17e-3e20-4eaa-a06a-fb1c87f26532",
-        "name": "FlaggGRC Global",
-        "emails": "jomon.j@flagggrc.tech",
-        "cycledate": "31/3/*",
-        "contractdate": "31/3/2030",
-        "quality": "NA",
-        "locations": "{\"India\":{\"Maharashtra\":[\"Pune\"]}}",
-        "plan": [
-            "Tool "
-        ],
-        "startdate": "01/01/2025",
-        "logo": [],
-        "confighome": "{\"modules\":[\"rcmresources\"]}",
-        "shortid": [
-            "lm0ck8ab"
-        ],
-        "shortnumid": [
-            1714371986
-        ],
-        "lastModifiedBy": "Ninad Thatte",
-        "lastModifiedTime": "1753179043341"
-    },
-    "Source Report": [
-        {
-            "country-0id": "42aae0da-ac44-4a0d-962c-f7693dbe095b",
-            "country-0name": "India",
-            "state-0id": "",
-            "state-0name": "",
-            "statute-0": "",
-            "projects-0": "",
-            "notification-name--0": "This is a test report",
-            "notification-reference-0": "Ref 102",
-            "regulatory-authority-0": "",
-            "publication-date-0": "2025-09-29",
-            "effective-date-0": "2025-10-01",
-            "remarks-0": "Test source report",
-            "rcmsourceimpact-0id": "661abaa5-c799-41f8-a00b-eae483cb8686",
-            "rcmsourceimpact-0name": "Came into force",
-            "rcmsourcetype-0id": "df5e7a85-61ac-48c2-ad63-579b1e970533",
-            "rcmsourcetype-0name": "Informative notification",
-            "tool-updation-status-0": "",
-            "document-0": [
-                {
-                    "key": "7e4b29f0-296e-4822-9172-ffbaab929423",
-                    "filename": "260KB.pdf",
-                    "ext": "pdf"
-                }
-            ]
-        }
-    ],
-    "customreporting": "[{\"type\":\"date\",\"name\":\"\",\"size\":\"large\",\"label\":\"Last Check Date *\",\"hint\":\"The date on which this RCM Source was last checked\",\"id\":\"lastcheckdate\",\"value\":\"2025-09-30\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":false,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},[{\"id\":\"sourcereport\",\"type\":\"sourcereport\",\"label\":\"Source Report\",\"schema\":\"[{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Country {iter}\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/country\\\",\\\"hint\\\":\\\"Country\\\",\\\"id\\\":\\\"country{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-sub-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"State {iter}\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/state\\\",\\\"hint\\\":\\\"State\\\",\\\"id\\\":\\\"state{iter}\\\",\\\"dependencies\\\":[\\\"country{iter}\\\"],\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-form-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Statute {iter}\\\",\\\"hint\\\":\\\"Statute for RCM Source\\\",\\\"id\\\":\\\"statute{iter}\\\",\\\"mode\\\":\\\"multiselect-list\\\",\\\"dependencies\\\":[\\\"country{iter}\\\"],\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/statute\\\",\\\"selectprojection\\\":\\\"name\\\",\\\"ignoredprojections\\\":\\\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\\\",\\\"maxselect\\\":\\\"100\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-form-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Projects {iter}\\\",\\\"hint\\\":\\\"Projects to whom RCM Source is applicable\\\",\\\"id\\\":\\\"projects{iter}\\\",\\\"mode\\\":\\\"multiselect-list\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/project\\\",\\\"selectprojection\\\":\\\"project\\\",\\\"ignoredprojections\\\":\\\"[&quot;logo&quot;,&quot;plan&quot;,&quot;address&quot;,&quot;emails&quot;,&quot;vertical&quot;,&quot;cycledate&quot;,&quot;shortid&quot;,&quot;startdate&quot;,&quot;contractdate&quot;,&quot;quality&quot;,&quot;locations&quot;,&quot;shortnumid&quot;,&quot;confighome&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]\\\",\\\"maxselect\\\":\\\"100\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Name {iter}\\\",\\\"hint\\\":\\\"Notification name from the source\\\",\\\"id\\\":\\\"notification-name-{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Reference {iter}\\\",\\\"hint\\\":\\\"Notification reference from the source\\\",\\\"id\\\":\\\"notification-reference{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Regulatory Authority {iter}\\\",\\\"hint\\\":\\\"Regulatory authority related to the source\\\",\\\"id\\\":\\\"regulatory-authority{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"date\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Publication Date {iter}\\\",\\\"hint\\\":\\\"The date on which this notification is published.\\\",\\\"id\\\":\\\"publication-date{iter}\\\",\\\"mandatory\\\":\\\"\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"date\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Effective Date {iter}\\\",\\\"hint\\\":\\\"The date on which this notification is effective.\\\",\\\"id\\\":\\\"effective-date{iter}\\\",\\\"mandatory\\\":\\\"\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Remarks {iter}\\\",\\\"hint\\\":\\\"Remarks on the RCM Source\\\",\\\"id\\\":\\\"remarks{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Impact {iter}\\\",\\\"apiid\\\":\\\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\\\",\\\"hint\\\":\\\"RCM Source Impact\\\",\\\"id\\\":\\\"rcmsourceimpact{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Type {iter}\\\",\\\"apiid\\\":\\\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\\\",\\\"hint\\\":\\\"RCM Source Type\\\",\\\"id\\\":\\\"rcmsourcetype{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Tool Updation Status {iter}\\\",\\\"hint\\\":\\\"Status of this source reflecting in the tool\\\",\\\"id\\\":\\\"tool-updation-status{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-uploader\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Document {iter}\\\",\\\"hint\\\":\\\"Document for this rcm notification\\\",\\\"id\\\":\\\"document{iter}\\\",\\\"mode\\\":\\\"multiselect-dropdown\\\",\\\"apiid\\\":\\\"1peg5170d3\\\",\\\"allowedextensions\\\":\\\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\\\",\\\"extract\\\":\\\"no\\\",\\\"maxselect\\\":\\\"1\\\",\\\"maxsize\\\":\\\"10242880\\\",\\\"allowdownload\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"}]\",\"direction\":\"column\",\"customreporting\":true,\"children\":[[{\"type\":\"sf-i-select\",\"name\":\"\",\"size\":\"large\",\"label\":\"Country 0\",\"hint\":\"Country\",\"id\":\"country-0\",\"options\":[\"Yes\",\"No\"],\"value\":[\"42aae0da-ac44-4a0d-962c-f7693dbe095b\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/country\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":null,\"copytoreopen\":true,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"sf-i-sub-select\",\"name\":\"\",\"size\":\"large\",\"label\":\"State 0\",\"hint\":\"State\",\"id\":\"state-0\",\"options\":[\"Yes\",\"No\"],\"value\":[\";\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/state\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[\"country-0\"],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":null,\"copytoreopen\":true,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"sf-i-form-select\",\"name\":\"\",\"size\":\"large\",\"label\":\"Statute 0\",\"hint\":\"Statute for RCM Source\",\"id\":\"statute-0\",\"options\":[\"Yes\",\"No\"],\"value\":\"\",\"collapse\":\"true\",\"mode\":\"multiselect-list\",\"maxselect\":\"100\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/statute\",\"searchstring\":\"\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\",\"savenameseparate\":\"no\",\"dependencies\":[\"country-0\"],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":null,\"copytoreopen\":false,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"sf-i-form-select\",\"name\":\"\",\"size\":\"large\",\"label\":\"Projects 0\",\"hint\":\"Projects to whom RCM Source is applicable\",\"id\":\"projects-0\",\"options\":[\"Yes\",\"No\"],\"value\":\"\",\"collapse\":\"true\",\"mode\":\"multiselect-list\",\"maxselect\":\"100\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/project\",\"searchstring\":\"\",\"selectprojection\":\"project\",\"ignoredprojections\":\"[&quot;logo&quot;,&quot;plan&quot;,&quot;address&quot;,&quot;emails&quot;,&quot;vertical&quot;,&quot;cycledate&quot;,&quot;shortid&quot;,&quot;startdate&quot;,&quot;contractdate&quot;,&quot;quality&quot;,&quot;locations&quot;,&quot;shortnumid&quot;,&quot;confighome&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":null,\"copytoreopen\":false,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"textarea\",\"name\":\"\",\"size\":\"small\",\"label\":\"Notification Name 0\",\"hint\":\"Notification name from the source\",\"id\":\"notification-name--0\",\"options\":[\"Yes\",\"No\"],\"value\":\"This is a test report\",\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":null,\"copytoreopen\":false,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"textarea\",\"name\":\"\",\"size\":\"small\",\"label\":\"Notification Reference 0\",\"hint\":\"Notification reference from the source\",\"id\":\"notification-reference-0\",\"options\":[\"Yes\",\"No\"],\"value\":\"Ref 102\",\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":null,\"copytoreopen\":false,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"textarea\",\"name\":\"\",\"size\":\"small\",\"label\":\"Regulatory Authority 0\",\"hint\":\"Regulatory authority related to the source\",\"id\":\"regulatory-authority-0\",\"options\":[\"Yes\",\"No\"],\"value\":\"\",\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":null,\"copytoreopen\":false,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"date\",\"name\":\"\",\"size\":\"large\",\"label\":\"Publication Date 0\",\"hint\":\"The date on which this notification is published.\",\"id\":\"publication-date-0\",\"options\":[\"Yes\",\"No\"],\"value\":\"2025-09-29\",\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":false,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"date\",\"name\":\"\",\"size\":\"large\",\"label\":\"Effective Date 0\",\"hint\":\"The date on which this notification is effective.\",\"id\":\"effective-date-0\",\"options\":[\"Yes\",\"No\"],\"value\":\"2025-10-01\",\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":false,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"textarea\",\"name\":\"\",\"size\":\"small\",\"label\":\"Remarks 0\",\"hint\":\"Remarks on the RCM Source\",\"id\":\"remarks-0\",\"options\":[\"Yes\",\"No\"],\"value\":\"Test source report\",\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":null,\"copytoreopen\":true,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"sf-i-select\",\"name\":\"\",\"size\":\"large\",\"label\":\"RCM Source Impact 0\",\"hint\":\"RCM Source Impact\",\"id\":\"rcmsourceimpact-0\",\"options\":[\"Yes\",\"No\"],\"value\":[\"661abaa5-c799-41f8-a00b-eae483cb8686\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":null,\"copytoreopen\":false,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"sf-i-select\",\"name\":\"\",\"size\":\"large\",\"label\":\"RCM Source Type 0\",\"hint\":\"RCM Source Type\",\"id\":\"rcmsourcetype-0\",\"options\":[\"Yes\",\"No\"],\"value\":[\"df5e7a85-61ac-48c2-ad63-579b1e970533\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":null,\"copytoreopen\":false,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"textarea\",\"name\":\"\",\"size\":\"small\",\"label\":\"Tool Updation Status 0\",\"hint\":\"Status of this source reflecting in the tool\",\"id\":\"tool-updation-status-0\",\"options\":[\"Yes\",\"No\"],\"value\":\"\",\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":null,\"copytoreopen\":false,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},{\"type\":\"sf-i-uploader\",\"name\":\"\",\"size\":\"large\",\"label\":\"RCM Document 0\",\"hint\":\"Document for this rcm notification\",\"id\":\"document-0\",\"options\":[\"Yes\",\"No\"],\"value\":[{\"key\":\"7e4b29f0-296e-4822-9172-ffbaab929423\",\"filename\":\"260KB.pdf\",\"ext\":\"pdf\"}],\"collapse\":\"true\",\"mode\":\"multiselect-dropdown\",\"maxselect\":\"1\",\"apiid\":\"1peg5170d3\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\",\"extract\":\"no\",\"maxsize\":\"10242880\",\"allowdownload\":\"yes\",\"selectfields\":[],\"mandatory\":null,\"copytoreopen\":false,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true}]],\"name\":\"Source Report\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"Country {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/country\",\"hint\":\"Country\",\"id\":\"country{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-sub-select\",\"size\":\"large\",\"label\":\"State {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/state\",\"hint\":\"State\",\"id\":\"state{iter}\",\"dependencies\":[\"country{iter}\"],\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-form-select\",\"size\":\"large\",\"label\":\"Statute {iter}\",\"hint\":\"Statute for RCM Source\",\"id\":\"statute{iter}\",\"mode\":\"multiselect-list\",\"dependencies\":[\"country{iter}\"],\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/statute\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\",\"maxselect\":\"100\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-form-select\",\"size\":\"large\",\"label\":\"Projects {iter}\",\"hint\":\"Projects to whom RCM Source is applicable\",\"id\":\"projects{iter}\",\"mode\":\"multiselect-list\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/project\",\"selectprojection\":\"project\",\"ignoredprojections\":\"[&quot;logo&quot;,&quot;plan&quot;,&quot;address&quot;,&quot;emails&quot;,&quot;vertical&quot;,&quot;cycledate&quot;,&quot;shortid&quot;,&quot;startdate&quot;,&quot;contractdate&quot;,&quot;quality&quot;,&quot;locations&quot;,&quot;shortnumid&quot;,&quot;confighome&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]\",\"maxselect\":\"100\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Name {iter}\",\"hint\":\"Notification name from the source\",\"id\":\"notification-name-{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Reference {iter}\",\"hint\":\"Notification reference from the source\",\"id\":\"notification-reference{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Regulatory Authority {iter}\",\"hint\":\"Regulatory authority related to the source\",\"id\":\"regulatory-authority{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Publication Date {iter}\",\"hint\":\"The date on which this notification is published.\",\"id\":\"publication-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Effective Date {iter}\",\"hint\":\"The date on which this notification is effective.\",\"id\":\"effective-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Remarks {iter}\",\"hint\":\"Remarks on the RCM Source\",\"id\":\"remarks{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Impact {iter}\",\"apiid\":\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Impact\",\"id\":\"rcmsourceimpact{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Type {iter}\",\"apiid\":\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Type\",\"id\":\"rcmsourcetype{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Tool Updation Status {iter}\",\"hint\":\"Status of this source reflecting in the tool\",\"id\":\"tool-updation-status{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-uploader\",\"size\":\"large\",\"label\":\"RCM Document {iter}\",\"hint\":\"Document for this rcm notification\",\"id\":\"document{iter}\",\"mode\":\"multiselect-dropdown\",\"apiid\":\"1peg5170d3\",\"allowedextensions\":\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\",\"extract\":\"no\",\"maxselect\":\"1\",\"maxsize\":\"10242880\",\"allowdownload\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"}]]",
-    "id": "ffd64c52-bcaa-42e0-bc4c-dacfc9e8ab87",
-    "documents": [],
-    "comments": [],
-    "approved": false,
-    "lastupdated": "",
-    "dateofcompletion": "",
-    "reportformatschema": "[{\"type\":\"date\",\"size\":\"large\",\"label\":\"Last Check Date *\",\"hint\":\"The date on which this RCM Source was last checked\",\"id\":\"lastcheckdate\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},[{\"type\":\"sourcereport\",\"id\":\"sourcereport\",\"name\":\"Source Report\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"Country {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/country\",\"hint\":\"Country\",\"id\":\"country{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-sub-select\",\"size\":\"large\",\"label\":\"State {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/state\",\"hint\":\"State\",\"id\":\"state{iter}\",\"dependencies\":[\"country{iter}\"],\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-form-select\",\"size\":\"large\",\"label\":\"Statute {iter}\",\"hint\":\"Statute for RCM Source\",\"id\":\"statute{iter}\",\"mode\":\"multiselect-list\",\"dependencies\":[\"country{iter}\"],\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/statute\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\",\"maxselect\":\"100\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-form-select\",\"size\":\"large\",\"label\":\"Projects {iter}\",\"hint\":\"Projects to whom RCM Source is applicable\",\"id\":\"projects{iter}\",\"mode\":\"multiselect-list\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/project\",\"selectprojection\":\"project\",\"ignoredprojections\":\"[&quot;logo&quot;,&quot;plan&quot;,&quot;address&quot;,&quot;emails&quot;,&quot;vertical&quot;,&quot;cycledate&quot;,&quot;shortid&quot;,&quot;startdate&quot;,&quot;contractdate&quot;,&quot;quality&quot;,&quot;locations&quot;,&quot;shortnumid&quot;,&quot;confighome&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]\",\"maxselect\":\"100\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Name {iter}\",\"hint\":\"Notification name from the source\",\"id\":\"notification-name-{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Reference {iter}\",\"hint\":\"Notification reference from the source\",\"id\":\"notification-reference{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Regulatory Authority {iter}\",\"hint\":\"Regulatory authority related to the source\",\"id\":\"regulatory-authority{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Publication Date {iter}\",\"hint\":\"The date on which this notification is published.\",\"id\":\"publication-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Effective Date {iter}\",\"hint\":\"The date on which this notification is effective.\",\"id\":\"effective-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Remarks {iter}\",\"hint\":\"Remarks on the RCM Source\",\"id\":\"remarks{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Impact {iter}\",\"apiid\":\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Impact\",\"id\":\"rcmsourceimpact{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Type {iter}\",\"apiid\":\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Type\",\"id\":\"rcmsourcetype{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Tool Updation Status {iter}\",\"hint\":\"Status of this source reflecting in the tool\",\"id\":\"tool-updation-status{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-uploader\",\"size\":\"large\",\"label\":\"RCM Document {iter}\",\"hint\":\"Document for this rcm notification\",\"id\":\"document{iter}\",\"mode\":\"multiselect-dropdown\",\"apiid\":\"1peg5170d3\",\"allowedextensions\":\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\",\"extract\":\"no\",\"maxselect\":\"1\",\"maxsize\":\"10242880\",\"allowdownload\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"}]]",
-    "reportformatvalues": "",
-    "history": {
-        "25/09/2025": [
-            {
-                "object": {
-                    "name": "Test RCM Source",
-                    "description": "THis is a test RCM source for notification",
-                    "url": "www.flagggrc.com",
-                    "frequency": "*/*/*",
-                    "lastcheckdate": "2025-09-24",
-                    "duedate": "2025-09-25",
-                    "countryid": "07d73b44-648d-4301-82c4-d6df43397824",
-                    "countryname": "India (ABC Global-Country)",
-                    "entityid": "c989a44e-7d3d-427e-b712-90eacf585075",
-                    "entityname": "ABC Limited - India (ABC Global-India-Entity)",
-                    "locations": [
-                        "Pune (ABC Global-India-ABC Limited - India-Location);4fb7b672-5cce-443f-869b-6b35247d6331"
-                    ],
-                    "tags": [
-                        "Advertising Conditions (ABC Global-Tags);2cd4f501-1dcf-4f76-be0b-779a0721ad2f"
-                    ],
-                    "reporters": [
-                        "Local Reporter 1;e9684b5d-ddbc-46d3-ae07-51706bf75410"
-                    ],
-                    "approvers": [
-                        "Local Approver 1;c44dcd04-aebb-4417-ba6b-fac170efd5d0"
-                    ],
-                    "functionheads": [
-                        "Chief Compliance Officer;5fe96caa-1a44-4a2d-921a-920d29433eca"
-                    ],
-                    "categoryid": "0da8f379-2006-4ad2-ba20-699345cd87d7",
-                    "categoryname": "Sector Specific",
-                    "subcategoryid": "00c5ad85-0609-4190-b6a7-3162e3ea5376",
-                    "subcategoryname": "Food",
-                    "context": "",
-                    "makercheckers": [],
-                    "auditors": [],
-                    "viewers": [],
-                    "projects": {
-                        "id": "d7d4d17e-3e20-4eaa-a06a-fb1c87f26532",
-                        "name": "FlaggGRC Global",
-                        "emails": "jomon.j@flagggrc.tech",
-                        "cycledate": "31/3/*",
-                        "contractdate": "31/3/2030",
-                        "quality": "NA",
-                        "locations": "{\"India\":{\"Maharashtra\":[\"Pune\"]}}",
-                        "plan": [
-                            "Tool "
-                        ],
-                        "startdate": "01/01/2025",
-                        "logo": [],
-                        "confighome": "{\"modules\":[\"rcmresources\"]}",
-                        "shortid": [
-                            "lm0ck8ab"
-                        ],
-                        "shortnumid": [
-                            1714371986
-                        ],
-                        "lastModifiedBy": "Ninad Thatte",
-                        "lastModifiedTime": "1753179043341"
-                    },
-                    "Source Report": [],
-                    "customreporting": "[{\"type\":\"date\",\"name\":\"\",\"size\":\"large\",\"label\":\"Last Check Date *\",\"hint\":\"The date on which this RCM Source was last checked\",\"id\":\"lastcheckdate\",\"value\":\"2025-09-24\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":false,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},[{\"id\":\"sourcereport\",\"type\":\"sourcereport\",\"label\":\"Source Report\",\"schema\":\"[{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Country {iter}\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/country\\\",\\\"hint\\\":\\\"Country\\\",\\\"id\\\":\\\"country{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-sub-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"State {iter}\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/state\\\",\\\"hint\\\":\\\"State\\\",\\\"id\\\":\\\"state{iter}\\\",\\\"dependencies\\\":[\\\"country{iter}\\\"],\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-form-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Statute {iter}\\\",\\\"hint\\\":\\\"Statute for RCM Source\\\",\\\"id\\\":\\\"statute{iter}\\\",\\\"mode\\\":\\\"select\\\",\\\"dependencies\\\":[\\\"country{iter}\\\"],\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/statute\\\",\\\"selectprojection\\\":\\\"name\\\",\\\"ignoredprojections\\\":\\\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\\\",\\\"maxselect\\\":\\\"1\\\",\\\"displayinhistory\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Name {iter}\\\",\\\"hint\\\":\\\"Notification name from the source\\\",\\\"id\\\":\\\"notification-name-{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Reference {iter}\\\",\\\"hint\\\":\\\"Notification reference from the source\\\",\\\"id\\\":\\\"notification-reference{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"date\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Publication Date {iter}\\\",\\\"hint\\\":\\\"The date on which this notification is published.\\\",\\\"id\\\":\\\"publication-date{iter}\\\",\\\"mandatory\\\":\\\"\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"date\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Effective Date {iter}\\\",\\\"hint\\\":\\\"The date on which this notification is effective.\\\",\\\"id\\\":\\\"effective-date{iter}\\\",\\\"mandatory\\\":\\\"\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Remarks {iter}\\\",\\\"hint\\\":\\\"Remarks on the RCM Source\\\",\\\"id\\\":\\\"remarks{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Impact {iter}\\\",\\\"apiid\\\":\\\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\\\",\\\"hint\\\":\\\"RCM Source Impact\\\",\\\"id\\\":\\\"rcmsourceimpact{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Type {iter}\\\",\\\"apiid\\\":\\\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\\\",\\\"hint\\\":\\\"RCM Source Type\\\",\\\"id\\\":\\\"rcmsourcetype{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-uploader\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Document {iter}\\\",\\\"hint\\\":\\\"Document for this rcm notification\\\",\\\"id\\\":\\\"document{iter}\\\",\\\"mode\\\":\\\"multiselect-dropdown\\\",\\\"apiid\\\":\\\"1peg5170d3\\\",\\\"allowedextensions\\\":\\\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\\\",\\\"extract\\\":\\\"no\\\",\\\"maxselect\\\":\\\"1\\\",\\\"maxsize\\\":\\\"10242880\\\",\\\"allowdownload\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"}]\",\"direction\":\"column\",\"customreporting\":true,\"children\":[],\"name\":\"Source Report\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"Country {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/country\",\"hint\":\"Country\",\"id\":\"country{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-sub-select\",\"size\":\"large\",\"label\":\"State {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/state\",\"hint\":\"State\",\"id\":\"state{iter}\",\"dependencies\":[\"country{iter}\"],\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-form-select\",\"size\":\"large\",\"label\":\"Statute {iter}\",\"hint\":\"Statute for RCM Source\",\"id\":\"statute{iter}\",\"mode\":\"select\",\"dependencies\":[\"country{iter}\"],\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/statute\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\",\"maxselect\":\"1\",\"displayinhistory\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Name {iter}\",\"hint\":\"Notification name from the source\",\"id\":\"notification-name-{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Reference {iter}\",\"hint\":\"Notification reference from the source\",\"id\":\"notification-reference{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Publication Date {iter}\",\"hint\":\"The date on which this notification is published.\",\"id\":\"publication-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Effective Date {iter}\",\"hint\":\"The date on which this notification is effective.\",\"id\":\"effective-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Remarks {iter}\",\"hint\":\"Remarks on the RCM Source\",\"id\":\"remarks{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Impact {iter}\",\"apiid\":\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Impact\",\"id\":\"rcmsourceimpact{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Type {iter}\",\"apiid\":\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Type\",\"id\":\"rcmsourcetype{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-uploader\",\"size\":\"large\",\"label\":\"RCM Document {iter}\",\"hint\":\"Document for this rcm notification\",\"id\":\"document{iter}\",\"mode\":\"multiselect-dropdown\",\"apiid\":\"1peg5170d3\",\"allowedextensions\":\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\",\"extract\":\"no\",\"maxselect\":\"1\",\"maxsize\":\"10242880\",\"allowdownload\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"}]]",
-                    "id": "ffd64c52-bcaa-42e0-bc4c-dacfc9e8ab87",
-                    "documents": [],
-                    "comments": [
-                        {
-                            "author": "Reporter",
-                            "username": "Local Reporter 1",
-                            "comment": "Test approval (Documents Saved: 0)",
-                            "timestamp": "Thu, 25 Sep 2025 10:39:48 GMT"
-                        },
-                        {
-                            "author": "Approver",
-                            "username": "Local Approver 1",
-                            "comment": "Test approved (Approved: Yes)",
-                            "timestamp": "Thu, 25 Sep 2025 10:50:45 GMT"
-                        },
-                        {
-                            "author": "Approver",
-                            "username": "Local Approver 1",
-                            "comment": "Test reject (Approved: No)",
-                            "timestamp": "Thu, 25 Sep 2025 10:54:44 GMT"
-                        },
-                        {
-                            "author": "Approver",
-                            "username": "Local Approver 1",
-                            "comment": "Test Reported again (Approved: Yes)",
-                            "timestamp": "Thu, 25 Sep 2025 10:57:01 GMT"
-                        }
-                    ],
-                    "approved": true,
-                    "lastupdated": "Thu, 25 Sep 2025 10:57:01 GMT",
-                    "dateofcompletion": "1758796474478",
-                    "reportformatschema": "[{\"type\":\"date\",\"name\":\"\",\"size\":\"large\",\"label\":\"Last Check Date *\",\"hint\":\"The date on which this RCM Source was last checked\",\"id\":\"lastcheckdate\",\"value\":\"2025-09-24\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":false,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},[{\"id\":\"sourcereport\",\"type\":\"sourcereport\",\"label\":\"Source Report\",\"schema\":\"[{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Country {iter}\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/country\\\",\\\"hint\\\":\\\"Country\\\",\\\"id\\\":\\\"country{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-sub-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"State {iter}\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/state\\\",\\\"hint\\\":\\\"State\\\",\\\"id\\\":\\\"state{iter}\\\",\\\"dependencies\\\":[\\\"country{iter}\\\"],\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-form-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Statute {iter}\\\",\\\"hint\\\":\\\"Statute for RCM Source\\\",\\\"id\\\":\\\"statute{iter}\\\",\\\"mode\\\":\\\"select\\\",\\\"dependencies\\\":[\\\"country{iter}\\\"],\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/statute\\\",\\\"selectprojection\\\":\\\"name\\\",\\\"ignoredprojections\\\":\\\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\\\",\\\"maxselect\\\":\\\"1\\\",\\\"displayinhistory\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Name {iter}\\\",\\\"hint\\\":\\\"Notification name from the source\\\",\\\"id\\\":\\\"notification-name-{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Reference {iter}\\\",\\\"hint\\\":\\\"Notification reference from the source\\\",\\\"id\\\":\\\"notification-reference{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"date\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Publication Date {iter}\\\",\\\"hint\\\":\\\"The date on which this notification is published.\\\",\\\"id\\\":\\\"publication-date{iter}\\\",\\\"mandatory\\\":\\\"\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"date\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Effective Date {iter}\\\",\\\"hint\\\":\\\"The date on which this notification is effective.\\\",\\\"id\\\":\\\"effective-date{iter}\\\",\\\"mandatory\\\":\\\"\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Remarks {iter}\\\",\\\"hint\\\":\\\"Remarks on the RCM Source\\\",\\\"id\\\":\\\"remarks{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Impact {iter}\\\",\\\"apiid\\\":\\\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\\\",\\\"hint\\\":\\\"RCM Source Impact\\\",\\\"id\\\":\\\"rcmsourceimpact{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Type {iter}\\\",\\\"apiid\\\":\\\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\\\",\\\"hint\\\":\\\"RCM Source Type\\\",\\\"id\\\":\\\"rcmsourcetype{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-uploader\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Document {iter}\\\",\\\"hint\\\":\\\"Document for this rcm notification\\\",\\\"id\\\":\\\"document{iter}\\\",\\\"mode\\\":\\\"multiselect-dropdown\\\",\\\"apiid\\\":\\\"1peg5170d3\\\",\\\"allowedextensions\\\":\\\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\\\",\\\"extract\\\":\\\"no\\\",\\\"maxselect\\\":\\\"1\\\",\\\"maxsize\\\":\\\"10242880\\\",\\\"allowdownload\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"}]\",\"direction\":\"column\",\"customreporting\":true,\"children\":[],\"name\":\"Source Report\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"Country {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/country\",\"hint\":\"Country\",\"id\":\"country{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-sub-select\",\"size\":\"large\",\"label\":\"State {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/state\",\"hint\":\"State\",\"id\":\"state{iter}\",\"dependencies\":[\"country{iter}\"],\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-form-select\",\"size\":\"large\",\"label\":\"Statute {iter}\",\"hint\":\"Statute for RCM Source\",\"id\":\"statute{iter}\",\"mode\":\"select\",\"dependencies\":[\"country{iter}\"],\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/statute\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\",\"maxselect\":\"1\",\"displayinhistory\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Name {iter}\",\"hint\":\"Notification name from the source\",\"id\":\"notification-name-{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Reference {iter}\",\"hint\":\"Notification reference from the source\",\"id\":\"notification-reference{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Publication Date {iter}\",\"hint\":\"The date on which this notification is published.\",\"id\":\"publication-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Effective Date {iter}\",\"hint\":\"The date on which this notification is effective.\",\"id\":\"effective-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Remarks {iter}\",\"hint\":\"Remarks on the RCM Source\",\"id\":\"remarks{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Impact {iter}\",\"apiid\":\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Impact\",\"id\":\"rcmsourceimpact{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Type {iter}\",\"apiid\":\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Type\",\"id\":\"rcmsourcetype{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-uploader\",\"size\":\"large\",\"label\":\"RCM Document {iter}\",\"hint\":\"Document for this rcm notification\",\"id\":\"document{iter}\",\"mode\":\"multiselect-dropdown\",\"apiid\":\"1peg5170d3\",\"allowedextensions\":\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\",\"extract\":\"no\",\"maxselect\":\"1\",\"maxsize\":\"10242880\",\"allowdownload\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"}]]",
-                    "reportformatvalues": "",
-                    "history": null
-                },
-                "schema": [
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "Name *",
-                        "hint": "RCM Source name",
-                        "id": "name",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "Description",
-                        "hint": "RCM Source description",
-                        "id": "description",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "RCM Source URL *",
-                        "hint": "RCM Source url",
-                        "id": "url",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "RCM Source Frequency *",
-                        "hint": "RCM Source checking frequency",
-                        "id": "frequency",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "date",
-                        "size": "large",
-                        "label": "Last Check Date *",
-                        "hint": "The date on which this RCM Source was last checked",
-                        "id": "lastcheckdate",
-                        "mandatory": "",
-                        "displayinhistory": "yes",
-                        "customreporting": "yes"
-                    },
-                    {
-                        "type": "date",
-                        "size": "large",
-                        "label": "Due Date *",
-                        "hint": "The date on which this RCM Source is to be checked next.",
-                        "id": "duedate",
-                        "mandatory": "",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-bricks",
-                        "size": "large",
-                        "label": "Country *",
-                        "hint": "Country for RCM Source",
-                        "id": "country",
-                        "mode": "select",
-                        "savenameseparate": "yes",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-bricks",
-                        "size": "large",
-                        "label": "Entity *",
-                        "hint": "Entity for RCM Source",
-                        "id": "entity",
-                        "dependencies": [
-                            "country"
-                        ],
-                        "mode": "select",
-                        "savenameseparate": "yes",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-bricks",
-                        "size": "large",
-                        "label": "Location *",
-                        "hint": "Location for RCM Source",
-                        "id": "locations",
-                        "dependencies": [
-                            "country",
-                            "entity"
-                        ],
-                        "mode": "select",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-bricks",
-                        "size": "large",
-                        "label": "Tags *",
-                        "hint": "Tags applied to RCM Source",
-                        "id": "tags",
-                        "mode": "multiselect",
-                        "dependencies": [
-                            "country",
-                            "entity",
-                            "locations"
-                        ],
-                        "searchstring": "-Tags",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Reporter *",
-                        "hint": "Reporter for the RCM Source",
-                        "id": "reporters",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Approver *",
-                        "hint": "Approver for the RCM Source",
-                        "id": "approvers",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Function head *",
-                        "hint": "Function head for the RCM Source",
-                        "id": "functionheads",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-select",
-                        "size": "large",
-                        "label": "Category *",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/category",
-                        "hint": "Category",
-                        "id": "category",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-sub-select",
-                        "size": "large",
-                        "label": "SubCategory *",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/subcategory",
-                        "hint": "Subcategory",
-                        "id": "subcategory",
-                        "dependencies": [
-                            "category"
-                        ],
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "section",
-                        "name": "Additional Fields"
-                    },
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "Context",
-                        "hint": "Context of the RCM Source",
-                        "id": "context",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Disable Approval",
-                        "hint": "Disable approval required for the RCM Source",
-                        "id": "makercheckers",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/tagging",
-                        "searchstring": "MakerChecker",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]",
-                        "maxselect": "1",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Auditor",
-                        "hint": "Auditor for the RCM Source",
-                        "id": "auditors",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Viewer",
-                        "hint": "Viewer for the RCM Source",
-                        "id": "viewers",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form-select",
-                        "size": "large",
-                        "label": "Projects",
-                        "hint": "Projects to whom RCM Source is applicable",
-                        "id": "projects",
-                        "mode": "select",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/project",
-                        "selectprojection": "project",
-                        "ignoredprojections": "[&quot;logo&quot;,&quot;plan&quot;,&quot;address&quot;,&quot;emails&quot;,&quot;vertical&quot;,&quot;cycledate&quot;,&quot;shortid&quot;,&quot;startdate&quot;,&quot;contractdate&quot;,&quot;quality&quot;,&quot;locations&quot;,&quot;shortnumid&quot;,&quot;confighome&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "100",
-                        "displayinhistory": "yes"
-                    },
-                    [
-                        {
-                            "type": "sourcereport",
-                            "id": "sourcereport",
-                            "name": "Source Report",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-select",
-                            "size": "large",
-                            "label": "Country {iter}",
-                            "apiid": "dnytrdlrmxgsy.cloudfront.net/country",
-                            "hint": "Country",
-                            "id": "country{iter}",
-                            "copytoreopen": "yes",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-sub-select",
-                            "size": "large",
-                            "label": "State {iter}",
-                            "apiid": "dnytrdlrmxgsy.cloudfront.net/state",
-                            "hint": "State",
-                            "id": "state{iter}",
-                            "dependencies": [
-                                "country{iter}"
-                            ],
-                            "copytoreopen": "yes",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-form-select",
-                            "size": "large",
-                            "label": "Statute {iter}",
-                            "hint": "Statute for RCM Source",
-                            "id": "statute{iter}",
-                            "mode": "select",
-                            "dependencies": [
-                                "country{iter}"
-                            ],
-                            "apiid": "dnytrdlrmxgsy.cloudfront.net/statute",
-                            "selectprojection": "name",
-                            "ignoredprojections": "[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]",
-                            "maxselect": "1",
-                            "displayinhistory": "yes"
-                        },
-                        {
-                            "type": "textarea",
-                            "size": "small",
-                            "label": "Notification Name {iter}",
-                            "hint": "Notification name from the source",
-                            "id": "notification-name-{iter}",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "textarea",
-                            "size": "small",
-                            "label": "Notification Reference {iter}",
-                            "hint": "Notification reference from the source",
-                            "id": "notification-reference{iter}",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "date",
-                            "size": "large",
-                            "label": "Publication Date {iter}",
-                            "hint": "The date on which this notification is published.",
-                            "id": "publication-date{iter}",
-                            "mandatory": "",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "date",
-                            "size": "large",
-                            "label": "Effective Date {iter}",
-                            "hint": "The date on which this notification is effective.",
-                            "id": "effective-date{iter}",
-                            "mandatory": "",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "textarea",
-                            "size": "small",
-                            "label": "Remarks {iter}",
-                            "hint": "Remarks on the RCM Source",
-                            "id": "remarks{iter}",
-                            "copytoreopen": "yes",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-select",
-                            "size": "large",
-                            "label": "RCM Source Impact {iter}",
-                            "apiid": "r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws",
-                            "hint": "RCM Source Impact",
-                            "id": "rcmsourceimpact{iter}",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-select",
-                            "size": "large",
-                            "label": "RCM Source Type {iter}",
-                            "apiid": "6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws",
-                            "hint": "RCM Source Type",
-                            "id": "rcmsourcetype{iter}",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-uploader",
-                            "size": "large",
-                            "label": "RCM Document {iter}",
-                            "hint": "Document for this rcm notification",
-                            "id": "document{iter}",
-                            "mode": "multiselect-dropdown",
-                            "apiid": "1peg5170d3",
-                            "allowedextensions": "[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]",
-                            "extract": "no",
-                            "maxselect": "1",
-                            "maxsize": "10242880",
-                            "allowdownload": "yes",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        }
-                    ]
-                ]
-            }
-        ],
-        "26/09/2025": [
-            {
-                "object": {
-                    "name": "Test RCM Source",
-                    "description": "THis is a test RCM source for notification",
-                    "url": "www.flagggrc.com",
-                    "frequency": "*/*/*",
-                    "lastcheckdate": "2025-09-25",
-                    "duedate": "2025-09-26",
-                    "countryid": "07d73b44-648d-4301-82c4-d6df43397824",
-                    "countryname": "India (ABC Global-Country)",
-                    "entityid": "c989a44e-7d3d-427e-b712-90eacf585075",
-                    "entityname": "ABC Limited - India (ABC Global-India-Entity)",
-                    "locations": [
-                        "Pune (ABC Global-India-ABC Limited - India-Location);4fb7b672-5cce-443f-869b-6b35247d6331"
-                    ],
-                    "tags": [
-                        "Advertising Conditions (ABC Global-Tags);2cd4f501-1dcf-4f76-be0b-779a0721ad2f"
-                    ],
-                    "reporters": [
-                        "Local Reporter 1;e9684b5d-ddbc-46d3-ae07-51706bf75410"
-                    ],
-                    "approvers": [
-                        "Local Approver 1;c44dcd04-aebb-4417-ba6b-fac170efd5d0"
-                    ],
-                    "functionheads": [
-                        "Chief Compliance Officer;5fe96caa-1a44-4a2d-921a-920d29433eca"
-                    ],
-                    "categoryid": "0da8f379-2006-4ad2-ba20-699345cd87d7",
-                    "categoryname": "Sector Specific",
-                    "subcategoryid": "00c5ad85-0609-4190-b6a7-3162e3ea5376",
-                    "subcategoryname": "Food",
-                    "context": "",
-                    "makercheckers": [],
-                    "auditors": [],
-                    "viewers": [],
-                    "projects": {
-                        "id": "d7d4d17e-3e20-4eaa-a06a-fb1c87f26532",
-                        "name": "FlaggGRC Global",
-                        "emails": "jomon.j@flagggrc.tech",
-                        "cycledate": "31/3/*",
-                        "contractdate": "31/3/2030",
-                        "quality": "NA",
-                        "locations": "{\"India\":{\"Maharashtra\":[\"Pune\"]}}",
-                        "plan": [
-                            "Tool "
-                        ],
-                        "startdate": "01/01/2025",
-                        "logo": [],
-                        "confighome": "{\"modules\":[\"rcmresources\"]}",
-                        "shortid": [
-                            "lm0ck8ab"
-                        ],
-                        "shortnumid": [
-                            1714371986
-                        ],
-                        "lastModifiedBy": "Ninad Thatte",
-                        "lastModifiedTime": "1753179043341"
-                    },
-                    "Source Report": [
-                        {
-                            "country-0id": "42aae0da-ac44-4a0d-962c-f7693dbe095b",
-                            "country-0name": "India",
-                            "state-0id": "08405853-96b7-4088-9844-f481c77077e5",
-                            "state-0name": "Delhi",
-                            "statute-0": {
-                                "id": "50c64a5a-5b9f-45e5-bdc3-b43bb657a23e",
-                                "country": [
-                                    "India"
-                                ],
-                                "jurisdiction": [
-                                    "Federal"
-                                ],
-                                "state": [],
-                                "name": "Food Safety and Standards Act, 2006 + Food Safety and Standards (Alcoholic Beverages) Regulation, 2018",
-                                "category": [
-                                    "Operational"
-                                ],
-                                "subcategory": [
-                                    "FSSAI"
-                                ],
-                                "updatetype": [
-                                    "New"
-                                ],
-                                "applicability": "Applicable to every food business operator",
-                                "shortid": [
-                                    "ly8apd7e"
-                                ],
-                                "shortnumid": [
-                                    1720159754
-                                ]
-                            },
-                            "notification-name--0": "Test notification",
-                            "notification-reference-0": "Reference 101",
-                            "publication-date-0": "2025-09-24",
-                            "effective-date-0": "2025-09-27",
-                            "remarks-0": "This is a test notification",
-                            "rcmsourceimpact-0id": "62b3df51-9719-44e2-9129-09a8278b74b6",
-                            "rcmsourceimpact-0name": "Draft published for stakeholders’ comments",
-                            "rcmsourcetype-0id": "df5e7a85-61ac-48c2-ad63-579b1e970533",
-                            "rcmsourcetype-0name": "Informative notification",
-                            "document-0": []
-                        }
-                    ],
-                    "customreporting": "[{\"type\":\"date\",\"name\":\"\",\"size\":\"large\",\"label\":\"Last Check Date *\",\"hint\":\"The date on which this RCM Source was last checked\",\"id\":\"lastcheckdate\",\"value\":\"2025-09-24\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":false,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},[{\"id\":\"sourcereport\",\"type\":\"sourcereport\",\"label\":\"Source Report\",\"schema\":\"[{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Country {iter}\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/country\\\",\\\"hint\\\":\\\"Country\\\",\\\"id\\\":\\\"country{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-sub-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"State {iter}\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/state\\\",\\\"hint\\\":\\\"State\\\",\\\"id\\\":\\\"state{iter}\\\",\\\"dependencies\\\":[\\\"country{iter}\\\"],\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-form-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Statute {iter}\\\",\\\"hint\\\":\\\"Statute for RCM Source\\\",\\\"id\\\":\\\"statute{iter}\\\",\\\"mode\\\":\\\"select\\\",\\\"dependencies\\\":[\\\"country{iter}\\\"],\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/statute\\\",\\\"selectprojection\\\":\\\"name\\\",\\\"ignoredprojections\\\":\\\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\\\",\\\"maxselect\\\":\\\"1\\\",\\\"displayinhistory\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Name {iter}\\\",\\\"hint\\\":\\\"Notification name from the source\\\",\\\"id\\\":\\\"notification-name-{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Reference {iter}\\\",\\\"hint\\\":\\\"Notification reference from the source\\\",\\\"id\\\":\\\"notification-reference{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"date\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Publication Date {iter}\\\",\\\"hint\\\":\\\"The date on which this notification is published.\\\",\\\"id\\\":\\\"publication-date{iter}\\\",\\\"mandatory\\\":\\\"\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"date\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Effective Date {iter}\\\",\\\"hint\\\":\\\"The date on which this notification is effective.\\\",\\\"id\\\":\\\"effective-date{iter}\\\",\\\"mandatory\\\":\\\"\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Remarks {iter}\\\",\\\"hint\\\":\\\"Remarks on the RCM Source\\\",\\\"id\\\":\\\"remarks{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Impact {iter}\\\",\\\"apiid\\\":\\\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\\\",\\\"hint\\\":\\\"RCM Source Impact\\\",\\\"id\\\":\\\"rcmsourceimpact{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Type {iter}\\\",\\\"apiid\\\":\\\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\\\",\\\"hint\\\":\\\"RCM Source Type\\\",\\\"id\\\":\\\"rcmsourcetype{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-uploader\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Document {iter}\\\",\\\"hint\\\":\\\"Document for this rcm notification\\\",\\\"id\\\":\\\"document{iter}\\\",\\\"mode\\\":\\\"multiselect-dropdown\\\",\\\"apiid\\\":\\\"1peg5170d3\\\",\\\"allowedextensions\\\":\\\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\\\",\\\"extract\\\":\\\"no\\\",\\\"maxselect\\\":\\\"1\\\",\\\"maxsize\\\":\\\"10242880\\\",\\\"allowdownload\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"}]\",\"direction\":\"column\",\"customreporting\":true,\"children\":[],\"name\":\"Source Report\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"Country {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/country\",\"hint\":\"Country\",\"id\":\"country{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-sub-select\",\"size\":\"large\",\"label\":\"State {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/state\",\"hint\":\"State\",\"id\":\"state{iter}\",\"dependencies\":[\"country{iter}\"],\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-form-select\",\"size\":\"large\",\"label\":\"Statute {iter}\",\"hint\":\"Statute for RCM Source\",\"id\":\"statute{iter}\",\"mode\":\"select\",\"dependencies\":[\"country{iter}\"],\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/statute\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\",\"maxselect\":\"1\",\"displayinhistory\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Name {iter}\",\"hint\":\"Notification name from the source\",\"id\":\"notification-name-{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Reference {iter}\",\"hint\":\"Notification reference from the source\",\"id\":\"notification-reference{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Publication Date {iter}\",\"hint\":\"The date on which this notification is published.\",\"id\":\"publication-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Effective Date {iter}\",\"hint\":\"The date on which this notification is effective.\",\"id\":\"effective-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Remarks {iter}\",\"hint\":\"Remarks on the RCM Source\",\"id\":\"remarks{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Impact {iter}\",\"apiid\":\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Impact\",\"id\":\"rcmsourceimpact{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Type {iter}\",\"apiid\":\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Type\",\"id\":\"rcmsourcetype{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-uploader\",\"size\":\"large\",\"label\":\"RCM Document {iter}\",\"hint\":\"Document for this rcm notification\",\"id\":\"document{iter}\",\"mode\":\"multiselect-dropdown\",\"apiid\":\"1peg5170d3\",\"allowedextensions\":\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\",\"extract\":\"no\",\"maxselect\":\"1\",\"maxsize\":\"10242880\",\"allowdownload\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"}]]",
-                    "id": "ffd64c52-bcaa-42e0-bc4c-dacfc9e8ab87",
-                    "documents": [],
-                    "comments": [
-                        {
-                            "author": "Reporter",
-                            "username": "Local Reporter 1",
-                            "comment": "Another notification (Documents Saved: 0)",
-                            "timestamp": "Fri, 26 Sep 2025 05:11:58 GMT"
-                        },
-                        {
-                            "author": "Approver",
-                            "username": "Local Approver 1",
-                            "comment": "Approved (Approved: Yes)",
-                            "timestamp": "Fri, 26 Sep 2025 05:13:27 GMT"
-                        },
-                        {
-                            "author": "Approver",
-                            "username": "Local Approver 1",
-                            "comment": "Test Reject (Approved: No)",
-                            "timestamp": "Fri, 26 Sep 2025 05:17:55 GMT"
-                        },
-                        {
-                            "author": "Approver",
-                            "username": "Local Approver 1",
-                            "comment": "Approved (Approved: Yes)",
-                            "timestamp": "Fri, 26 Sep 2025 05:18:56 GMT"
-                        },
-                        {
-                            "author": "Approver",
-                            "username": "Local Approver 1",
-                            "comment": "Test reject (Approved: No)",
-                            "timestamp": "Fri, 26 Sep 2025 05:25:40 GMT"
-                        },
-                        {
-                            "author": "Approver",
-                            "username": "Local Approver 1",
-                            "comment": "Approve (Approved: Yes)",
-                            "timestamp": "Fri, 26 Sep 2025 05:26:12 GMT"
-                        }
-                    ],
-                    "approved": true,
-                    "lastupdated": "Fri, 26 Sep 2025 05:26:12 GMT",
-                    "dateofcompletion": "1758863514425",
-                    "reportformatschema": "[{\"type\":\"date\",\"name\":\"\",\"size\":\"large\",\"label\":\"Last Check Date *\",\"hint\":\"The date on which this RCM Source was last checked\",\"id\":\"lastcheckdate\",\"value\":\"2025-09-24\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":false,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},[{\"id\":\"sourcereport\",\"type\":\"sourcereport\",\"label\":\"Source Report\",\"schema\":\"[{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Country {iter}\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/country\\\",\\\"hint\\\":\\\"Country\\\",\\\"id\\\":\\\"country{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-sub-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"State {iter}\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/state\\\",\\\"hint\\\":\\\"State\\\",\\\"id\\\":\\\"state{iter}\\\",\\\"dependencies\\\":[\\\"country{iter}\\\"],\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-form-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Statute {iter}\\\",\\\"hint\\\":\\\"Statute for RCM Source\\\",\\\"id\\\":\\\"statute{iter}\\\",\\\"mode\\\":\\\"select\\\",\\\"dependencies\\\":[\\\"country{iter}\\\"],\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/statute\\\",\\\"selectprojection\\\":\\\"name\\\",\\\"ignoredprojections\\\":\\\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\\\",\\\"maxselect\\\":\\\"1\\\",\\\"displayinhistory\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Name {iter}\\\",\\\"hint\\\":\\\"Notification name from the source\\\",\\\"id\\\":\\\"notification-name-{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Reference {iter}\\\",\\\"hint\\\":\\\"Notification reference from the source\\\",\\\"id\\\":\\\"notification-reference{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"date\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Publication Date {iter}\\\",\\\"hint\\\":\\\"The date on which this notification is published.\\\",\\\"id\\\":\\\"publication-date{iter}\\\",\\\"mandatory\\\":\\\"\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"date\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Effective Date {iter}\\\",\\\"hint\\\":\\\"The date on which this notification is effective.\\\",\\\"id\\\":\\\"effective-date{iter}\\\",\\\"mandatory\\\":\\\"\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Remarks {iter}\\\",\\\"hint\\\":\\\"Remarks on the RCM Source\\\",\\\"id\\\":\\\"remarks{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Impact {iter}\\\",\\\"apiid\\\":\\\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\\\",\\\"hint\\\":\\\"RCM Source Impact\\\",\\\"id\\\":\\\"rcmsourceimpact{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Type {iter}\\\",\\\"apiid\\\":\\\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\\\",\\\"hint\\\":\\\"RCM Source Type\\\",\\\"id\\\":\\\"rcmsourcetype{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-uploader\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Document {iter}\\\",\\\"hint\\\":\\\"Document for this rcm notification\\\",\\\"id\\\":\\\"document{iter}\\\",\\\"mode\\\":\\\"multiselect-dropdown\\\",\\\"apiid\\\":\\\"1peg5170d3\\\",\\\"allowedextensions\\\":\\\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\\\",\\\"extract\\\":\\\"no\\\",\\\"maxselect\\\":\\\"1\\\",\\\"maxsize\\\":\\\"10242880\\\",\\\"allowdownload\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"}]\",\"direction\":\"column\",\"customreporting\":true,\"children\":[],\"name\":\"Source Report\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"Country {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/country\",\"hint\":\"Country\",\"id\":\"country{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-sub-select\",\"size\":\"large\",\"label\":\"State {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/state\",\"hint\":\"State\",\"id\":\"state{iter}\",\"dependencies\":[\"country{iter}\"],\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-form-select\",\"size\":\"large\",\"label\":\"Statute {iter}\",\"hint\":\"Statute for RCM Source\",\"id\":\"statute{iter}\",\"mode\":\"select\",\"dependencies\":[\"country{iter}\"],\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/statute\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\",\"maxselect\":\"1\",\"displayinhistory\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Name {iter}\",\"hint\":\"Notification name from the source\",\"id\":\"notification-name-{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Reference {iter}\",\"hint\":\"Notification reference from the source\",\"id\":\"notification-reference{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Publication Date {iter}\",\"hint\":\"The date on which this notification is published.\",\"id\":\"publication-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Effective Date {iter}\",\"hint\":\"The date on which this notification is effective.\",\"id\":\"effective-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Remarks {iter}\",\"hint\":\"Remarks on the RCM Source\",\"id\":\"remarks{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Impact {iter}\",\"apiid\":\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Impact\",\"id\":\"rcmsourceimpact{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Type {iter}\",\"apiid\":\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Type\",\"id\":\"rcmsourcetype{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-uploader\",\"size\":\"large\",\"label\":\"RCM Document {iter}\",\"hint\":\"Document for this rcm notification\",\"id\":\"document{iter}\",\"mode\":\"multiselect-dropdown\",\"apiid\":\"1peg5170d3\",\"allowedextensions\":\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\",\"extract\":\"no\",\"maxselect\":\"1\",\"maxsize\":\"10242880\",\"allowdownload\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"}]]",
-                    "reportformatvalues": "",
-                    "history": null,
-                    "terminated": false
-                },
-                "schema": [
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "Name *",
-                        "hint": "RCM Source name",
-                        "id": "name",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "Description",
-                        "hint": "RCM Source description",
-                        "id": "description",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "RCM Source URL *",
-                        "hint": "RCM Source url",
-                        "id": "url",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "RCM Source Frequency *",
-                        "hint": "RCM Source checking frequency",
-                        "id": "frequency",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "date",
-                        "size": "large",
-                        "label": "Last Check Date *",
-                        "hint": "The date on which this RCM Source was last checked",
-                        "id": "lastcheckdate",
-                        "mandatory": "",
-                        "displayinhistory": "yes",
-                        "customreporting": "yes"
-                    },
-                    {
-                        "type": "date",
-                        "size": "large",
-                        "label": "Due Date *",
-                        "hint": "The date on which this RCM Source is to be checked next.",
-                        "id": "duedate",
-                        "mandatory": "",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-bricks",
-                        "size": "large",
-                        "label": "Country *",
-                        "hint": "Country for RCM Source",
-                        "id": "country",
-                        "mode": "select",
-                        "savenameseparate": "yes",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-bricks",
-                        "size": "large",
-                        "label": "Entity *",
-                        "hint": "Entity for RCM Source",
-                        "id": "entity",
-                        "dependencies": [
-                            "country"
-                        ],
-                        "mode": "select",
-                        "savenameseparate": "yes",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-bricks",
-                        "size": "large",
-                        "label": "Location *",
-                        "hint": "Location for RCM Source",
-                        "id": "locations",
-                        "dependencies": [
-                            "country",
-                            "entity"
-                        ],
-                        "mode": "select",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-bricks",
-                        "size": "large",
-                        "label": "Tags *",
-                        "hint": "Tags applied to RCM Source",
-                        "id": "tags",
-                        "mode": "multiselect",
-                        "dependencies": [
-                            "country",
-                            "entity",
-                            "locations"
-                        ],
-                        "searchstring": "-Tags",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Reporter *",
-                        "hint": "Reporter for the RCM Source",
-                        "id": "reporters",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Approver *",
-                        "hint": "Approver for the RCM Source",
-                        "id": "approvers",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Function head *",
-                        "hint": "Function head for the RCM Source",
-                        "id": "functionheads",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-select",
-                        "size": "large",
-                        "label": "Category *",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/category",
-                        "hint": "Category",
-                        "id": "category",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-sub-select",
-                        "size": "large",
-                        "label": "SubCategory *",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/subcategory",
-                        "hint": "Subcategory",
-                        "id": "subcategory",
-                        "dependencies": [
-                            "category"
-                        ],
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "section",
-                        "name": "Additional Fields"
-                    },
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "Context",
-                        "hint": "Context of the RCM Source",
-                        "id": "context",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Disable Approval",
-                        "hint": "Disable approval required for the RCM Source",
-                        "id": "makercheckers",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/tagging",
-                        "searchstring": "MakerChecker",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]",
-                        "maxselect": "1",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Auditor",
-                        "hint": "Auditor for the RCM Source",
-                        "id": "auditors",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Viewer",
-                        "hint": "Viewer for the RCM Source",
-                        "id": "viewers",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form-select",
-                        "size": "large",
-                        "label": "Projects",
-                        "hint": "Projects to whom RCM Source is applicable",
-                        "id": "projects",
-                        "mode": "select",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/project",
-                        "selectprojection": "project",
-                        "ignoredprojections": "[&quot;logo&quot;,&quot;plan&quot;,&quot;address&quot;,&quot;emails&quot;,&quot;vertical&quot;,&quot;cycledate&quot;,&quot;shortid&quot;,&quot;startdate&quot;,&quot;contractdate&quot;,&quot;quality&quot;,&quot;locations&quot;,&quot;shortnumid&quot;,&quot;confighome&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "100",
-                        "displayinhistory": "yes"
-                    },
-                    [
-                        {
-                            "type": "sourcereport",
-                            "id": "sourcereport",
-                            "name": "Source Report",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-select",
-                            "size": "large",
-                            "label": "Country {iter}",
-                            "apiid": "dnytrdlrmxgsy.cloudfront.net/country",
-                            "hint": "Country",
-                            "id": "country{iter}",
-                            "copytoreopen": "yes",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-sub-select",
-                            "size": "large",
-                            "label": "State {iter}",
-                            "apiid": "dnytrdlrmxgsy.cloudfront.net/state",
-                            "hint": "State",
-                            "id": "state{iter}",
-                            "dependencies": [
-                                "country{iter}"
-                            ],
-                            "copytoreopen": "yes",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-form-select",
-                            "size": "large",
-                            "label": "Statute {iter}",
-                            "hint": "Statute for RCM Source",
-                            "id": "statute{iter}",
-                            "mode": "select",
-                            "dependencies": [
-                                "country{iter}"
-                            ],
-                            "apiid": "dnytrdlrmxgsy.cloudfront.net/statute",
-                            "selectprojection": "name",
-                            "ignoredprojections": "[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]",
-                            "maxselect": "1",
-                            "displayinhistory": "yes"
-                        },
-                        {
-                            "type": "textarea",
-                            "size": "small",
-                            "label": "Notification Name {iter}",
-                            "hint": "Notification name from the source",
-                            "id": "notification-name-{iter}",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "textarea",
-                            "size": "small",
-                            "label": "Notification Reference {iter}",
-                            "hint": "Notification reference from the source",
-                            "id": "notification-reference{iter}",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "date",
-                            "size": "large",
-                            "label": "Publication Date {iter}",
-                            "hint": "The date on which this notification is published.",
-                            "id": "publication-date{iter}",
-                            "mandatory": "",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "date",
-                            "size": "large",
-                            "label": "Effective Date {iter}",
-                            "hint": "The date on which this notification is effective.",
-                            "id": "effective-date{iter}",
-                            "mandatory": "",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "textarea",
-                            "size": "small",
-                            "label": "Remarks {iter}",
-                            "hint": "Remarks on the RCM Source",
-                            "id": "remarks{iter}",
-                            "copytoreopen": "yes",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-select",
-                            "size": "large",
-                            "label": "RCM Source Impact {iter}",
-                            "apiid": "r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws",
-                            "hint": "RCM Source Impact",
-                            "id": "rcmsourceimpact{iter}",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-select",
-                            "size": "large",
-                            "label": "RCM Source Type {iter}",
-                            "apiid": "6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws",
-                            "hint": "RCM Source Type",
-                            "id": "rcmsourcetype{iter}",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-uploader",
-                            "size": "large",
-                            "label": "RCM Document {iter}",
-                            "hint": "Document for this rcm notification",
-                            "id": "document{iter}",
-                            "mode": "multiselect-dropdown",
-                            "apiid": "1peg5170d3",
-                            "allowedextensions": "[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]",
-                            "extract": "no",
-                            "maxselect": "1",
-                            "maxsize": "10242880",
-                            "allowdownload": "yes",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        }
-                    ]
-                ]
-            }
-        ],
-        "27/09/2025": [
-            {
-                "object": {
-                    "name": "Test RCM Source",
-                    "description": "THis is a test RCM source for notification",
-                    "url": "www.flagggrc.com",
-                    "frequency": "*/*/*",
-                    "lastcheckdate": "2025-09-25",
-                    "duedate": "2025-09-27",
-                    "countryid": "07d73b44-648d-4301-82c4-d6df43397824",
-                    "countryname": "India (ABC Global-Country)",
-                    "entityid": "c989a44e-7d3d-427e-b712-90eacf585075",
-                    "entityname": "ABC Limited - India (ABC Global-India-Entity)",
-                    "locations": [
-                        "Pune (ABC Global-India-ABC Limited - India-Location);4fb7b672-5cce-443f-869b-6b35247d6331"
-                    ],
-                    "tags": [
-                        "Advertising Conditions (ABC Global-Tags);2cd4f501-1dcf-4f76-be0b-779a0721ad2f"
-                    ],
-                    "reporters": [
-                        "Local Reporter 1;e9684b5d-ddbc-46d3-ae07-51706bf75410"
-                    ],
-                    "approvers": [
-                        "Local Approver 1;c44dcd04-aebb-4417-ba6b-fac170efd5d0"
-                    ],
-                    "functionheads": [
-                        "Chief Compliance Officer;5fe96caa-1a44-4a2d-921a-920d29433eca"
-                    ],
-                    "categoryid": "0da8f379-2006-4ad2-ba20-699345cd87d7",
-                    "categoryname": "Sector Specific",
-                    "subcategoryid": "00c5ad85-0609-4190-b6a7-3162e3ea5376",
-                    "subcategoryname": "Food",
-                    "context": "",
-                    "makercheckers": [],
-                    "auditors": [],
-                    "viewers": [],
-                    "projects": {
-                        "id": "d7d4d17e-3e20-4eaa-a06a-fb1c87f26532",
-                        "name": "FlaggGRC Global",
-                        "emails": "jomon.j@flagggrc.tech",
-                        "cycledate": "31/3/*",
-                        "contractdate": "31/3/2030",
-                        "quality": "NA",
-                        "locations": "{\"India\":{\"Maharashtra\":[\"Pune\"]}}",
-                        "plan": [
-                            "Tool "
-                        ],
-                        "startdate": "01/01/2025",
-                        "logo": [],
-                        "confighome": "{\"modules\":[\"rcmresources\"]}",
-                        "shortid": [
-                            "lm0ck8ab"
-                        ],
-                        "shortnumid": [
-                            1714371986
-                        ],
-                        "lastModifiedBy": "Ninad Thatte",
-                        "lastModifiedTime": "1753179043341"
-                    },
-                    "Source Report": [
-                        {
-                            "country-0id": "42aae0da-ac44-4a0d-962c-f7693dbe095b",
-                            "country-0name": "India",
-                            "state-0id": "f12bb850-2c95-4135-9c35-77ba624cd3d7",
-                            "state-0name": "Maharashtra",
-                            "statute-0": {
-                                "id": "df2c468a-2654-425e-8e8e-1187cb79203c",
-                                "country": [
-                                    "India"
-                                ],
-                                "jurisdiction": [
-                                    "Federal"
-                                ],
-                                "state": [],
-                                "name": "Food Safety and Standards Act, 2006 + Food Safety and Standards (Packaging) Regulations, 2018",
-                                "category": [
-                                    "Sector Specific"
-                                ],
-                                "subcategory": [
-                                    "Food"
-                                ],
-                                "updatetype": [
-                                    "Correction Update"
-                                ],
-                                "applicability": "Applicable to all Food Business Operators.\nMore information:\nFood business means any undertaking, whether for profit or not and whether public or private, carrying out any of the activities related to any stage of manufacture, processing, packaging, storage, transportation, distribution of food, import and includes food services, catering services, sale of food or food ingredients.",
-                                "definitions": [],
-                                "shortid": [
-                                    "lkik8o53"
-                                ],
-                                "shortnumid": [
-                                    1716144105
-                                ],
-                                "lastModifiedBy": "Shruti Deshpande",
-                                "lastModifiedTime": "1737305602971"
-                            },
-                            "notification-name--0": "Test notification no. 2",
-                            "notification-reference-0": "Ref 102",
-                            "publication-date-0": "2025-09-25",
-                            "effective-date-0": "2025-09-27",
-                            "remarks-0": "This is another notificaiton to be looked at",
-                            "rcmsourceimpact-0id": "b337c42d-3d33-4709-8daf-5d1679d8492a",
-                            "rcmsourceimpact-0name": "Enacted (not yet effective)",
-                            "rcmsourcetype-0id": "8870a4d3-8e15-45c6-892e-db3cdf77880f",
-                            "rcmsourcetype-0name": "New compliance obligations in existing laws",
-                            "document-0": []
-                        }
-                    ],
-                    "customreporting": "[{\"type\":\"date\",\"name\":\"\",\"size\":\"large\",\"label\":\"Last Check Date *\",\"hint\":\"The date on which this RCM Source was last checked\",\"id\":\"lastcheckdate\",\"value\":\"2025-09-24\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":false,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},[{\"id\":\"sourcereport\",\"type\":\"sourcereport\",\"label\":\"Source Report\",\"schema\":\"[{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Country {iter}\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/country\\\",\\\"hint\\\":\\\"Country\\\",\\\"id\\\":\\\"country{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-sub-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"State {iter}\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/state\\\",\\\"hint\\\":\\\"State\\\",\\\"id\\\":\\\"state{iter}\\\",\\\"dependencies\\\":[\\\"country{iter}\\\"],\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-form-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Statute {iter}\\\",\\\"hint\\\":\\\"Statute for RCM Source\\\",\\\"id\\\":\\\"statute{iter}\\\",\\\"mode\\\":\\\"select\\\",\\\"dependencies\\\":[\\\"country{iter}\\\"],\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/statute\\\",\\\"selectprojection\\\":\\\"name\\\",\\\"ignoredprojections\\\":\\\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\\\",\\\"maxselect\\\":\\\"1\\\",\\\"displayinhistory\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Name {iter}\\\",\\\"hint\\\":\\\"Notification name from the source\\\",\\\"id\\\":\\\"notification-name-{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Reference {iter}\\\",\\\"hint\\\":\\\"Notification reference from the source\\\",\\\"id\\\":\\\"notification-reference{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"date\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Publication Date {iter}\\\",\\\"hint\\\":\\\"The date on which this notification is published.\\\",\\\"id\\\":\\\"publication-date{iter}\\\",\\\"mandatory\\\":\\\"\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"date\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Effective Date {iter}\\\",\\\"hint\\\":\\\"The date on which this notification is effective.\\\",\\\"id\\\":\\\"effective-date{iter}\\\",\\\"mandatory\\\":\\\"\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Remarks {iter}\\\",\\\"hint\\\":\\\"Remarks on the RCM Source\\\",\\\"id\\\":\\\"remarks{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Impact {iter}\\\",\\\"apiid\\\":\\\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\\\",\\\"hint\\\":\\\"RCM Source Impact\\\",\\\"id\\\":\\\"rcmsourceimpact{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Type {iter}\\\",\\\"apiid\\\":\\\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\\\",\\\"hint\\\":\\\"RCM Source Type\\\",\\\"id\\\":\\\"rcmsourcetype{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-uploader\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Document {iter}\\\",\\\"hint\\\":\\\"Document for this rcm notification\\\",\\\"id\\\":\\\"document{iter}\\\",\\\"mode\\\":\\\"multiselect-dropdown\\\",\\\"apiid\\\":\\\"1peg5170d3\\\",\\\"allowedextensions\\\":\\\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\\\",\\\"extract\\\":\\\"no\\\",\\\"maxselect\\\":\\\"1\\\",\\\"maxsize\\\":\\\"10242880\\\",\\\"allowdownload\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"}]\",\"direction\":\"column\",\"customreporting\":true,\"children\":[],\"name\":\"Source Report\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"Country {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/country\",\"hint\":\"Country\",\"id\":\"country{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-sub-select\",\"size\":\"large\",\"label\":\"State {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/state\",\"hint\":\"State\",\"id\":\"state{iter}\",\"dependencies\":[\"country{iter}\"],\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-form-select\",\"size\":\"large\",\"label\":\"Statute {iter}\",\"hint\":\"Statute for RCM Source\",\"id\":\"statute{iter}\",\"mode\":\"select\",\"dependencies\":[\"country{iter}\"],\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/statute\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\",\"maxselect\":\"1\",\"displayinhistory\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Name {iter}\",\"hint\":\"Notification name from the source\",\"id\":\"notification-name-{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Reference {iter}\",\"hint\":\"Notification reference from the source\",\"id\":\"notification-reference{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Publication Date {iter}\",\"hint\":\"The date on which this notification is published.\",\"id\":\"publication-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Effective Date {iter}\",\"hint\":\"The date on which this notification is effective.\",\"id\":\"effective-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Remarks {iter}\",\"hint\":\"Remarks on the RCM Source\",\"id\":\"remarks{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Impact {iter}\",\"apiid\":\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Impact\",\"id\":\"rcmsourceimpact{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Type {iter}\",\"apiid\":\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Type\",\"id\":\"rcmsourcetype{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-uploader\",\"size\":\"large\",\"label\":\"RCM Document {iter}\",\"hint\":\"Document for this rcm notification\",\"id\":\"document{iter}\",\"mode\":\"multiselect-dropdown\",\"apiid\":\"1peg5170d3\",\"allowedextensions\":\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\",\"extract\":\"no\",\"maxselect\":\"1\",\"maxsize\":\"10242880\",\"allowdownload\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"}]]",
-                    "id": "ffd64c52-bcaa-42e0-bc4c-dacfc9e8ab87",
-                    "documents": [],
-                    "comments": [
-                        {
-                            "author": "Reporter",
-                            "username": "Local Reporter 1",
-                            "comment": "Test reporting. Nothing found (Documents Saved: 0)",
-                            "timestamp": "Fri, 26 Sep 2025 12:01:58 GMT"
-                        },
-                        {
-                            "author": "Approver",
-                            "username": "Local Approver 1",
-                            "comment": " (Approved: Yes)",
-                            "timestamp": "Fri, 26 Sep 2025 12:03:36 GMT"
-                        }
-                    ],
-                    "approved": true,
-                    "lastupdated": "Fri, 26 Sep 2025 12:03:36 GMT",
-                    "dateofcompletion": "1758888122001",
-                    "reportformatschema": "[{\"type\":\"date\",\"name\":\"\",\"size\":\"large\",\"label\":\"Last Check Date *\",\"hint\":\"The date on which this RCM Source was last checked\",\"id\":\"lastcheckdate\",\"value\":\"2025-09-24\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":false,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},[{\"id\":\"sourcereport\",\"type\":\"sourcereport\",\"label\":\"Source Report\",\"schema\":\"[{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Country {iter}\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/country\\\",\\\"hint\\\":\\\"Country\\\",\\\"id\\\":\\\"country{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-sub-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"State {iter}\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/state\\\",\\\"hint\\\":\\\"State\\\",\\\"id\\\":\\\"state{iter}\\\",\\\"dependencies\\\":[\\\"country{iter}\\\"],\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-form-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Statute {iter}\\\",\\\"hint\\\":\\\"Statute for RCM Source\\\",\\\"id\\\":\\\"statute{iter}\\\",\\\"mode\\\":\\\"select\\\",\\\"dependencies\\\":[\\\"country{iter}\\\"],\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/statute\\\",\\\"selectprojection\\\":\\\"name\\\",\\\"ignoredprojections\\\":\\\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\\\",\\\"maxselect\\\":\\\"1\\\",\\\"displayinhistory\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Name {iter}\\\",\\\"hint\\\":\\\"Notification name from the source\\\",\\\"id\\\":\\\"notification-name-{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Reference {iter}\\\",\\\"hint\\\":\\\"Notification reference from the source\\\",\\\"id\\\":\\\"notification-reference{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"date\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Publication Date {iter}\\\",\\\"hint\\\":\\\"The date on which this notification is published.\\\",\\\"id\\\":\\\"publication-date{iter}\\\",\\\"mandatory\\\":\\\"\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"date\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Effective Date {iter}\\\",\\\"hint\\\":\\\"The date on which this notification is effective.\\\",\\\"id\\\":\\\"effective-date{iter}\\\",\\\"mandatory\\\":\\\"\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Remarks {iter}\\\",\\\"hint\\\":\\\"Remarks on the RCM Source\\\",\\\"id\\\":\\\"remarks{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Impact {iter}\\\",\\\"apiid\\\":\\\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\\\",\\\"hint\\\":\\\"RCM Source Impact\\\",\\\"id\\\":\\\"rcmsourceimpact{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Type {iter}\\\",\\\"apiid\\\":\\\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\\\",\\\"hint\\\":\\\"RCM Source Type\\\",\\\"id\\\":\\\"rcmsourcetype{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-uploader\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Document {iter}\\\",\\\"hint\\\":\\\"Document for this rcm notification\\\",\\\"id\\\":\\\"document{iter}\\\",\\\"mode\\\":\\\"multiselect-dropdown\\\",\\\"apiid\\\":\\\"1peg5170d3\\\",\\\"allowedextensions\\\":\\\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\\\",\\\"extract\\\":\\\"no\\\",\\\"maxselect\\\":\\\"1\\\",\\\"maxsize\\\":\\\"10242880\\\",\\\"allowdownload\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"}]\",\"direction\":\"column\",\"customreporting\":true,\"children\":[],\"name\":\"Source Report\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"Country {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/country\",\"hint\":\"Country\",\"id\":\"country{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-sub-select\",\"size\":\"large\",\"label\":\"State {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/state\",\"hint\":\"State\",\"id\":\"state{iter}\",\"dependencies\":[\"country{iter}\"],\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-form-select\",\"size\":\"large\",\"label\":\"Statute {iter}\",\"hint\":\"Statute for RCM Source\",\"id\":\"statute{iter}\",\"mode\":\"select\",\"dependencies\":[\"country{iter}\"],\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/statute\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\",\"maxselect\":\"1\",\"displayinhistory\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Name {iter}\",\"hint\":\"Notification name from the source\",\"id\":\"notification-name-{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Reference {iter}\",\"hint\":\"Notification reference from the source\",\"id\":\"notification-reference{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Publication Date {iter}\",\"hint\":\"The date on which this notification is published.\",\"id\":\"publication-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Effective Date {iter}\",\"hint\":\"The date on which this notification is effective.\",\"id\":\"effective-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Remarks {iter}\",\"hint\":\"Remarks on the RCM Source\",\"id\":\"remarks{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Impact {iter}\",\"apiid\":\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Impact\",\"id\":\"rcmsourceimpact{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Type {iter}\",\"apiid\":\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Type\",\"id\":\"rcmsourcetype{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-uploader\",\"size\":\"large\",\"label\":\"RCM Document {iter}\",\"hint\":\"Document for this rcm notification\",\"id\":\"document{iter}\",\"mode\":\"multiselect-dropdown\",\"apiid\":\"1peg5170d3\",\"allowedextensions\":\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\",\"extract\":\"no\",\"maxselect\":\"1\",\"maxsize\":\"10242880\",\"allowdownload\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"}]]",
-                    "reportformatvalues": "",
-                    "history": null,
-                    "terminated": false
-                },
-                "schema": [
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "Name *",
-                        "hint": "RCM Source name",
-                        "id": "name",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "Description",
-                        "hint": "RCM Source description",
-                        "id": "description",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "RCM Source URL *",
-                        "hint": "RCM Source url",
-                        "id": "url",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "RCM Source Frequency *",
-                        "hint": "RCM Source checking frequency",
-                        "id": "frequency",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "date",
-                        "size": "large",
-                        "label": "Last Check Date *",
-                        "hint": "The date on which this RCM Source was last checked",
-                        "id": "lastcheckdate",
-                        "mandatory": "",
-                        "displayinhistory": "yes",
-                        "customreporting": "yes"
-                    },
-                    {
-                        "type": "date",
-                        "size": "large",
-                        "label": "Due Date *",
-                        "hint": "The date on which this RCM Source is to be checked next.",
-                        "id": "duedate",
-                        "mandatory": "",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-bricks",
-                        "size": "large",
-                        "label": "Country *",
-                        "hint": "Country for RCM Source",
-                        "id": "country",
-                        "mode": "select",
-                        "savenameseparate": "yes",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-bricks",
-                        "size": "large",
-                        "label": "Entity *",
-                        "hint": "Entity for RCM Source",
-                        "id": "entity",
-                        "dependencies": [
-                            "country"
-                        ],
-                        "mode": "select",
-                        "savenameseparate": "yes",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-bricks",
-                        "size": "large",
-                        "label": "Location *",
-                        "hint": "Location for RCM Source",
-                        "id": "locations",
-                        "dependencies": [
-                            "country",
-                            "entity"
-                        ],
-                        "mode": "select",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-bricks",
-                        "size": "large",
-                        "label": "Tags *",
-                        "hint": "Tags applied to RCM Source",
-                        "id": "tags",
-                        "mode": "multiselect",
-                        "dependencies": [
-                            "country",
-                            "entity",
-                            "locations"
-                        ],
-                        "searchstring": "-Tags",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Reporter *",
-                        "hint": "Reporter for the RCM Source",
-                        "id": "reporters",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Approver *",
-                        "hint": "Approver for the RCM Source",
-                        "id": "approvers",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Function head *",
-                        "hint": "Function head for the RCM Source",
-                        "id": "functionheads",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-select",
-                        "size": "large",
-                        "label": "Category *",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/category",
-                        "hint": "Category",
-                        "id": "category",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-sub-select",
-                        "size": "large",
-                        "label": "SubCategory *",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/subcategory",
-                        "hint": "Subcategory",
-                        "id": "subcategory",
-                        "dependencies": [
-                            "category"
-                        ],
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "section",
-                        "name": "Additional Fields"
-                    },
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "Context",
-                        "hint": "Context of the RCM Source",
-                        "id": "context",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Disable Approval",
-                        "hint": "Disable approval required for the RCM Source",
-                        "id": "makercheckers",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/tagging",
-                        "searchstring": "MakerChecker",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]",
-                        "maxselect": "1",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Auditor",
-                        "hint": "Auditor for the RCM Source",
-                        "id": "auditors",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Viewer",
-                        "hint": "Viewer for the RCM Source",
-                        "id": "viewers",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    [
-                        {
-                            "type": "sourcereport",
-                            "id": "sourcereport",
-                            "name": "Source Report",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-select",
-                            "size": "large",
-                            "label": "Country {iter}",
-                            "apiid": "dnytrdlrmxgsy.cloudfront.net/country",
-                            "hint": "Country",
-                            "id": "country{iter}",
-                            "copytoreopen": "yes",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-sub-select",
-                            "size": "large",
-                            "label": "State {iter}",
-                            "apiid": "dnytrdlrmxgsy.cloudfront.net/state",
-                            "hint": "State",
-                            "id": "state{iter}",
-                            "dependencies": [
-                                "country{iter}"
-                            ],
-                            "copytoreopen": "yes",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-form-select",
-                            "size": "large",
-                            "label": "Statute {iter}",
-                            "hint": "Statute for RCM Source",
-                            "id": "statute{iter}",
-                            "mode": "multiselect-list",
-                            "dependencies": [
-                                "country{iter}"
-                            ],
-                            "apiid": "dnytrdlrmxgsy.cloudfront.net/statute",
-                            "selectprojection": "name",
-                            "ignoredprojections": "[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]",
-                            "maxselect": "100",
-                            "displayinhistory": "yes"
-                        },
-                        {
-                            "type": "sf-i-form-select",
-                            "size": "large",
-                            "label": "Projects {iter}",
-                            "hint": "Projects to whom RCM Source is applicable",
-                            "id": "projects{iter}",
-                            "mode": "multiselect-list",
-                            "apiid": "dnytrdlrmxgsy.cloudfront.net/project",
-                            "selectprojection": "project",
-                            "ignoredprojections": "[&quot;logo&quot;,&quot;plan&quot;,&quot;address&quot;,&quot;emails&quot;,&quot;vertical&quot;,&quot;cycledate&quot;,&quot;shortid&quot;,&quot;startdate&quot;,&quot;contractdate&quot;,&quot;quality&quot;,&quot;locations&quot;,&quot;shortnumid&quot;,&quot;confighome&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                            "maxselect": "100",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "textarea",
-                            "size": "small",
-                            "label": "Notification Name {iter}",
-                            "hint": "Notification name from the source",
-                            "id": "notification-name-{iter}",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "textarea",
-                            "size": "small",
-                            "label": "Notification Reference {iter}",
-                            "hint": "Notification reference from the source",
-                            "id": "notification-reference{iter}",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "date",
-                            "size": "large",
-                            "label": "Publication Date {iter}",
-                            "hint": "The date on which this notification is published.",
-                            "id": "publication-date{iter}",
-                            "mandatory": "",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "date",
-                            "size": "large",
-                            "label": "Effective Date {iter}",
-                            "hint": "The date on which this notification is effective.",
-                            "id": "effective-date{iter}",
-                            "mandatory": "",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "textarea",
-                            "size": "small",
-                            "label": "Remarks {iter}",
-                            "hint": "Remarks on the RCM Source",
-                            "id": "remarks{iter}",
-                            "copytoreopen": "yes",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-select",
-                            "size": "large",
-                            "label": "RCM Source Impact {iter}",
-                            "apiid": "r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws",
-                            "hint": "RCM Source Impact",
-                            "id": "rcmsourceimpact{iter}",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-select",
-                            "size": "large",
-                            "label": "RCM Source Type {iter}",
-                            "apiid": "6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws",
-                            "hint": "RCM Source Type",
-                            "id": "rcmsourcetype{iter}",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-uploader",
-                            "size": "large",
-                            "label": "RCM Document {iter}",
-                            "hint": "Document for this rcm notification",
-                            "id": "document{iter}",
-                            "mode": "multiselect-dropdown",
-                            "apiid": "1peg5170d3",
-                            "allowedextensions": "[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]",
-                            "extract": "no",
-                            "maxselect": "1",
-                            "maxsize": "10242880",
-                            "allowdownload": "yes",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        }
-                    ]
-                ]
-            }
-        ],
-        "28/09/2025": [
-            {
-                "object": {
-                    "name": "Test RCM Source",
-                    "description": "THis is a test RCM source for notification",
-                    "url": "www.flagggrc.com",
-                    "frequency": "*/*/*",
-                    "lastcheckdate": "2025-09-26",
-                    "duedate": "2025-09-28",
-                    "countryid": "07d73b44-648d-4301-82c4-d6df43397824",
-                    "countryname": "India (ABC Global-Country)",
-                    "entityid": "c989a44e-7d3d-427e-b712-90eacf585075",
-                    "entityname": "ABC Limited - India (ABC Global-India-Entity)",
-                    "locations": [
-                        "Pune (ABC Global-India-ABC Limited - India-Location);4fb7b672-5cce-443f-869b-6b35247d6331"
-                    ],
-                    "tags": [
-                        "Advertising Conditions (ABC Global-Tags);2cd4f501-1dcf-4f76-be0b-779a0721ad2f"
-                    ],
-                    "reporters": [
-                        "Local Reporter 1;e9684b5d-ddbc-46d3-ae07-51706bf75410"
-                    ],
-                    "approvers": [
-                        "Local Approver 1;c44dcd04-aebb-4417-ba6b-fac170efd5d0"
-                    ],
-                    "functionheads": [
-                        "Chief Compliance Officer;5fe96caa-1a44-4a2d-921a-920d29433eca"
-                    ],
-                    "categoryid": "0da8f379-2006-4ad2-ba20-699345cd87d7",
-                    "categoryname": "Sector Specific",
-                    "subcategoryid": "00c5ad85-0609-4190-b6a7-3162e3ea5376",
-                    "subcategoryname": "Food",
-                    "context": "",
-                    "makercheckers": [],
-                    "auditors": [],
-                    "viewers": [],
-                    "projects": {
-                        "id": "d7d4d17e-3e20-4eaa-a06a-fb1c87f26532",
-                        "name": "FlaggGRC Global",
-                        "emails": "jomon.j@flagggrc.tech",
-                        "cycledate": "31/3/*",
-                        "contractdate": "31/3/2030",
-                        "quality": "NA",
-                        "locations": "{\"India\":{\"Maharashtra\":[\"Pune\"]}}",
-                        "plan": [
-                            "Tool "
-                        ],
-                        "startdate": "01/01/2025",
-                        "logo": [],
-                        "confighome": "{\"modules\":[\"rcmresources\"]}",
-                        "shortid": [
-                            "lm0ck8ab"
-                        ],
-                        "shortnumid": [
-                            1714371986
-                        ],
-                        "lastModifiedBy": "Ninad Thatte",
-                        "lastModifiedTime": "1753179043341"
-                    },
-                    "Source Report": [],
-                    "customreporting": "[{\"type\":\"date\",\"size\":\"large\",\"label\":\"Last Check Date *\",\"hint\":\"The date on which this RCM Source was last checked\",\"id\":\"lastcheckdate\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},[{\"type\":\"sourcereport\",\"id\":\"sourcereport\",\"name\":\"Source Report\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"Country {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/country\",\"hint\":\"Country\",\"id\":\"country{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-sub-select\",\"size\":\"large\",\"label\":\"State {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/state\",\"hint\":\"State\",\"id\":\"state{iter}\",\"dependencies\":[\"country{iter}\"],\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-form-select\",\"size\":\"large\",\"label\":\"Statute {iter}\",\"hint\":\"Statute for RCM Source\",\"id\":\"statute{iter}\",\"mode\":\"multiselect-list\",\"dependencies\":[\"country{iter}\"],\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/statute\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\",\"maxselect\":\"100\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-form-select\",\"size\":\"large\",\"label\":\"Projects {iter}\",\"hint\":\"Projects to whom RCM Source is applicable\",\"id\":\"projects{iter}\",\"mode\":\"multiselect-list\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/project\",\"selectprojection\":\"project\",\"ignoredprojections\":\"[&quot;logo&quot;,&quot;plan&quot;,&quot;address&quot;,&quot;emails&quot;,&quot;vertical&quot;,&quot;cycledate&quot;,&quot;shortid&quot;,&quot;startdate&quot;,&quot;contractdate&quot;,&quot;quality&quot;,&quot;locations&quot;,&quot;shortnumid&quot;,&quot;confighome&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]\",\"maxselect\":\"100\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Name {iter}\",\"hint\":\"Notification name from the source\",\"id\":\"notification-name-{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Reference {iter}\",\"hint\":\"Notification reference from the source\",\"id\":\"notification-reference{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Publication Date {iter}\",\"hint\":\"The date on which this notification is published.\",\"id\":\"publication-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Effective Date {iter}\",\"hint\":\"The date on which this notification is effective.\",\"id\":\"effective-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Remarks {iter}\",\"hint\":\"Remarks on the RCM Source\",\"id\":\"remarks{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Impact {iter}\",\"apiid\":\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Impact\",\"id\":\"rcmsourceimpact{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Type {iter}\",\"apiid\":\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Type\",\"id\":\"rcmsourcetype{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-uploader\",\"size\":\"large\",\"label\":\"RCM Document {iter}\",\"hint\":\"Document for this rcm notification\",\"id\":\"document{iter}\",\"mode\":\"multiselect-dropdown\",\"apiid\":\"1peg5170d3\",\"allowedextensions\":\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\",\"extract\":\"no\",\"maxselect\":\"1\",\"maxsize\":\"10242880\",\"allowdownload\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"}]]",
-                    "id": "ffd64c52-bcaa-42e0-bc4c-dacfc9e8ab87",
-                    "documents": [],
-                    "comments": [
-                        {
-                            "author": "Reporter",
-                            "username": "Local Reporter 1",
-                            "comment": "Tesst reporting (Documents Saved: 0)",
-                            "timestamp": "Tue, 30 Sep 2025 10:25:22 GMT"
-                        },
-                        {
-                            "author": "Approver",
-                            "username": "Local Approver 1",
-                            "comment": "Test Approve (Approved: Yes)",
-                            "timestamp": "Tue, 30 Sep 2025 10:27:37 GMT"
-                        }
-                    ],
-                    "approved": true,
-                    "lastupdated": "Tue, 30 Sep 2025 10:27:37 GMT",
-                    "dateofcompletion": "1759227919604",
-                    "reportformatschema": "[{\"type\":\"date\",\"size\":\"large\",\"label\":\"Last Check Date *\",\"hint\":\"The date on which this RCM Source was last checked\",\"id\":\"lastcheckdate\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},[{\"type\":\"sourcereport\",\"id\":\"sourcereport\",\"name\":\"Source Report\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"Country {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/country\",\"hint\":\"Country\",\"id\":\"country{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-sub-select\",\"size\":\"large\",\"label\":\"State {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/state\",\"hint\":\"State\",\"id\":\"state{iter}\",\"dependencies\":[\"country{iter}\"],\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-form-select\",\"size\":\"large\",\"label\":\"Statute {iter}\",\"hint\":\"Statute for RCM Source\",\"id\":\"statute{iter}\",\"mode\":\"multiselect-list\",\"dependencies\":[\"country{iter}\"],\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/statute\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\",\"maxselect\":\"100\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-form-select\",\"size\":\"large\",\"label\":\"Projects {iter}\",\"hint\":\"Projects to whom RCM Source is applicable\",\"id\":\"projects{iter}\",\"mode\":\"multiselect-list\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/project\",\"selectprojection\":\"project\",\"ignoredprojections\":\"[&quot;logo&quot;,&quot;plan&quot;,&quot;address&quot;,&quot;emails&quot;,&quot;vertical&quot;,&quot;cycledate&quot;,&quot;shortid&quot;,&quot;startdate&quot;,&quot;contractdate&quot;,&quot;quality&quot;,&quot;locations&quot;,&quot;shortnumid&quot;,&quot;confighome&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]\",\"maxselect\":\"100\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Name {iter}\",\"hint\":\"Notification name from the source\",\"id\":\"notification-name-{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Reference {iter}\",\"hint\":\"Notification reference from the source\",\"id\":\"notification-reference{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Publication Date {iter}\",\"hint\":\"The date on which this notification is published.\",\"id\":\"publication-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Effective Date {iter}\",\"hint\":\"The date on which this notification is effective.\",\"id\":\"effective-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Remarks {iter}\",\"hint\":\"Remarks on the RCM Source\",\"id\":\"remarks{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Impact {iter}\",\"apiid\":\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Impact\",\"id\":\"rcmsourceimpact{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Type {iter}\",\"apiid\":\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Type\",\"id\":\"rcmsourcetype{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-uploader\",\"size\":\"large\",\"label\":\"RCM Document {iter}\",\"hint\":\"Document for this rcm notification\",\"id\":\"document{iter}\",\"mode\":\"multiselect-dropdown\",\"apiid\":\"1peg5170d3\",\"allowedextensions\":\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\",\"extract\":\"no\",\"maxselect\":\"1\",\"maxsize\":\"10242880\",\"allowdownload\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"}]]",
-                    "reportformatvalues": "",
-                    "history": null,
-                    "terminated": false
-                },
-                "schema": [
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "Name *",
-                        "hint": "RCM Source name",
-                        "id": "name",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "Description",
-                        "hint": "RCM Source description",
-                        "id": "description",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "RCM Source URL *",
-                        "hint": "RCM Source url",
-                        "id": "url",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "RCM Source Frequency *",
-                        "hint": "RCM Source checking frequency",
-                        "id": "frequency",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "date",
-                        "size": "large",
-                        "label": "Last Check Date *",
-                        "hint": "The date on which this RCM Source was last checked",
-                        "id": "lastcheckdate",
-                        "mandatory": "",
-                        "displayinhistory": "yes",
-                        "customreporting": "yes"
-                    },
-                    {
-                        "type": "date",
-                        "size": "large",
-                        "label": "Due Date *",
-                        "hint": "The date on which this RCM Source is to be checked next.",
-                        "id": "duedate",
-                        "mandatory": "",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-bricks",
-                        "size": "large",
-                        "label": "Country *",
-                        "hint": "Country for RCM Source",
-                        "id": "country",
-                        "mode": "select",
-                        "savenameseparate": "yes",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-bricks",
-                        "size": "large",
-                        "label": "Entity *",
-                        "hint": "Entity for RCM Source",
-                        "id": "entity",
-                        "dependencies": [
-                            "country"
-                        ],
-                        "mode": "select",
-                        "savenameseparate": "yes",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-bricks",
-                        "size": "large",
-                        "label": "Location *",
-                        "hint": "Location for RCM Source",
-                        "id": "locations",
-                        "dependencies": [
-                            "country",
-                            "entity"
-                        ],
-                        "mode": "select",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-bricks",
-                        "size": "large",
-                        "label": "Tags *",
-                        "hint": "Tags applied to RCM Source",
-                        "id": "tags",
-                        "mode": "multiselect",
-                        "dependencies": [
-                            "country",
-                            "entity",
-                            "locations"
-                        ],
-                        "searchstring": "-Tags",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Reporter *",
-                        "hint": "Reporter for the RCM Source",
-                        "id": "reporters",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Approver *",
-                        "hint": "Approver for the RCM Source",
-                        "id": "approvers",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Function head *",
-                        "hint": "Function head for the RCM Source",
-                        "id": "functionheads",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-select",
-                        "size": "large",
-                        "label": "Category *",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/category",
-                        "hint": "Category",
-                        "id": "category",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-sub-select",
-                        "size": "large",
-                        "label": "SubCategory *",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/subcategory",
-                        "hint": "Subcategory",
-                        "id": "subcategory",
-                        "dependencies": [
-                            "category"
-                        ],
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "section",
-                        "name": "Additional Fields"
-                    },
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "Context",
-                        "hint": "Context of the RCM Source",
-                        "id": "context",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Disable Approval",
-                        "hint": "Disable approval required for the RCM Source",
-                        "id": "makercheckers",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/tagging",
-                        "searchstring": "MakerChecker",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]",
-                        "maxselect": "1",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Auditor",
-                        "hint": "Auditor for the RCM Source",
-                        "id": "auditors",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Viewer",
-                        "hint": "Viewer for the RCM Source",
-                        "id": "viewers",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    [
-                        {
-                            "type": "sourcereport",
-                            "id": "sourcereport",
-                            "name": "Source Report",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-select",
-                            "size": "large",
-                            "label": "Country {iter}",
-                            "apiid": "dnytrdlrmxgsy.cloudfront.net/country",
-                            "hint": "Country",
-                            "id": "country{iter}",
-                            "copytoreopen": "yes",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-sub-select",
-                            "size": "large",
-                            "label": "State {iter}",
-                            "apiid": "dnytrdlrmxgsy.cloudfront.net/state",
-                            "hint": "State",
-                            "id": "state{iter}",
-                            "dependencies": [
-                                "country{iter}"
-                            ],
-                            "copytoreopen": "yes",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-form-select",
-                            "size": "large",
-                            "label": "Statute {iter}",
-                            "hint": "Statute for RCM Source",
-                            "id": "statute{iter}",
-                            "mode": "multiselect-list",
-                            "dependencies": [
-                                "country{iter}"
-                            ],
-                            "apiid": "dnytrdlrmxgsy.cloudfront.net/statute",
-                            "selectprojection": "name",
-                            "ignoredprojections": "[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]",
-                            "maxselect": "100",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-form-select",
-                            "size": "large",
-                            "label": "Projects {iter}",
-                            "hint": "Projects to whom RCM Source is applicable",
-                            "id": "projects{iter}",
-                            "mode": "multiselect-list",
-                            "apiid": "dnytrdlrmxgsy.cloudfront.net/project",
-                            "selectprojection": "project",
-                            "ignoredprojections": "[&quot;logo&quot;,&quot;plan&quot;,&quot;address&quot;,&quot;emails&quot;,&quot;vertical&quot;,&quot;cycledate&quot;,&quot;shortid&quot;,&quot;startdate&quot;,&quot;contractdate&quot;,&quot;quality&quot;,&quot;locations&quot;,&quot;shortnumid&quot;,&quot;confighome&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                            "maxselect": "100",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "textarea",
-                            "size": "small",
-                            "label": "Notification Name {iter}",
-                            "hint": "Notification name from the source",
-                            "id": "notification-name-{iter}",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "textarea",
-                            "size": "small",
-                            "label": "Notification Reference {iter}",
-                            "hint": "Notification reference from the source",
-                            "id": "notification-reference{iter}",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "date",
-                            "size": "large",
-                            "label": "Publication Date {iter}",
-                            "hint": "The date on which this notification is published.",
-                            "id": "publication-date{iter}",
-                            "mandatory": "",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "date",
-                            "size": "large",
-                            "label": "Effective Date {iter}",
-                            "hint": "The date on which this notification is effective.",
-                            "id": "effective-date{iter}",
-                            "mandatory": "",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "textarea",
-                            "size": "small",
-                            "label": "Remarks {iter}",
-                            "hint": "Remarks on the RCM Source",
-                            "id": "remarks{iter}",
-                            "copytoreopen": "yes",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-select",
-                            "size": "large",
-                            "label": "RCM Source Impact {iter}",
-                            "apiid": "r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws",
-                            "hint": "RCM Source Impact",
-                            "id": "rcmsourceimpact{iter}",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-select",
-                            "size": "large",
-                            "label": "RCM Source Type {iter}",
-                            "apiid": "6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws",
-                            "hint": "RCM Source Type",
-                            "id": "rcmsourcetype{iter}",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-uploader",
-                            "size": "large",
-                            "label": "RCM Document {iter}",
-                            "hint": "Document for this rcm notification",
-                            "id": "document{iter}",
-                            "mode": "multiselect-dropdown",
-                            "apiid": "1peg5170d3",
-                            "allowedextensions": "[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]",
-                            "extract": "no",
-                            "maxselect": "1",
-                            "maxsize": "10242880",
-                            "allowdownload": "yes",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        }
-                    ]
-                ]
-            }
-        ],
-        "29/09/2025": [
-            {
-                "object": {
-                    "name": "Test RCM Source",
-                    "description": "THis is a test RCM source for notification",
-                    "url": "www.flagggrc.com",
-                    "frequency": "*/*/*",
-                    "lastcheckdate": "2025-09-30",
-                    "duedate": "2025-09-29",
-                    "countryid": "07d73b44-648d-4301-82c4-d6df43397824",
-                    "countryname": "India (ABC Global-Country)",
-                    "entityid": "c989a44e-7d3d-427e-b712-90eacf585075",
-                    "entityname": "ABC Limited - India (ABC Global-India-Entity)",
-                    "locations": [
-                        "Pune (ABC Global-India-ABC Limited - India-Location);4fb7b672-5cce-443f-869b-6b35247d6331"
-                    ],
-                    "tags": [
-                        "Advertising Conditions (ABC Global-Tags);2cd4f501-1dcf-4f76-be0b-779a0721ad2f"
-                    ],
-                    "reporters": [
-                        "Local Reporter 1;e9684b5d-ddbc-46d3-ae07-51706bf75410"
-                    ],
-                    "approvers": [
-                        "Local Approver 1;c44dcd04-aebb-4417-ba6b-fac170efd5d0"
-                    ],
-                    "functionheads": [
-                        "Chief Compliance Officer;5fe96caa-1a44-4a2d-921a-920d29433eca"
-                    ],
-                    "categoryid": "0da8f379-2006-4ad2-ba20-699345cd87d7",
-                    "categoryname": "Sector Specific",
-                    "subcategoryid": "00c5ad85-0609-4190-b6a7-3162e3ea5376",
-                    "subcategoryname": "Food",
-                    "context": "",
-                    "makercheckers": [],
-                    "auditors": [],
-                    "viewers": [],
-                    "projects": {
-                        "id": "d7d4d17e-3e20-4eaa-a06a-fb1c87f26532",
-                        "name": "FlaggGRC Global",
-                        "emails": "jomon.j@flagggrc.tech",
-                        "cycledate": "31/3/*",
-                        "contractdate": "31/3/2030",
-                        "quality": "NA",
-                        "locations": "{\"India\":{\"Maharashtra\":[\"Pune\"]}}",
-                        "plan": [
-                            "Tool "
-                        ],
-                        "startdate": "01/01/2025",
-                        "logo": [],
-                        "confighome": "{\"modules\":[\"rcmresources\"]}",
-                        "shortid": [
-                            "lm0ck8ab"
-                        ],
-                        "shortnumid": [
-                            1714371986
-                        ],
-                        "lastModifiedBy": "Ninad Thatte",
-                        "lastModifiedTime": "1753179043341"
-                    },
-                    "Source Report": [],
-                    "customreporting": "[{\"type\":\"date\",\"name\":\"\",\"size\":\"large\",\"label\":\"Last Check Date *\",\"hint\":\"The date on which this RCM Source was last checked\",\"id\":\"lastcheckdate\",\"value\":\"2025-09-30\",\"options\":[\"Yes\",\"No\"],\"collapse\":\"true\",\"mode\":\"\",\"maxselect\":\"\",\"apiid\":\"\",\"searchstring\":\"\",\"selectprojection\":\"\",\"ignoredprojections\":\"\",\"savenameseparate\":\"no\",\"dependencies\":[],\"allowedextensions\":\"\",\"extract\":\"\",\"maxsize\":\"\",\"allowdownload\":\"\",\"selectfields\":[],\"mandatory\":\"\",\"copytoreopen\":false,\"displayinhistory\":true,\"hideinadmin\":false,\"elementsjson\":\"\",\"customreporting\":true},[{\"id\":\"sourcereport\",\"type\":\"sourcereport\",\"label\":\"Source Report\",\"schema\":\"[{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Country {iter}\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/country\\\",\\\"hint\\\":\\\"Country\\\",\\\"id\\\":\\\"country{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-sub-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"State {iter}\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/state\\\",\\\"hint\\\":\\\"State\\\",\\\"id\\\":\\\"state{iter}\\\",\\\"dependencies\\\":[\\\"country{iter}\\\"],\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-form-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Statute {iter}\\\",\\\"hint\\\":\\\"Statute for RCM Source\\\",\\\"id\\\":\\\"statute{iter}\\\",\\\"mode\\\":\\\"multiselect-list\\\",\\\"dependencies\\\":[\\\"country{iter}\\\"],\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/statute\\\",\\\"selectprojection\\\":\\\"name\\\",\\\"ignoredprojections\\\":\\\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\\\",\\\"maxselect\\\":\\\"100\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-form-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Projects {iter}\\\",\\\"hint\\\":\\\"Projects to whom RCM Source is applicable\\\",\\\"id\\\":\\\"projects{iter}\\\",\\\"mode\\\":\\\"multiselect-list\\\",\\\"apiid\\\":\\\"dnytrdlrmxgsy.cloudfront.net/project\\\",\\\"selectprojection\\\":\\\"project\\\",\\\"ignoredprojections\\\":\\\"[&quot;logo&quot;,&quot;plan&quot;,&quot;address&quot;,&quot;emails&quot;,&quot;vertical&quot;,&quot;cycledate&quot;,&quot;shortid&quot;,&quot;startdate&quot;,&quot;contractdate&quot;,&quot;quality&quot;,&quot;locations&quot;,&quot;shortnumid&quot;,&quot;confighome&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]\\\",\\\"maxselect\\\":\\\"100\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Name {iter}\\\",\\\"hint\\\":\\\"Notification name from the source\\\",\\\"id\\\":\\\"notification-name-{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Notification Reference {iter}\\\",\\\"hint\\\":\\\"Notification reference from the source\\\",\\\"id\\\":\\\"notification-reference{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"date\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Publication Date {iter}\\\",\\\"hint\\\":\\\"The date on which this notification is published.\\\",\\\"id\\\":\\\"publication-date{iter}\\\",\\\"mandatory\\\":\\\"\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"date\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"Effective Date {iter}\\\",\\\"hint\\\":\\\"The date on which this notification is effective.\\\",\\\"id\\\":\\\"effective-date{iter}\\\",\\\"mandatory\\\":\\\"\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"textarea\\\",\\\"size\\\":\\\"small\\\",\\\"label\\\":\\\"Remarks {iter}\\\",\\\"hint\\\":\\\"Remarks on the RCM Source\\\",\\\"id\\\":\\\"remarks{iter}\\\",\\\"copytoreopen\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Impact {iter}\\\",\\\"apiid\\\":\\\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\\\",\\\"hint\\\":\\\"RCM Source Impact\\\",\\\"id\\\":\\\"rcmsourceimpact{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-select\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Source Type {iter}\\\",\\\"apiid\\\":\\\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\\\",\\\"hint\\\":\\\"RCM Source Type\\\",\\\"id\\\":\\\"rcmsourcetype{iter}\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"},{\\\"type\\\":\\\"sf-i-uploader\\\",\\\"size\\\":\\\"large\\\",\\\"label\\\":\\\"RCM Document {iter}\\\",\\\"hint\\\":\\\"Document for this rcm notification\\\",\\\"id\\\":\\\"document{iter}\\\",\\\"mode\\\":\\\"multiselect-dropdown\\\",\\\"apiid\\\":\\\"1peg5170d3\\\",\\\"allowedextensions\\\":\\\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\\\",\\\"extract\\\":\\\"no\\\",\\\"maxselect\\\":\\\"1\\\",\\\"maxsize\\\":\\\"10242880\\\",\\\"allowdownload\\\":\\\"yes\\\",\\\"displayinhistory\\\":\\\"yes\\\",\\\"customreporting\\\":\\\"yes\\\"}]\",\"direction\":\"column\",\"customreporting\":true,\"children\":[],\"name\":\"Source Report\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"Country {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/country\",\"hint\":\"Country\",\"id\":\"country{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-sub-select\",\"size\":\"large\",\"label\":\"State {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/state\",\"hint\":\"State\",\"id\":\"state{iter}\",\"dependencies\":[\"country{iter}\"],\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-form-select\",\"size\":\"large\",\"label\":\"Statute {iter}\",\"hint\":\"Statute for RCM Source\",\"id\":\"statute{iter}\",\"mode\":\"multiselect-list\",\"dependencies\":[\"country{iter}\"],\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/statute\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\",\"maxselect\":\"100\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-form-select\",\"size\":\"large\",\"label\":\"Projects {iter}\",\"hint\":\"Projects to whom RCM Source is applicable\",\"id\":\"projects{iter}\",\"mode\":\"multiselect-list\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/project\",\"selectprojection\":\"project\",\"ignoredprojections\":\"[&quot;logo&quot;,&quot;plan&quot;,&quot;address&quot;,&quot;emails&quot;,&quot;vertical&quot;,&quot;cycledate&quot;,&quot;shortid&quot;,&quot;startdate&quot;,&quot;contractdate&quot;,&quot;quality&quot;,&quot;locations&quot;,&quot;shortnumid&quot;,&quot;confighome&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]\",\"maxselect\":\"100\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Name {iter}\",\"hint\":\"Notification name from the source\",\"id\":\"notification-name-{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Reference {iter}\",\"hint\":\"Notification reference from the source\",\"id\":\"notification-reference{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Publication Date {iter}\",\"hint\":\"The date on which this notification is published.\",\"id\":\"publication-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Effective Date {iter}\",\"hint\":\"The date on which this notification is effective.\",\"id\":\"effective-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Remarks {iter}\",\"hint\":\"Remarks on the RCM Source\",\"id\":\"remarks{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Impact {iter}\",\"apiid\":\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Impact\",\"id\":\"rcmsourceimpact{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Type {iter}\",\"apiid\":\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Type\",\"id\":\"rcmsourcetype{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-uploader\",\"size\":\"large\",\"label\":\"RCM Document {iter}\",\"hint\":\"Document for this rcm notification\",\"id\":\"document{iter}\",\"mode\":\"multiselect-dropdown\",\"apiid\":\"1peg5170d3\",\"allowedextensions\":\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\",\"extract\":\"no\",\"maxselect\":\"1\",\"maxsize\":\"10242880\",\"allowdownload\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"}]]",
-                    "id": "ffd64c52-bcaa-42e0-bc4c-dacfc9e8ab87",
-                    "documents": [],
-                    "comments": [
-                        {
-                            "author": "Reporter",
-                            "username": "Local Reporter 1",
-                            "comment": "Test report. Nothing new found. (Documents Saved: 0)",
-                            "timestamp": "Tue, 30 Sep 2025 10:33:59 GMT"
-                        },
-                        {
-                            "author": "Approver",
-                            "username": "Local Approver 1",
-                            "comment": "Test approval. (Approved: Yes)",
-                            "timestamp": "Tue, 30 Sep 2025 10:34:38 GMT"
-                        }
-                    ],
-                    "approved": true,
-                    "lastupdated": "Tue, 30 Sep 2025 10:34:38 GMT",
-                    "dateofcompletion": "1759228436071",
-                    "reportformatschema": "[{\"type\":\"date\",\"size\":\"large\",\"label\":\"Last Check Date *\",\"hint\":\"The date on which this RCM Source was last checked\",\"id\":\"lastcheckdate\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},[{\"type\":\"sourcereport\",\"id\":\"sourcereport\",\"name\":\"Source Report\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"Country {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/country\",\"hint\":\"Country\",\"id\":\"country{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-sub-select\",\"size\":\"large\",\"label\":\"State {iter}\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/state\",\"hint\":\"State\",\"id\":\"state{iter}\",\"dependencies\":[\"country{iter}\"],\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-form-select\",\"size\":\"large\",\"label\":\"Statute {iter}\",\"hint\":\"Statute for RCM Source\",\"id\":\"statute{iter}\",\"mode\":\"multiselect-list\",\"dependencies\":[\"country{iter}\"],\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/statute\",\"selectprojection\":\"name\",\"ignoredprojections\":\"[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]\",\"maxselect\":\"100\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-form-select\",\"size\":\"large\",\"label\":\"Projects {iter}\",\"hint\":\"Projects to whom RCM Source is applicable\",\"id\":\"projects{iter}\",\"mode\":\"multiselect-list\",\"apiid\":\"dnytrdlrmxgsy.cloudfront.net/project\",\"selectprojection\":\"project\",\"ignoredprojections\":\"[&quot;logo&quot;,&quot;plan&quot;,&quot;address&quot;,&quot;emails&quot;,&quot;vertical&quot;,&quot;cycledate&quot;,&quot;shortid&quot;,&quot;startdate&quot;,&quot;contractdate&quot;,&quot;quality&quot;,&quot;locations&quot;,&quot;shortnumid&quot;,&quot;confighome&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]\",\"maxselect\":\"100\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Name {iter}\",\"hint\":\"Notification name from the source\",\"id\":\"notification-name-{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Notification Reference {iter}\",\"hint\":\"Notification reference from the source\",\"id\":\"notification-reference{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Publication Date {iter}\",\"hint\":\"The date on which this notification is published.\",\"id\":\"publication-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"date\",\"size\":\"large\",\"label\":\"Effective Date {iter}\",\"hint\":\"The date on which this notification is effective.\",\"id\":\"effective-date{iter}\",\"mandatory\":\"\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"textarea\",\"size\":\"small\",\"label\":\"Remarks {iter}\",\"hint\":\"Remarks on the RCM Source\",\"id\":\"remarks{iter}\",\"copytoreopen\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Impact {iter}\",\"apiid\":\"r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Impact\",\"id\":\"rcmsourceimpact{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-select\",\"size\":\"large\",\"label\":\"RCM Source Type {iter}\",\"apiid\":\"6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws\",\"hint\":\"RCM Source Type\",\"id\":\"rcmsourcetype{iter}\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"},{\"type\":\"sf-i-uploader\",\"size\":\"large\",\"label\":\"RCM Document {iter}\",\"hint\":\"Document for this rcm notification\",\"id\":\"document{iter}\",\"mode\":\"multiselect-dropdown\",\"apiid\":\"1peg5170d3\",\"allowedextensions\":\"[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]\",\"extract\":\"no\",\"maxselect\":\"1\",\"maxsize\":\"10242880\",\"allowdownload\":\"yes\",\"displayinhistory\":\"yes\",\"customreporting\":\"yes\"}]]",
-                    "reportformatvalues": "",
-                    "history": null,
-                    "terminated": false
-                },
-                "schema": [
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "Name *",
-                        "hint": "RCM Source name",
-                        "id": "name",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "Description",
-                        "hint": "RCM Source description",
-                        "id": "description",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "RCM Source URL *",
-                        "hint": "RCM Source url",
-                        "id": "url",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "RCM Source Frequency *",
-                        "hint": "RCM Source checking frequency",
-                        "id": "frequency",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "date",
-                        "size": "large",
-                        "label": "Last Check Date *",
-                        "hint": "The date on which this RCM Source was last checked",
-                        "id": "lastcheckdate",
-                        "mandatory": "",
-                        "displayinhistory": "yes",
-                        "customreporting": "yes"
-                    },
-                    {
-                        "type": "date",
-                        "size": "large",
-                        "label": "Due Date *",
-                        "hint": "The date on which this RCM Source is to be checked next.",
-                        "id": "duedate",
-                        "mandatory": "",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-bricks",
-                        "size": "large",
-                        "label": "Country *",
-                        "hint": "Country for RCM Source",
-                        "id": "country",
-                        "mode": "select",
-                        "savenameseparate": "yes",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-bricks",
-                        "size": "large",
-                        "label": "Entity *",
-                        "hint": "Entity for RCM Source",
-                        "id": "entity",
-                        "dependencies": [
-                            "country"
-                        ],
-                        "mode": "select",
-                        "savenameseparate": "yes",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-bricks",
-                        "size": "large",
-                        "label": "Location *",
-                        "hint": "Location for RCM Source",
-                        "id": "locations",
-                        "dependencies": [
-                            "country",
-                            "entity"
-                        ],
-                        "mode": "select",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-bricks",
-                        "size": "large",
-                        "label": "Tags *",
-                        "hint": "Tags applied to RCM Source",
-                        "id": "tags",
-                        "mode": "multiselect",
-                        "dependencies": [
-                            "country",
-                            "entity",
-                            "locations"
-                        ],
-                        "searchstring": "-Tags",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Reporter *",
-                        "hint": "Reporter for the RCM Source",
-                        "id": "reporters",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Approver *",
-                        "hint": "Approver for the RCM Source",
-                        "id": "approvers",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Function head *",
-                        "hint": "Function head for the RCM Source",
-                        "id": "functionheads",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-select",
-                        "size": "large",
-                        "label": "Category *",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/category",
-                        "hint": "Category",
-                        "id": "category",
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-sub-select",
-                        "size": "large",
-                        "label": "SubCategory *",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/subcategory",
-                        "hint": "Subcategory",
-                        "id": "subcategory",
-                        "dependencies": [
-                            "category"
-                        ],
-                        "mandatory": "",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "section",
-                        "name": "Additional Fields"
-                    },
-                    {
-                        "type": "textarea",
-                        "size": "small",
-                        "label": "Context",
-                        "hint": "Context of the RCM Source",
-                        "id": "context",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Disable Approval",
-                        "hint": "Disable approval required for the RCM Source",
-                        "id": "makercheckers",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/tagging",
-                        "searchstring": "MakerChecker",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]",
-                        "maxselect": "1",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Auditor",
-                        "hint": "Auditor for the RCM Source",
-                        "id": "auditors",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    {
-                        "type": "sf-i-form",
-                        "size": "large",
-                        "label": "Viewer",
-                        "hint": "Viewer for the RCM Source",
-                        "id": "viewers",
-                        "mode": "multiselect-dropdown",
-                        "apiid": "dnytrdlrmxgsy.cloudfront.net/userprofile",
-                        "searchstring": "",
-                        "selectprojection": "name",
-                        "ignoredprojections": "[&quot;usermap&quot;,&quot;designation&quot;,&quot;project&quot;,&quot;updatetype&quot;,&quot;userid&quot;,&quot;shortid&quot;,&quot;kra&quot;,&quot;role&quot;,&quot;trainingstatute&quot;,&quot;shortnumid&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                        "maxselect": "1",
-                        "copytoreopen": "yes",
-                        "displayinhistory": "yes"
-                    },
-                    [
-                        {
-                            "type": "sourcereport",
-                            "id": "sourcereport",
-                            "name": "Source Report",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-select",
-                            "size": "large",
-                            "label": "Country {iter}",
-                            "apiid": "dnytrdlrmxgsy.cloudfront.net/country",
-                            "hint": "Country",
-                            "id": "country{iter}",
-                            "copytoreopen": "yes",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-sub-select",
-                            "size": "large",
-                            "label": "State {iter}",
-                            "apiid": "dnytrdlrmxgsy.cloudfront.net/state",
-                            "hint": "State",
-                            "id": "state{iter}",
-                            "dependencies": [
-                                "country{iter}"
-                            ],
-                            "copytoreopen": "yes",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-form-select",
-                            "size": "large",
-                            "label": "Statute {iter}",
-                            "hint": "Statute for RCM Source",
-                            "id": "statute{iter}",
-                            "mode": "multiselect-list",
-                            "dependencies": [
-                                "country{iter}"
-                            ],
-                            "apiid": "dnytrdlrmxgsy.cloudfront.net/statute",
-                            "selectprojection": "name",
-                            "ignoredprojections": "[&quot;lastmodifiedtime&quot;,&quot;lastmodifiedby&quot;,&quot;shortnumid&quot;,&quot;definitions&quot;,&quot;applicability&quot;,&quot;subcategory&quot;,&quot;category&quot;,&quot;state&quot;,&quot;jurisdiction&quot;,&quot;country&quot;,&quot;updatetype&quot;,&quot;project&quot;,&quot;tagtype&quot;,&quot;shortid&quot;]",
-                            "maxselect": "100",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-form-select",
-                            "size": "large",
-                            "label": "Projects {iter}",
-                            "hint": "Projects to whom RCM Source is applicable",
-                            "id": "projects{iter}",
-                            "mode": "multiselect-list",
-                            "apiid": "dnytrdlrmxgsy.cloudfront.net/project",
-                            "selectprojection": "project",
-                            "ignoredprojections": "[&quot;logo&quot;,&quot;plan&quot;,&quot;address&quot;,&quot;emails&quot;,&quot;vertical&quot;,&quot;cycledate&quot;,&quot;shortid&quot;,&quot;startdate&quot;,&quot;contractdate&quot;,&quot;quality&quot;,&quot;locations&quot;,&quot;shortnumid&quot;,&quot;confighome&quot;,&quot;lastmodifiedby&quot;,&quot;lastmodifiedtime&quot;]",
-                            "maxselect": "100",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "textarea",
-                            "size": "small",
-                            "label": "Notification Name {iter}",
-                            "hint": "Notification name from the source",
-                            "id": "notification-name-{iter}",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "textarea",
-                            "size": "small",
-                            "label": "Notification Reference {iter}",
-                            "hint": "Notification reference from the source",
-                            "id": "notification-reference{iter}",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "date",
-                            "size": "large",
-                            "label": "Publication Date {iter}",
-                            "hint": "The date on which this notification is published.",
-                            "id": "publication-date{iter}",
-                            "mandatory": "",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "date",
-                            "size": "large",
-                            "label": "Effective Date {iter}",
-                            "hint": "The date on which this notification is effective.",
-                            "id": "effective-date{iter}",
-                            "mandatory": "",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "textarea",
-                            "size": "small",
-                            "label": "Remarks {iter}",
-                            "hint": "Remarks on the RCM Source",
-                            "id": "remarks{iter}",
-                            "copytoreopen": "yes",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-select",
-                            "size": "large",
-                            "label": "RCM Source Impact {iter}",
-                            "apiid": "r7u3dzkyoiyizxhb4n7hb523te0kbijf.lambda-url.us-east-1.on.aws",
-                            "hint": "RCM Source Impact",
-                            "id": "rcmsourceimpact{iter}",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-select",
-                            "size": "large",
-                            "label": "RCM Source Type {iter}",
-                            "apiid": "6ftklrdwhdtrdom7toyew7buc40mifqn.lambda-url.us-east-1.on.aws",
-                            "hint": "RCM Source Type",
-                            "id": "rcmsourcetype{iter}",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        },
-                        {
-                            "type": "sf-i-uploader",
-                            "size": "large",
-                            "label": "RCM Document {iter}",
-                            "hint": "Document for this rcm notification",
-                            "id": "document{iter}",
-                            "mode": "multiselect-dropdown",
-                            "apiid": "1peg5170d3",
-                            "allowedextensions": "[&quot;jpg&quot;,&quot;png&quot;,&quot;pdf&quot;,&quot;xls&quot;,&quot;xlsx&quot;,&quot;doc&quot;,&quot;docx&quot;]",
-                            "extract": "no",
-                            "maxselect": "1",
-                            "maxsize": "10242880",
-                            "allowdownload": "yes",
-                            "displayinhistory": "yes",
-                            "customreporting": "yes"
-                        }
-                    ]
-                ]
-            }
-        ],
-        "30/09/2025": [],
-        "01/10/2025": [],
-        "02/10/2025": []
-    },
-    "terminated": false,
-    "tagsmap": {
-        "Advertising Conditions (ABC Global-Tags);2cd4f501-1dcf-4f76-be0b-779a0721ad2f": true
-    },
-    "reportersmap": {
-        "e9684b5d-ddbc-46d3-ae07-51706bf75410": true
-    },
-    "approversmap": {
-        "c44dcd04-aebb-4417-ba6b-fac170efd5d0": true
-    },
-    "functionheadsmap": {
-        "5fe96caa-1a44-4a2d-921a-920d29433eca": true
-    },
-    "auditorsmap": {},
-    "viewersmap": {},
-    "module": "rcmresource",
-    "locationname": "Pune (ABC Global-India-ABC Limited - India-Location)",
-    "locationid": "4fb7b672-5cce-443f-869b-6b35247d6331",
-    "isnotice": true,
-    "obligationtitle": "Test RCM Source",
-    "docs": [
-        "Not Required"
-    ]
-}
 
   selectedItemIds: any = [];
 
@@ -2931,6 +254,9 @@ export class SfIReporting extends LitElement {
     }
     .align-stretch {
       align-items: stretch;
+    }
+    .align-self-end {
+      align-self: flex-end;
     }
     .p-10{
       padding: 10px
@@ -3705,6 +1031,8 @@ export class SfIReporting extends LitElement {
               `)
         }
                 </div>`) : ''}
+              ${this.flow == "reporting" ? (`
+                <button id="button-save-pdf" part="button-icon-light" class="mrl-5 material-symbols-outlined button-icon-click">picture_as_pdf</button>`) : ''}
               </div>
               <div class="progress-bar w-100-m-0 d-flex flex-wrap" part="progress-bar">
                 <div class="progress-bar-complete" part="progress-bar-complete"></div>
@@ -3981,6 +1309,12 @@ export class SfIReporting extends LitElement {
                   this.updateShortlistedSearchPhrases(childElement.id);
                 }
 
+              })
+            } else if (childElement.type == "sf-i-multiple-subselect") {
+              console.log('buttoneditform', element);
+              let buttonEditSubSelect = (this._SfReportingContainer as HTMLDivElement).querySelector('#button-edit-form-' + childElement.id) as HTMLButtonElement
+              buttonEditSubSelect?.addEventListener('click', () => {
+                this.populateMultipleSubselectModal(childElement);
               })
             } else if (childElement.type == "sf-i-select") {
               console.log('rendering sf-i-select', childElement.id, childElement.value);
@@ -4496,6 +1830,80 @@ export class SfIReporting extends LitElement {
     let buttonEditCancel = (this._SfReportingContainer as HTMLDivElement).querySelector('#button-edit-cancel') as HTMLButtonElement
     buttonEditCancel?.addEventListener('click', this.editCancelClick)
 
+    let buttonPdf = (this._SfReportingContainer as HTMLDivElement).querySelector('#button-save-pdf') as HTMLButtonElement
+    buttonPdf?.addEventListener('click', async () => {
+      console.log('PDF clicked', JSON.stringify(this.dataModel));
+
+      let pdfJson: any = { title: this.name, sections: [] }
+      let tempArr: any = { title: "", rows: [] }
+      // let tempArr: any = { title: "", fields: [] }
+      for (let element of this.dataModel) {
+        if (element.type == "section") {
+          if (tempArr.title !== "") {
+            pdfJson.sections.push(tempArr);
+          }
+          tempArr = { title: element.name, rows: [] }
+
+        } else
+          if (element.type == "" && element.children != null && Array.isArray(element.children)) {
+            if (tempArr.title !== "") {
+              pdfJson.sections.push(tempArr);
+            }
+            tempArr = []
+            for (let [tempIndex, tempElementArr] of element.children.entries()) {
+              let tempTempArr: any = { title: element.label + ' ' + tempIndex, rows: [] }
+              for (let tempElement of tempElementArr) {
+                tempTempArr.rows.push({
+                  field: tempElement.label,
+                  value: tempElement.value
+                })
+              }
+              tempArr.push(tempTempArr)
+            }
+          } else {
+            tempArr.rows.push({
+              field: element.label,
+              value: element.value
+            })
+          }
+      }
+      if (tempArr.title !== "") {
+        if (Array.isArray(tempArr)) {
+          pdfJson.sections = [...pdfJson.sections, ...tempArr]
+        } else {
+          pdfJson.sections.push(tempArr)
+        }
+      }
+      console.log('pdfJson', pdfJson);
+
+      const PizZip = (await import("https://esm.run/pizzip")).default;
+      const Docxtemplater = (await import("https://esm.run/docxtemplater")).default;
+      const saveAs = (await import("https://esm.run/file-saver")).default as any;
+      
+      const response = await fetch("https://alpha.flagggrc.tech/templates/table-template.docx");
+      const content = await response.arrayBuffer();
+
+      const zip = new PizZip(content);
+
+      const doc = new Docxtemplater(zip, {
+        paragraphLoop: true,
+        linebreaks: true
+      });
+
+      doc.setData(pdfJson);
+
+      doc.render();
+
+      const blob = doc.getZip().generate({
+        type: "blob",
+        mimeType:
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      });
+
+      saveAs(blob, `${pdfJson.title}.docx`);
+
+    })
+
     setTimeout(() => {
       this.evalShowProgress();
       (this._SfReportingContainer.querySelector('.form-container') as HTMLDivElement).scrollTo({ top: scrollTopTarget, left: 0 });
@@ -4508,27 +1916,166 @@ export class SfIReporting extends LitElement {
     }
   }
 
+  populateMultipleSubselectModal = (childElement: any) => {
+    let value: any = []
+    if (childElement.value != null && childElement.value != '') {
+      value = childElement.value
+    }
+    if (value.length == 0) {
+      value.push('')
+    }
+    let formHtml = `
+      <div part="date-container" class="d-flex flex-col flex-grow mt-20">
+        <label id="${childElement.id}-label" part="date-label">${childElement.label}</label>
+        <div part="td-body-2"><sf-i-elastic-text text="${childElement.hint}" minLength="50"></sf-i-elastic-text></div>
+        ${value.map((_: any, i: number) => `
+          <div class="d-flex align-end">
+            <div class="d-flex flex-col flex-grow mr-10">
+            <label id="${childElement.id}-label-${i}" part="date-label">${childElement.selectlabel} - ${i + 1}</label>
+            <sf-i-select class="reporting-sf-i-select" exportparts="input-select:select-input-select" id="${childElement.id}-select-${i}" part="input-sf-i-select" label="${childElement.selectlabel}" apiId="${childElement.apiidselect}" ${childElement.mandatory != null ? "mandatory=\"\"" : ""}></sf-i-select>
+            </div>
+            <div class="d-flex flex-col flex-grow mr-10">
+            <label id="${childElement.id}-sublabel-${i}" part="date-label">${childElement.subselectlabel} - ${i + 1}</label>
+            <sf-i-sub-select class="reporting-sf-i-sub-select" exportparts="input-select:sub-select-input-select" id="${childElement.id}-subselect-${i}" part="input-sf-i-sub-select" label="${childElement.subselectlabel}" apiId="${childElement.apiidsubselect}" ${childElement.mandatory != null ? "mandatory=\"\"" : ""}></sf-i-sub-select>
+            </div>
+            <button class="material-icons delete-subselect-button" part="button-icon" id="${childElement.id}-delete-${i}">delete</button>
+          </div>
+        `).join('')}
+        <button class="material-icons add-subselect-button align-self-end mt-10" part="button-icon" id="${childElement.id}-add">add</button>
+      </div>
+    `
+    console.log("rendering sf-i-muliple-subselect", childElement)
+    let subselectContainer = (this._SfReportingContainer as HTMLDivElement).querySelector('#sf-i-form-container') as HTMLDivElement
+    subselectContainer.innerHTML = formHtml
+    let subselectModalContainer = (this._SfReportingContainer as HTMLDivElement).querySelector('#sf-i-form-modal-container') as HTMLDivElement
+    subselectModalContainer.style.display = 'block'
+    let subselectCloseButton = (this._SfReportingContainer as HTMLDivElement).querySelector('#button-close-form') as HTMLButtonElement
+    subselectCloseButton.addEventListener('click', () => {
+      subselectModalContainer.style.display = 'none'
+    })
+    let subselectAddButton = (this._SfReportingContainer as HTMLDivElement).querySelector('#' + childElement.id + '-add') as HTMLButtonElement
+    subselectAddButton.addEventListener('click', () => {
+      let value: any = []
+      if (childElement.value != null && childElement.value != '') {
+        value = childElement.value
+      }
+      if (value.length == 0) {
+        value.push('')
+      }
+      console.log('add button clicked', value, typeof value, childElement.value);
+      value.push('')
+      childElement.value = value
+      this.populateMultipleSubselectModal(childElement);
+    })
+    let subselectSaveButton = (this._SfReportingContainer as HTMLDivElement).querySelector('#button-save-form') as HTMLButtonElement
+    let selectElements = subselectContainer.querySelectorAll('sf-i-select') as NodeListOf<SfISelect>
+    let subSelectElements = subselectContainer.querySelectorAll('sf-i-sub-select') as NodeListOf<SfISubSelect>
+    for (let [i, selectElement] of selectElements.entries()) {
+      if (value[i] != null && value[i] != '') {
+        let valObj = value[i]
+        selectElement.selectedId = valObj.selectValue.split(';')[1]
+        let subSelectElement = subSelectElements[i]
+        subSelectElement.filterId = valObj.selectValue.split(';')[1]
+        subSelectElement.selectedId = valObj.subSelectValue.split(';')[1]
+        selectElement.loadMode();
+        subSelectElement.loadMode();
+      }
+      selectElement.addEventListener('valueChanged', (e) => {
+        let target = e.target as SfISelect
+        let selectId = target.id
+        let correspondingSubSelectId = selectId.replace('select', 'subselect')
+        let subSelectElement = subselectContainer.querySelector('#' + correspondingSubSelectId) as SfISubSelect
+        if (target.selectedValues() != null) {
+          subSelectElement.filterId = target.selectedValues()[0];
+          console.log('select value changed', target.selectedId, subSelectElement.filterId)
+          subSelectElement.loadMode();
+        }
+      })
+    }
+
+    let selectDeleteButtons = subselectContainer.querySelectorAll('.delete-subselect-button') as NodeListOf<HTMLButtonElement>
+    for (let deleteButton of selectDeleteButtons) {
+      deleteButton.addEventListener('click', () => {
+        let targetId = deleteButton.id
+        let index = parseInt(targetId.split('-').slice(-1)[0])
+        console.log('delete button clicked', targetId, index)
+        let value: any = []
+        if (childElement.value != null && childElement.value != '') {
+          value = childElement.value
+        }
+        value.splice(index, 1)
+        childElement.value = value
+        this.populateMultipleSubselectModal(childElement);
+      })
+    }
+
+    subselectSaveButton.addEventListener('click', async () => {
+      await this.showLoader();
+      let selectElements = subselectContainer.querySelectorAll('sf-i-select') as NodeListOf<SfISelect>
+      let subSelectElements = subselectContainer.querySelectorAll('sf-i-sub-select') as NodeListOf<SfISubSelect>
+      let valArr = []
+      for (let [i, selectElement] of selectElements.entries()) {
+        let subSelectElement = subSelectElements[i]
+        if (selectElement.selectedValues() == null || selectElement.selectedValues().length == 0) {
+          continue;
+        }
+        let valObj: any = {
+          selectValue: selectElement.selectedTexts()[0] + ';' + selectElement.selectedValues()[0],
+          subSelectValue: subSelectElement.selectedTexts()[0] + ';' + subSelectElement.selectedValues()[0]
+        }
+        valArr.push(valObj)
+      }
+      console.log('Values Selected', valArr)
+      subselectModalContainer.style.display = 'none'
+
+      for (let dataElement of this.dataModel) {
+        if (isAddButtonObject(dataElement)) {
+          for (let childElementsArr of dataElement.children) {
+            for (let childFormElement of childElementsArr) {
+              if (childFormElement.id == childElement.id) {
+                let valObj: any = valArr
+                childFormElement.value = valObj
+              }
+            }
+          }
+        } else if (dataElement.id == childElement.id) {
+          let valObj: any = valArr
+          dataElement.value = valObj
+        }
+      }
+      let reportingFormContainer = (this._SfReportingContainer as HTMLDivElement).querySelector('.form-container') as HTMLDivElement
+      if (reportingFormContainer != null) {
+        console.log('scrolling', reportingFormContainer.scrollTop)
+        this.populateView(reportingFormContainer.scrollTop);
+      }
+      console.log('datamodel', this.dataModel)
+    })
+    /* if (childElement.dependencies != null && childElement.dependencies.length > 0) {
+      this.updateShortlistedSearchPhrases(childElement.id);
+    } */
+  }
+
   populateHistory = (selectedDate: string | null = null) => {
     console.log('populating history', this.getPrepopulateJson().history)
     let formContainer = (this._SfReportingContainer.querySelector('.form-container') as HTMLElement)
     if (formContainer != null) {
       let historyContainerDiv = formContainer.querySelector('#history-section-container') as HTMLDivElement
-      if(historyContainerDiv != null){
+      if (historyContainerDiv != null) {
         historyContainerDiv.remove()
       }
       let html = ''
       html += `
-        <div class="d-flex flex-col" part="section-container" id="history-section-container"><div id="history" class="section-head d-flex align-center justify-between" part="${selectedDate == null ? 'section-head-collapsed' : 'section-head-expanded'}"><h3 part="${selectedDate == null ? 'section-title-collapsed':'section-title-expanded'}'" id="section-history-title">History</h3><div class="material-icons" id="section-history-icon">${selectedDate == null ? 'keyboard_arrow_down':'keyboard_arrow_up'}</div></div><div id="section-history-body" class="section-body d-flex ${this.formviewclass} ${selectedDate == null ? 'hide':''}" part="section-body">
+        <div class="d-flex flex-col" part="section-container" id="history-section-container"><div id="history" class="section-head d-flex align-center justify-between" part="${selectedDate == null ? 'section-head-collapsed' : 'section-head-expanded'}"><h3 part="${selectedDate == null ? 'section-title-collapsed' : 'section-title-expanded'}'" id="section-history-title">History</h3><div class="material-icons" id="section-history-icon">${selectedDate == null ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}</div></div><div id="section-history-body" class="section-body d-flex ${this.formviewclass} ${selectedDate == null ? 'hide' : ''}" part="section-body">
       `
       for (let [indexDate, historyDate] of Object.keys(this.getPrepopulateJson().history).entries()) {
         console.log('history', this.getPrepopulateJson().history);
         html += `
           <div class="d-flex flex-col" part="section-container">
-            <div id="history-date-${indexDate}" class="history-section-head section-head d-flex align-center justify-between ${selectedDate != historyDate ? 'section-head-collapsed' : 'section-head-expanded'}" part="${selectedDate != historyDate ? 'section-head-collapsed':'section-head-expanded'}" date="${historyDate}">
-              <h3 part="${selectedDate != historyDate ? 'section-title-collapsed':'section-title-expanded'}" class="section-history-title" id="section-history-title-${indexDate}">${historyDate}</h3>
-              <div class="section-history-icon material-icons" id="section-history-icon-${indexDate}">${selectedDate != historyDate ? 'keyboard_arrow_down':'keyboard_arrow_up'}</div>
+            <div id="history-date-${indexDate}" class="history-section-head section-head d-flex align-center justify-between ${selectedDate != historyDate ? 'section-head-collapsed' : 'section-head-expanded'}" part="${selectedDate != historyDate ? 'section-head-collapsed' : 'section-head-expanded'}" date="${historyDate}">
+              <h3 part="${selectedDate != historyDate ? 'section-title-collapsed' : 'section-title-expanded'}" class="section-history-title" id="section-history-title-${indexDate}">${historyDate}</h3>
+              <div class="section-history-icon material-icons" id="section-history-icon-${indexDate}">${selectedDate != historyDate ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}</div>
             </div>
-            <div id="section-history-body-${indexDate}" class="section-history-body section-body d-flex ${this.formviewclass} ${selectedDate != historyDate ? 'hide':''}" part="section-body">
+            <div id="section-history-body-${indexDate}" class="section-history-body section-body d-flex ${this.formviewclass} ${selectedDate != historyDate ? 'hide' : ''}" part="section-body">
         `
         for (let [index, historyItem] of this.getPrepopulateJson().history[historyDate].entries()) {
           console.log('historyitem', historyItem)
@@ -4641,7 +2188,7 @@ export class SfIReporting extends LitElement {
                 sectionHistoryDateTitles[i].setAttribute('part', 'section-title-expanded')
                 sectionHistoryDateIcons[i].innerHTML = 'keyboard_arrow_up'
                 console.log('showing history section', sectionHistoryDateDiv, sectionHistoryDateDiv.getAttribute('part'), sectionHistoryDateDiv.isConnected, sectionHistoryDateDiv === sectionHistoryDate, sectionHistoryDateBody.innerHTML);
-                if(sectionHistoryDateBody.innerHTML.trim() == ""){
+                if (sectionHistoryDateBody.innerHTML.trim() == "") {
                   console.log('fetching history', sectionHistoryDate.getAttribute('date'));
                   this.fetchHistory(sectionHistoryDate.getAttribute('date') ?? "")
                 }
@@ -4697,6 +2244,13 @@ export class SfIReporting extends LitElement {
                 // }else{
                 childDataObj.value = valArr[childDataObj.id] ?? ''
                 // }
+              } else if (schemaElement.type == "sf-i-multiple-subselect") {
+                // if(schemaElement.savenameseparate == "yes"){
+                //   console.log('prepopulating sf-i-form-select', valArr[schemaElement.id])
+                //   childDataObj.value = valArr[schemaElement.id] ?? ''
+                // }else{
+                childDataObj.value = valArr[childDataObj.id] ?? ''
+                // }
               } else if (schemaElement.type == "sf-i-form") {
                 if (schemaElement.savenameseparate == "yes") {
                   childDataObj.searchstring = [valArr[childDataObj.id + 'name']]
@@ -4738,7 +2292,7 @@ export class SfIReporting extends LitElement {
                 childDataObj.value = [valArr[childDataObj.id + 'name'] + ';' + valArr[childDataObj.id + 'id']]
                 console.log('populating sf-i-select', childDataObj.value)
               } else if (schemaElement.type == "sf-i-sub-select") {
-                if(valArr[childDataObj.id + 'name'] != null && valArr[childDataObj.id + 'name'] != ""){
+                if (valArr[childDataObj.id + 'name'] != null && valArr[childDataObj.id + 'name'] != "") {
                   childDataObj.value = [valArr[childDataObj.id + 'name'] + ';' + valArr[childDataObj.id + 'id']]
                 }
               } else if (schemaElement.type == "sf-i-uploader") {
@@ -4831,6 +2385,7 @@ export class SfIReporting extends LitElement {
   }
 
   evalShowProgress = () => {
+    console.log('showing progress')
     let total = 0;
     let filled = 0;
     let sectionChildCount = 0;
@@ -4894,6 +2449,14 @@ export class SfIReporting extends LitElement {
             }
           } else if (element.type == "sf-i-form-select") {
             console.log('evalshowprogress sf-i-form-select value', element.value, Object.keys(element.value).length, element.mandatory);
+            if (Object.keys(element.value).length > 0) {
+              filled++;
+              sectionChildFilledCount++;
+            } else {
+              console.log('eval fail', element, this.id)
+            }
+          } else if (element.type == "sf-i-multiple-subselect") {
+            console.log('evalshowprogress sf-i-multiple-subselect value', element.value, Object.keys(element.value).length, element.mandatory);
             if (Object.keys(element.value).length > 0) {
               filled++;
               sectionChildFilledCount++;
@@ -5553,7 +3116,8 @@ export class SfIReporting extends LitElement {
             console.log('dependencyelement', dependencyElement.id);
             const label = (this._SfReportingContainer as HTMLDivElement).querySelector('#selected-option-' + dependency + ' label') as HTMLLabelElement
             let labelText = label ? label.textContent : '';
-            tempSearchPhrases.push((labelText ?? "").replace(/ *\([^)]*\) */g, ""))
+            tempSearchPhrases.push((labelText ?? ""))
+            // tempSearchPhrases.push((labelText ?? "").replace(/ *\([^)]*\) */g, ""))
             // for (let selectedText of (dependencyElement as SfIForm).selectedTexts()) {
             //   if (selectedText == '') {
             //     continue;
@@ -5672,7 +3236,7 @@ export class SfIReporting extends LitElement {
         valToBeShown = dataObj.value.name
       } else if (Array.isArray(dataObj.value)) {
         let tempArr = []
-        for(let tempObj of dataObj.value){
+        for (let tempObj of dataObj.value) {
           tempArr.push(tempObj.name)
         }
         valToBeShown = tempArr.join(', ')
@@ -5684,7 +3248,7 @@ export class SfIReporting extends LitElement {
                         <div part="td-body-2"><sf-i-elastic-text text="${dataObj.hint}" minLength="50"></sf-i-elastic-text></div>
                         ${((dataObj.mandatory == null && dataObj.value == '') && (this.mode == "view" || this.flow == "details" || this.editdisable == "true")) ? '<div part="not-selected">Not Selected</div>' :
           `<div class="d-flex flex-col align-start" part="form-select-container">
-                          <div class"d-flex align-center" part="form-selected-value">
+                          <div class="d-flex align-center" part="form-selected-value">
                             ${(Object.keys(dataObj.value) ?? []).length > 0 ? (`
                               <div class="selected-option d-flex justtify-center align-center" part="selected-option" id="selected-option-${dataObj.id}" dataid="${dataObj.id}">
                                 ${this.mode == "view" || this.flow == "details" ? '' : '<span class="material-icons selected-option-icon mr-10">cancel</span>'}
@@ -5695,6 +3259,33 @@ export class SfIReporting extends LitElement {
               `<button id="button-edit-form-${dataObj.id}" part="button-icon" class="material-icons button-edit-form button-icon-click">edit</button>`
             }
                               `) : ''
+          } 
+                          </div>`}
+                        </div>
+                      </div>`
+    } else if (dataObj.type == "sf-i-multiple-subselect") {
+      let valToBeShown = []
+      if (dataObj.value != null && dataObj.value.length > 0) {
+        for (let valElement of dataObj.value) {
+          valToBeShown.push(valElement.subSelectValue.split(';')[0])
+        }
+      }
+
+      elementHtml += `<div part="textarea-container" class="d-flex flex-col flex-grow">
+                        <label id="${dataObj.id}-label" part="date-label">${elementLabel}</label>
+                        <div part="td-body-2"><sf-i-elastic-text text="${dataObj.hint}" minLength="50"></sf-i-elastic-text></div>
+                        ${((dataObj.mandatory == null && dataObj.value == '') && (this.mode == "view" || this.flow == "details" || this.editdisable == "true")) ? '<div part="not-selected">Not Selected</div>' :
+          `<div class="d-flex flex-col align-start" part="form-select-container">
+                          <div class="d-flex align-center" part="form-selected-value">
+                            ${valToBeShown.map((val) => `
+                              <div class="selected-option d-flex justtify-center align-center" part="selected-option" id="selected-option-${dataObj.id}" dataid="${dataObj.id}">
+                                <label class="selected-option-label" part="selected-option-label">${val}</label>
+                              </div>`)}
+                              ${(`
+                                ${(this.mode == "view" || this.flow == "details") ? '' :
+              `<button id="button-edit-form-${dataObj.id}" part="button-icon" class="material-icons button-edit-form button-icon-click">edit</button>`
+            }
+                              `)
           } 
                           </div>`}
                         </div>
@@ -6151,7 +3742,7 @@ export class SfIReporting extends LitElement {
       const jsonRespose = JSON.parse(xhr.responseText);
       console.log('history response', jsonRespose)
       let object = this.getPrepopulateJson()
-      object.history[date] = jsonRespose.history 
+      object.history[date] = jsonRespose.history
       // let resultObject = jsonRespose.object
       // this.published = resultObject.published ?? false
       // this.terminated = resultObject.terminated ?? false
@@ -6529,7 +4120,9 @@ export class SfIReporting extends LitElement {
       `
     }
     return html`
+      <script src="/node_modules/html2pdf.js/dist/html2pdf.bundle.min.js"></script>
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
       <div part="reporting-container-outer" class="SfIReportingC d-flex flex-col align-center">
         <div id="reporting-container-short" part="reporting-container-short" class="w-100-m-0"></div>
         <div id="reporting-container" part="reporting-container" class="w-100-m-0 hide"></div>
