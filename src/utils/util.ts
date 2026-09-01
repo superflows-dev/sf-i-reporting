@@ -48,6 +48,31 @@ async function callApi(url: string, data: string, authorization: any) {
 
 }
 
+async function callApiPresigned(url: string, data: string) {
+
+  return new Promise((resolve: any) => {
+
+    const jsonData = JSON.stringify(data);
+    var xhr = new XMLHttpRequest();
+    xhr.addEventListener("readystatechange", () => {
+      if (xhr != null) {
+        if (xhr.readyState === 4) {
+          resolve(xhr);
+        }
+      }
+    });
+    xhr.open("PUT", url);
+    xhr.timeout = 1800000;
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.send(jsonData);
+
+    return xhr;
+
+  })
+
+}
+
 async function callApiPresignedDelete(url: string) {
 
   return new Promise((resolve: any) => {
@@ -175,7 +200,7 @@ function isPlainObject(value: any): boolean {
 }
 
 const exportFunctions = {
-  callApi, callApiPresignedDelete, callApiPresignedGet, validateName, readCookie, delay, timeSince, isInteger, isPlainObject
+  callApi, callApiPresigned, callApiPresignedDelete, callApiPresignedGet, validateName, readCookie, delay, timeSince, isInteger, isPlainObject
 };
 
 export default exportFunctions;

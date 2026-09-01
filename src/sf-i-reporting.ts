@@ -9,6 +9,8 @@ import { LitElement, html, css, PropertyValueMap } from 'lit';
 import { customElement, query, property } from 'lit/decorators.js';
 // import {customElement, query, property} from 'lit/decorators.js';
 import Util from './utils/util';
+import { Chart, ChartItem, registerables } from 'chart.js';
+import { exportBackgroundPlugin } from './exportBackgroundPlugin';
 // import {LitElement, html, css} from 'lit';
 // import {customElement} from 'lit/decorators.js';
 import { DataObject, AddButtonObject, createDataObject, createAddButtonObject, isAddButtonObject } from './dataObjects';
@@ -50,6 +52,9 @@ export class SfIReporting extends LitElement {
 
   @property()
   projectname: string = "";
+
+  @property()
+  userprofileid: string = "";
 
   @property()
   configjson: string = "[]";
@@ -129,6 +134,12 @@ export class SfIReporting extends LitElement {
 
   list: any[] = [];
 
+  blocksize: number = 10;
+
+  startindex: number = 0;
+
+  searchstring: string = ""
+
   published: boolean = false;
 
   terminated: boolean = false;
@@ -141,6 +152,19 @@ export class SfIReporting extends LitElement {
   selectedItemIds: any = [];
 
   reopenedItem: any = {};
+
+  COLOR_NOT_STARTED = "#888888";
+  COLOR_UPCOMING = "#F79256";
+  COLOR_OVERDUE = "#C80036";
+  COLOR_TERMINATED = "#ffe505"
+  COLOR_DRAFT = "#666666";
+
+
+  @property()
+  chart: any = null;
+
+  @property()
+  chartBase64: any = null;
 
   static override styles = css`
 
@@ -1435,7 +1459,7 @@ export class SfIReporting extends LitElement {
         if (element.value != '') {
           let arr = []
           for (let tempVal of element.value) {
-            console.log('bricks selecteddependantvalues tempVal', tempVal, values[0].indexOf(tempVal.split(';')[0]), values[1][(values[1].indexOf(tempVal.split(';')[0]))]);
+            console.log('bricks selecteddependantvalues tempVal', tempVal.split(';')[0], values, values[0].indexOf(tempVal.split(';')[0]), values[0][(values[0].indexOf(tempVal.split(';')[0]))], values[1][(values[1].indexOf(tempVal.split(';')[1]))]);
             if (values[1][(values[0].indexOf(tempVal.split(';')[0]))] == tempVal.split(';')[1]) {
               arr.push(tempVal)
             }
@@ -1879,7 +1903,7 @@ export class SfIReporting extends LitElement {
       const PizZip = (await import("https://esm.run/pizzip")).default;
       const Docxtemplater = (await import("https://esm.run/docxtemplater")).default;
       const saveAs = (await import("https://esm.run/file-saver")).default as any;
-      
+
       const response = await fetch("https://alpha.flagggrc.tech/templates/table-template.docx");
       const content = await response.arrayBuffer();
 
@@ -2281,6 +2305,7 @@ export class SfIReporting extends LitElement {
                   console.log('prepopulating sf-i-bricks', JSON.stringify(childDataObj.value), valArr[childDataObj.id + 'id'], valArr[childDataObj.id + 'name'])
                 } else {
                   childDataObj.value = valArr[childDataObj.id]
+                  console.log('prepopulating sf-i-bricks combined', JSON.stringify(childDataObj.value), valArr[childDataObj.id])
                 }
               } else if (schemaElement.type == "sf-checklist") {
                 // if (this.mode == 'admin' && this.flow == "edit") {
@@ -2354,6 +2379,8 @@ export class SfIReporting extends LitElement {
               console.log('prepopulating sf-i-bricks', JSON.stringify(this.dataModel[i].value), this.getPrepopulateJson()[element.id + 'id'], this.getPrepopulateJson()[element.id + 'name'])
             } else {
               this.dataModel[i].value = this.getPrepopulateJson()[element.id]
+              console.log('prepopulating sf-i-bricks combined', JSON.stringify(this.dataModel[i].value), this.getPrepopulateJson()[element.id])
+
             }
           } else if (element.type == "sf-checklist") {
             // if (this.mode == 'admin' && this.flow == "edit") {
@@ -2464,7 +2491,7 @@ export class SfIReporting extends LitElement {
               console.log('eval fail', element, this.id)
             }
           } else if (element.type == "sf-i-bricks") {
-            console.log('evalshowprogress sf-i-bricks value', element.value, element.value.length, element.mandatory, element.mandatory != null);
+            console.log('evalshowprogress sf-i-bricks value', element.id, element.value, element.value.length, element.mandatory, element.mandatory != null);
             if (element.value.length > 0) {
               filled++;
               sectionChildFilledCount++;
@@ -3172,6 +3199,16 @@ export class SfIReporting extends LitElement {
     let elementHtml = `<button id="${addObj.id}" class="add-button" part="add-button">Add ${addObj.label}</button>`
     return elementHtml
   }
+
+  linkify = (text: string) => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+    return text.replace(
+      urlRegex,
+      '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
+    )
+  }
+
   renderElement = (dataObj: DataObject) => {
     let elementHtml = ""
     console.log('rendering obj', dataObj.type)
@@ -3189,7 +3226,7 @@ export class SfIReporting extends LitElement {
                         <label id="${dataObj.id}-label" part="textarea-label">${elementLabel}</label>
                         <div part="td-body-2"><sf-i-elastic-text text="${dataObj.hint}" minLength="50"></sf-i-elastic-text></div>
                         ${((dataObj.mandatory == null && dataObj.value == '') && (this.mode == "view" || this.flow == "details" || this.editdisable == "true")) ? '<div part="not-selected">Not Selected</div>' :
-          `<${this.editdisable == "true" ? 'div' : 'textarea'} rows="${dataObj.size == "small" ? "4" : (dataObj.size == "smallest" ? "1" : "10")}" id="${dataObj.id}" type="text" class=" reporting-textarea" part="${this.mode == "view" || this.flow == "details" || this.editdisable == "true" ? "input-textarea-disabled" : "input-textarea"}" ${this.mode == "view" || this.flow == "details" ? "readonly" : ""}>${dataObj.value}</${this.editdisable == "true" ? 'div' : 'textarea'}>`}
+          `<${this.editdisable == "true" ? 'div' : 'textarea'} rows="${dataObj.size == "small" ? "4" : (dataObj.size == "smallest" ? "1" : "10")}" id="${dataObj.id}" type="text" class="reporting-textarea" part="${this.mode == "view" || this.flow == "details" || this.editdisable == "true" ? "input-textarea-disabled" : "input-textarea"}" ${this.mode == "view" || this.flow == "details" ? "readonly" : ""}>${this.editdisable == "true" ? this.linkify(dataObj.value) : dataObj.value}</${this.editdisable == "true" ? 'div' : 'textarea'}>`}
                       </div>`
     } else if (dataObj.type == "yesno+textarea") {
       elementHtml += `<div part="textarea-container"  class="d-flex flex-col flex-grow">
@@ -3329,6 +3366,304 @@ export class SfIReporting extends LitElement {
     return elementHtml
   }
 
+  renderStatisticsChart = (statistics: any) => {
+    // var dataTotal = statistics['total'] ?? 0;
+    var dataNotStarted = statistics['not-started'] ?? 0;
+    var dataUpcoming = statistics['upcoming'] ?? 0;
+    var dataOverdue = statistics['overdue'] ?? 0;
+    var dataTerminated = statistics['terminated'] ?? 0;
+    var dataDraft = statistics['draft'] ?? 0;
+
+    let ctx = (this._SfReportingContainer as HTMLDivElement).querySelector('#myChart') as ChartItem;
+
+
+    let data = {
+      labels: ['Active', 'About To Expire', 'Expired', 'Terminated', 'Draft'],
+      datasets: [{
+        label: this.name,
+        data: [dataNotStarted, dataUpcoming, dataOverdue, dataTerminated, dataDraft],
+        borderWidth: 1,
+        backgroundColor: [
+          this.COLOR_NOT_STARTED,
+          this.COLOR_UPCOMING,
+          this.COLOR_OVERDUE,
+          this.COLOR_TERMINATED,
+          this.COLOR_DRAFT
+        ]
+      }]
+    }
+    this.renderChart(ctx, 'doughnut', data, this.name, false)
+  }
+
+  renderChart = (ctx: any, type: any, data: any, title: string | string[], flagFullWidth: boolean = true, flagInModal: boolean = false) => {
+
+    //console.log('rendering chart', this.chart);
+
+    if (this.chart != null) {
+      //console.log('destroying chart', this.chart);
+      (this.chart as Chart).destroy();
+      this.chart = null;
+    }
+
+    this.chart = new Chart(ctx, {
+      type: type,
+      data: data,
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '95%',
+        layout: {
+          padding: {
+            top: 30,
+            bottom: 30,
+            left: 50,
+            right: 50
+          }
+        },
+        animation: {
+          duration: 0,
+          onComplete: () => {
+
+            if (this.chart != null) {
+
+              if (type == 'bar') {
+
+                // this.chart.ctx.font = "bold 10pt Courier";
+                this.chart.ctx.font = "bold 9pt 'Avenir'";
+                this.chart.ctx.fillStyle = '#333';
+                this.chart.ctx.textBaseline = "middle";
+                this.chart.ctx.textAlign = "center";
+
+                for (var i = 0; i < this.chart.data.datasets.length; i++) {
+
+                  const dataset = this.chart.data.datasets[i];
+                  for (var j = 0; j < dataset.data.length; j++) {
+
+                    if (parseInt(dataset.data[j]) > 0) {
+                      //console.log('points', this.chart.getDatasetMeta(i).data[j]);
+                      this.chart.ctx.fillText(dataset.data[j], this.chart.getDatasetMeta(i).data[j].x + 15, this.chart.getDatasetMeta(i).data[j].y);
+                    }
+
+                  }
+
+                }
+
+              } else {
+
+                //console.log('onanimation complete', this.chart, this.chart.data, this.graphParam);
+                //console.log('onanimation complete', this.graphParam);
+
+                var rendered = false;
+
+                for (var i = 0; i < this.chart.data.datasets.length; i++) {
+
+                  const dataset = this.chart.data.datasets[i];
+                  for (var j = 0; j < dataset.data.length; j++) {
+
+                    if (parseInt(dataset.data[j]) > 0) {
+
+                      rendered = true;
+                      //console.log(this.chart.getDatasetMeta(i));
+                      //console.log(i + "," + j, this.chart.getDatasetMeta(i).data[j]);
+                      // var total = this.chart.getDatasetMeta(i).total;
+                      //console.log('total', total);
+                      var mid_radius = (this.chart.getDatasetMeta(i).data[j].outerRadius - 25);
+                      if (j % 2 == 0) {
+                        mid_radius = (this.chart.getDatasetMeta(i).data[j].outerRadius + 10);
+                      }
+                      // var mid_radius = this.chart.getDatasetMeta(i).data[j].innerRadius + ((this.chart.getDatasetMeta(i).data[j].outerRadius - this.chart.getDatasetMeta(i).data[j].innerRadius) * 2) / 3;
+                      //console.log('mid_radius', mid_radius);
+                      var start_angle = this.chart.getDatasetMeta(i).data[j].startAngle;
+                      //console.log('start_angle', start_angle);
+                      var end_angle = this.chart.getDatasetMeta(i).data[j].endAngle;
+                      //console.log('end_angle', end_angle);
+                      var mid_angle = start_angle + (end_angle - start_angle) / 2;
+                      //console.log('mid_angle', mid_angle);
+
+                      var x = mid_radius * Math.cos(mid_angle);
+                      var y = mid_radius * Math.sin(mid_angle);
+
+                      this.chart.ctx.fillStyle = '#fff';
+                      if (i == 3) { // Darker text color for lighter background
+                        this.chart.ctx.fillStyle = '#444';
+                      }
+                      // var percent = String(Math.round(dataset.data[j]/total*100)) + "%";
+                      // var str = "";
+                      // for(var k = 0; k <= dataset.data[j].length; k++) {
+                      //   str += '█';
+                      // }
+                      //console.log('outputting bg', str);
+                      this.chart.ctx.fillStyle = '#333';
+                      //this.chart.ctx.fillText(str, this.chart.getDatasetMeta(i).data[j].x + x, this.chart.getDatasetMeta(i).data[j].y + y);
+                      //const match = /(?<value>\d+\.?\d*)/;
+                      let fillText = '';
+                      // let replaceText = ' ';
+                      this.chart.ctx.fillStyle = '#111';
+                      // if ((this.chart.data.labels[j] + "").toLowerCase().replace(/ /g, replaceText) == this.graphParam) {
+                        // this.chart.ctx.font = "bold 20pt 'Source Sans Pro'";
+                        // this.chart.ctx.font = "bold 20pt 'Avenir'";
+                        // this.chart.ctx.fillStyle = '#111';
+                        // fillText = dataset.data[j] + '✓';
+
+                      // } else {
+                      //   // this.chart.ctx.font = "bold 8pt 'Source Sans Pro'";
+                        this.chart.ctx.font = "bold 9pt 'Avenir'";
+                        this.chart.ctx.fillStyle = '#333';
+                        // this.chart.ctx.fillStyle = '#fff';
+                        fillText = dataset.data[j];
+
+                      // }
+
+
+                      this.chart.ctx.textBaseline = "middle";
+                      this.chart.ctx.textAlign = "center";
+
+                      // this.chart.ctx.fillText(fillText, this.chart.getDatasetMeta(i).data[j].x + x, this.chart.getDatasetMeta(i).data[j].y + y);
+                      const textWidth = this.chart.ctx.measureText(fillText).width;
+                      const outerRadius = this.chart.getDatasetMeta(i).data[j].outerRadius
+                      mid_radius = outerRadius + 10;
+
+                      // if (textWidth > 25) {
+                      //   mid_radius = outerRadius - 10;
+                      // }
+
+                      // if (textWidth > 40) {
+                      //   mid_radius = outerRadius - 20;
+                      // }
+                      if (j % 2 === 0 && textWidth < 30) {
+                        mid_radius = outerRadius + 10;
+                      } else {
+                        mid_radius = outerRadius - 20;
+                      }
+                      x = mid_radius * Math.cos(mid_angle);
+                      y = mid_radius * Math.sin(mid_angle);
+
+                      let drawX = this.chart.getDatasetMeta(i).data[j].x + x;
+                      let drawY = this.chart.getDatasetMeta(i).data[j].y + y;
+
+                      const padding = 5;
+
+                      if (drawX + textWidth / 2 > this.chart.width - padding) {
+                        drawX = this.chart.width - textWidth / 2 - padding;
+                      }
+
+                      if (drawX - textWidth / 2 < padding) {
+                        drawX = textWidth / 2 + padding;
+                      }
+
+                      this.chart.ctx.fillText(fillText, drawX, drawY);
+
+                    }
+
+                  }
+                }
+
+                if (!rendered) {
+                  const { chartArea: { left, top, right, bottom }, ctx } = this.chart;
+                  const centerX = (left + right) / 2;
+                  const centerY = (top + bottom) / 2;
+                  ctx.font = "15pt Arial";
+                  ctx.fillStyle = '#666';
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'middle';
+                  ctx.fillText('No data to display', centerX, centerY);
+                }
+
+              }
+
+            }
+            if (this.chart != null) {
+              this.chartBase64 = (this.chart as Chart).toBase64Image();
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: {
+              display: false,
+              drawBorder: false
+            },
+            ticks: {
+              display: false,
+            },
+            stacked: true,
+          },
+          y: {
+            grid: {
+              display: false,
+              drawBorder: false
+            },
+            ticks: {
+              display: type == 'bar' ? true : false,
+              font: {
+                size: window.innerWidth > window.innerHeight ? window.innerWidth / 170 : window.innerWidth / 40,
+              }
+            },
+            stacked: true,
+          }
+        },
+        barPercentage: 0.8,
+        barThickness: 10,
+        categoryPercentage: 0.5,
+        plugins: {
+          legend: {
+            display: type !== "bar",
+            position: "bottom",
+            align: "center",
+            labels: {
+              font: {
+                size: 10,
+              },
+              boxWidth: 10,
+              boxHeight: 10,
+              generateLabels: (chart: any) => chart.data.labels.map((l: any, i: any) => ({
+                datasetIndex: i,
+                index: i,
+                text: l,
+                fillStyle: chart.data.datasets[0].backgroundColor[i],
+                strokeStyle: chart.data.datasets[0].backgroundColor[i],
+                // hidden: chart.getDatasetMeta(0).data[i].hidden
+              }))
+            },
+            onClick: (_evt: any, legendItem: any, _legend: any) => {
+              console.log('click', legendItem)
+            }
+          },
+          title: {
+            display: true,
+            text: title,
+            font: {
+              size: Array.isArray(title) ? 14 : 16,
+              lineHeight: 1.5
+            },
+            padding: { bottom: 20 }
+          },
+          exportBackground: {
+            color: '#ffffff'
+          }
+        },
+        onClick: (_event: any, array: any) => {
+          console.log('chartclick', array[0], data.labels[array[0].index]);
+        }
+      },
+    });
+
+    console.log('chartData', data);
+
+    let chartHeight = '480px'
+    if (flagFullWidth && flagInModal) {
+      chartHeight = '100vh'
+    }
+    this.chart.canvas.parentNode.style.height = (type === 'bar') ? ((parseInt(data.labels.length) * 90 + 40) + 'px') : chartHeight;
+    // if (type !== 'bar' && flagFullWidth) {
+    //   this.chart.canvas.parentNode.style.width = '100vh'
+    // }
+    this.chart.canvas.parentNode.style.width = chartHeight
+
+    // this.chart.canvas.parentNode.style.height = '100vh'
+  }
+
   populateViewShort = () => {
     let html = "";
     if (this.mode == "short-new") {
@@ -3351,7 +3686,7 @@ export class SfIReporting extends LitElement {
     })
   }
 
-  populateList = () => {
+  populateList = (found: number) => {
     let html = ''
     html += `<div class="d-flex left-sticky justify-between align-start p-7">`
     html += `<div part="calendar-date-container" class="d-flex flex-col align-start justify-center">${this.lastCalendarGenerated == "" ? "" : ("<div class=\"d-flex align-center justify-center\" part=\"last-calendar-date\" id=\"last-calendar-date\"><span class=\"material-symbols-outlined\">update</span>&nbsp;&nbsp;Calendar synced on \n" + (new Date(parseInt(this.lastCalendarGenerated)).toLocaleDateString('en-IN') + " - " + new Date(parseInt(this.lastCalendarGenerated)).toLocaleTimeString('en-IN'))) + '</div>'}${this.nextCalendarScheduled == "" ? "" : ("<div class=\"d-flex align-center justify-center\" part=\"next-calendar-date\" id=\"next-calendar-date\"><span class=\"material-symbols-outlined\">hourglass</span>&nbsp;&nbsp;Next update on \n" + (new Date(parseInt(this.nextCalendarScheduled)).toLocaleDateString('en-IN') + " - " + new Date(parseInt(this.nextCalendarScheduled)).toLocaleTimeString('en-IN'))) + '</div>'}</div>`
@@ -3359,9 +3694,35 @@ export class SfIReporting extends LitElement {
     // html += `<button id="button-publish" part="button-icon" class="material-icons hide">campaign</button>`
     html += `<input class="hide" id="input-import" type="file" accept=".csv" />`
     html += `<label id="button-upload" part="button-icon" for="input-import" class="material-icons label-button ml-10">upload</label>`
+    html += `<button id="button-export" part="button-icon" class="material-icons button-icon-click ml-10">download</button>`
     html += `<button id="button-new" part="button-icon" class="material-icons button-icon-click ml-10">add</button>`
     html += `</div>`
     html += `</div>`
+
+    html += '<div class="chart-container d-flex scroll-x justify-center align-start"><div part="chart-item" class="chart-item"><canvas id="myChart"></canvas></div></div>';
+
+    html += '<div class="d-flex w-100-m-0 justify-between align-center">'
+    html += '<div class="d-flex justify-start mb-10 align-center" id="button-next link">';
+    html += `<input id="search-input" value="${this.searchstring}" part="input" class="mr-10"/>`
+    html += '<button id="button-search" part="button-icon" class="material-icons ml-10">search</button>'
+    html += '</div>'
+    if (this.list.length === this.blocksize && this.startindex < (found - this.blocksize)) {
+      html += '<div class="d-flex justify-end mb-10 align-center" id="button-next link">';
+      if (this.startindex > 0) {
+        html += '<button id="button-prev" part="button-icon-small" class="material-icons">chevron_left</button>&nbsp;';
+      }
+      html += '<span part="td-head">&nbsp;&nbsp;' + (Math.ceil((this.startindex + 1) / this.blocksize)) + "/" + (Math.ceil(found / this.blocksize)) + '&nbsp;&nbsp;</span>'
+      html += '<button id="button-next" part="button-icon-small" class="material-icons">chevron_right</button>&nbsp;&nbsp;';
+      html += '</div>';
+    } else {
+      html += '<div class="d-flex justify-end mb-10 align-center" id="button-next link">';
+      if (this.startindex > 0) {
+        html += '<button id="button-prev" part="button-icon-small" class="material-icons">chevron_left</button>&nbsp;&nbsp;';
+      }
+      html += '<span part="td-head">&nbsp;&nbsp;' + (Math.ceil((this.startindex + 1) / this.blocksize)) + "/" + (Math.ceil(found / this.blocksize)) + '&nbsp;&nbsp;</span>'
+      html += '</div>';
+    }
+    html += '</div>'
     html += '<table id="select-list-table" class="w-100-m-0">';
     for (let [i, item] of this.list.entries()) {
       html += '<tr class="tablerow">'
@@ -3376,7 +3737,7 @@ export class SfIReporting extends LitElement {
           if (property == "lastModifiedTime") {
             displayValue = Util.timeSince(parseInt(item[property]));
           }
-          html += `<td part="td-body" class="td-body ${bgClass}"><div class="d-flex flex-col align-start flex-wrap"><div part="td-head" class="pl-0-imp w-100 d-flex align-center">${property}</div><div><sf-i-elastic-text text="${displayValue}" minLength="10"></sf-i-elastic-text></div></div></td>`
+          html += `<td part="td-body" class="td-body ${bgClass}"><div class="d-flex flex-col align-start flex-wrap"><div part="td-head" class="pl-0-imp w-100 d-flex align-center">${property}</div><div><sf-i-elastic-text text="${displayValue}" minLength="40"></sf-i-elastic-text></div></div></td>`
         }
       }
       html += '</tr>'
@@ -3438,6 +3799,32 @@ export class SfIReporting extends LitElement {
       this.newClick()
     })
 
+    let buttonSearch = ((this._SfReportingContainer as HTMLDivElement).querySelector('#button-search') as HTMLButtonElement)
+    let inputSearch = ((this._SfReportingContainer as HTMLDivElement).querySelector('#search-input') as HTMLInputElement)
+    buttonSearch?.addEventListener('click', () => {
+      this.startindex = 0
+      let inputsearchstring = (inputSearch?.value ?? "").trim()
+      this.fetchList(inputsearchstring);
+    })
+
+    inputSearch.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') {
+        buttonSearch?.click();
+      }
+    })
+
+    let buttonNext = ((this._SfReportingContainer as HTMLDivElement).querySelector('#button-next') as HTMLButtonElement)
+    buttonNext?.addEventListener('click', () => {
+      this.startindex = this.startindex + this.blocksize
+      this.fetchList(this.searchstring);
+    })
+
+    let buttonPrev = ((this._SfReportingContainer as HTMLDivElement).querySelector('#button-prev') as HTMLButtonElement)
+    buttonPrev?.addEventListener('click', () => {
+      this.startindex = this.startindex - this.blocksize
+      this.fetchList(this.searchstring);
+    })
+
     let inputImport = ((this._SfReportingContainer as HTMLDivElement).querySelector('#input-import') as HTMLInputElement)
     inputImport.addEventListener('change', async (ev: any) => {
       let target = ev.target as HTMLInputElement;
@@ -3448,20 +3835,35 @@ export class SfIReporting extends LitElement {
         this.showLoader();
         let jsonData = await this.csvToJson(file);
         console.log('jsonData', jsonData);
-        await this.fetchSchema()
-        for (let element of jsonData) {
-          this.published = false
-          // this.prepopulateValJson = JSON.stringify(element)
-          // this.populateDataModel()
-          // this.prepopulateValues(false)
-          console.log('adding element', element);
-          await this.submitNew(element)
-        }
+        // await this.fetchSchema()
+        // for (let element of jsonData) {
+        //   this.published = false
+        //   // this.prepopulateValJson = JSON.stringify(element)
+        //   // this.populateDataModel()
+        //   // this.prepopulateValues(false)
+        //   console.log('adding element', element);
+        //   if (element.id == null) {
+        //     await this.submitNew(element)
+        //   } else {
+        //     await this.submitEdit(element)
+        //   }
+        // }
+        await this.submitBulk(jsonData)
+        target.value = ''
         this.hideLoader();
         // this.dataModel = jsonData;
         // this.populateView();
       }
     })
+
+    let buttonExport = ((this._SfReportingContainer as HTMLDivElement).querySelector('#button-export') as HTMLButtonElement)
+    buttonExport?.addEventListener('click', async () => {
+      let fullList = await this.fetchListFull();
+      if (fullList != null) {
+        this.downloadCsv(fullList, 'exported-data');
+      }
+    })
+
     let customEvent = new CustomEvent('valueChanged');
     this.dispatchEvent(customEvent);
     this.hideLoader();
@@ -3532,9 +3934,129 @@ export class SfIReporting extends LitElement {
     });
   }
 
+  downloadCsv = (
+    data: Record<string, any>[],
+    fileName: string = 'export.csv',
+    excludedKeys: string[] = ['history', 'customreporting', 'reportformatschema', 'reportformatvalues', 'Source Report', 'documents', 'comments', 'approved', 'lastupdated', 'dateofcompletion', 'terminated', 'projects', 'lastModifiedTime']
+  ) => {
+    if (!data?.length) {
+      console.warn('No data available for CSV export');
+      return;
+    }
 
+    const excludedSet = new Set(excludedKeys);
+
+    const headers = [
+      ...new Set(data.flatMap(obj => Object.keys(obj)))
+    ].filter(key => {
+      if (excludedSet.has(key)) {
+        return false;
+      }
+      return true;
+    });
+
+    const escapeCsvValue = (value: any): string => {
+      if (value === null || value === undefined) {
+        return '';
+      }
+
+      // Convert objects and arrays to JSON
+      if (
+        typeof value === 'object' &&
+        !(value instanceof Date)
+      ) {
+        value = JSON.stringify(value);
+      }
+
+
+      let str = String(value).replace(/"/g, '""');
+
+      if (
+        str.includes(',') ||
+        str.includes('"') ||
+        str.includes('\n') ||
+        str.includes('\r')
+      ) {
+        str = `"${str}"`;
+      }
+
+      return str;
+    };
+
+    const csvRows = [
+      headers.join(','),
+      ...data.map(row =>
+        headers
+          .map(header => escapeCsvValue(row[header]))
+          .join(',')
+      )
+    ];
+
+    const csvContent = csvRows.join('\r\n');
+
+    const blob = new Blob(
+      ['\uFEFF' + csvContent],
+      { type: 'text/csv;charset=utf-8;' }
+    );
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+
+    document.body.appendChild(link);
+    link.click();
+
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
+
+  submitBulk = async (data: any) => {
+    let url = "https://" + this.apiId + "/importbulk";
+    let body: any = {
+      "projectid": this.projectid,
+      "presigned": true,
+    }
+
+    let authorization: any = btoa(Util.readCookie('email') + ":" + Util.readCookie('accessToken'));
+    let xhr: any = (await this.prepareXhr(body, url, this._SfLoader, authorization)) as any;
+    this._SfLoader.innerHTML = '';
+    if (xhr.status == 200) {
+
+      const jsonRespose = JSON.parse(xhr.responseText);
+      await this.uploadToPresignedUrl(data, jsonRespose.signedUrl)
+
+      body = {
+        "projectid": this.projectid,
+        "userprofileid": this.userprofileid,
+        "key": jsonRespose.key,
+      }
+
+      authorization = btoa(Util.readCookie('email') + ":" + Util.readCookie('accessToken'));
+      xhr = (await this.prepareXhr(body, url, this._SfLoader, authorization)) as any;
+      this._SfLoader.innerHTML = '';
+      this.setSuccess('Importing started successfully. You will be notified by email after it\'s completion.');
+      setTimeout(() => {
+        this.clearMessages()
+      }, 3000);
+    } else {
+      if (xhr.status == 401) {
+        let changeEvent = new CustomEvent('tokenExpired', { bubbles: true });
+        this.dispatchEvent(changeEvent);
+      }
+      const jsonRespose = JSON.parse(xhr.responseText);
+      this.setError(jsonRespose.error);
+      setTimeout(() => {
+        this.clearMessages()
+      }, 2000);
+    }
+
+  }
 
   loadMode = async () => {
+    Chart.register(...registerables);
+    Chart.register(exportBackgroundPlugin);
     console.log('loadmode', this.mode, this.flow);
     if (this.mode == "view") {
       this.populateDataModel();
@@ -3571,11 +4093,30 @@ export class SfIReporting extends LitElement {
         setTimeout(() => {
           this.initListListeners();
         }, 500);
-        this.fetchList();
+        this.fetchList(this.searchstring);
       }
     } else {
       this.populateViewShort();
     }
+  }
+
+  uploadToPresignedUrl = async (data: any, url: string) => {
+    const xhr: any = (await this.prepareXhrPresigned(data, url, this._SfLoader)) as any;
+    this._SfLoader.innerHTML = '';
+    if (xhr.status == 200) {
+
+    }
+  }
+
+  prepareXhrPresigned = async (data: any, url: string, loaderElement: any, loaderText: string = '') => {
+
+
+    if (loaderElement != null) {
+      loaderElement.innerHTML = '<div class="lds-dual-ring"></div>';
+      loaderElement.innerHTML += ('<div class="lds-text"><div class="lds-text-c">' + loaderText + '</div></div>');
+    }
+    return await Util.callApiPresigned(url, data);
+
   }
 
   prepareXhrPresignedGet = async (url: string, loaderElement: any, loaderText: string = '') => {
@@ -3684,9 +4225,36 @@ export class SfIReporting extends LitElement {
     }
   }
 
-  fetchList = async () => {
+  fetchListFull = async () => {
     let url = "https://" + this.apiId + "/list1";
     let body = { projectid: this.projectid }
+    const authorization = btoa(Util.readCookie('email') + ":" + Util.readCookie('accessToken'));
+    const xhr: any = (await this.prepareXhr(body, url, this._SfLoader, authorization)) as any;
+    this._SfLoader.innerHTML = '';
+    console.log(xhr)
+    if (xhr.status == 200) {
+      const jsonRespose = JSON.parse(xhr.responseText);
+      console.log('full list response', jsonRespose)
+      console.log('full list response', jsonRespose.lastCalendarGenerated)
+      this.lastCalendarGenerated = jsonRespose.lastCalendarGenerated ?? ""
+      this.nextCalendarScheduled = jsonRespose.nextCalendarScheduled ?? ""
+      let data = await this.fetchPresignedUrl(jsonRespose.signedUrlGet);
+      await this.fetchPresignedUrlDelete(jsonRespose.signedUrlDelete)
+      return data
+    } else {
+      const jsonRespose = JSON.parse(xhr.responseText);
+      this.setError(jsonRespose.error);
+      setTimeout(() => {
+        this.clearMessages()
+      }, 3000);
+      return null;
+    }
+  }
+
+  fetchList = async (searchstring: string) => {
+    this.searchstring = searchstring
+    let url = "https://" + this.apiId + "/list2";
+    let body = { projectid: this.projectid, startindex: this.startindex, blocksize: this.blocksize, searchstring: searchstring }
     const authorization = btoa(Util.readCookie('email') + ":" + Util.readCookie('accessToken'));
     const xhr: any = (await this.prepareXhr(body, url, this._SfLoader, authorization)) as any;
     this._SfLoader.innerHTML = '';
@@ -3701,7 +4269,8 @@ export class SfIReporting extends LitElement {
       await this.fetchPresignedUrlDelete(jsonRespose.signedUrlDelete)
       this.list = data
       this.initListeners()
-      this.populateList();
+      this.populateList(jsonRespose.totalLength);
+      this.renderStatisticsChart(jsonRespose.statistics ?? {})
     } else {
       const jsonRespose = JSON.parse(xhr.responseText);
       this.setError(jsonRespose.error);
@@ -3779,9 +4348,9 @@ export class SfIReporting extends LitElement {
     }
   }
 
-  submitEdit = async () => {
+  submitEdit = async (obj = this.selectedValues()) => {
     let url = "https://" + this.apiId + "/update";
-    let body = { projectid: this.projectid, objectid: this.selectedItem.id, object: this.selectedValues(), schema: this.getSchema(), published: this.published }
+    let body = { projectid: this.projectid, objectid: this.selectedItem.id, object: obj, schema: this.getSchema(), published: this.published }
     if (Object.keys(this.reopenedItem).length > 0) {
       url = "https://" + this.apiId + "/reopen"
       body = { projectid: this.projectid, object: this.selectedValues(), schema: this.getSchema(), objectid: this.reopenedItem.id, published: this.published }

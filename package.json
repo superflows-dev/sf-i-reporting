@@ -1,7 +1,7 @@
 {
   "name": "sf-i-reporting",
   "private": false,
-  "version": "1.0.124",
+  "version": "1.0.131",
   "description": "Superflows Reporting Component",
   "main": "sf-i-reporting.js",
   "module": "sf-i-reporting.js",
@@ -51,6 +51,7 @@
   "license": "MIT",
   "repository": "superflows-dev/sf-i-reporting",
   "dependencies": {
+    "chart.js": "3.9.0",
     "docxtemplater": "^3.68.3",
     "file-saver": "^2.0.5",
     "fs": "^0.0.1-security",
